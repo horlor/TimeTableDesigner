@@ -100,7 +100,7 @@ namespace TimetableDesigner.Model
 
         public void SetTimespan(Time from, Time to)
         {
-            if (from != null && to != null &&  from < to)
+            if (from != null && to != null && from < to)
             {
                 start = from;
                 end = to;

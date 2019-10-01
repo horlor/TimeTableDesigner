@@ -12,7 +12,7 @@ namespace TimetableDesigner.Model
         }
         private List<Course> courses =  new List<Course>();
 
-        public IReadOnlyList<Course> Courses
+        public System.Collections.ObjectModel.ReadOnlyCollection<Course> Courses
         {
             get
             {

@@ -4,21 +4,31 @@ using System.Text;
 
 namespace TimetableDesigner.Model
 {
+    /// <summary>
+    /// The Class for representing a teacher.
+    /// </summary>
     public class Teacher : EntityBase
     {
+        //Providing a constructor, to make new class
         public Teacher(int id): base(id) { }
 
         private List<Course> courses = new List<Course>();
 
         private List<Subject> teachedSubjects = new List<Subject>();
 
-        public System.Collections.ObjectModel.ReadOnlyCollection<Course> Courses {
+        /// <summary>
+        /// This is a List Accesser for the Courses they teach, it cannot be modified by this reference
+        /// </summary>
+        public System.Collections.ObjectModel.ReadOnlyCollection<Course> Courses { //Somehow this Special class has more functions than IReadOnlyList
             get 
             {
                 return courses.AsReadOnly(); 
             }
         }
 
+        /// <summary>
+        /// Only readonly representation of the teached subjects, it can be modified by the class's methods
+        /// </summary>
         public IReadOnlyList<Subject> TeachedSubjects
         {
             get
@@ -75,5 +85,6 @@ namespace TimetableDesigner.Model
                 return false;
             return true;
         }
+
     }
 }
