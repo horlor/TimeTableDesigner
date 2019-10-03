@@ -17,7 +17,7 @@ namespace LogicTests
         [Test]
         public void TimeSetGetTest()
         {
-            Course course = new Course(0);
+            Course course = new Course();
             course.SetTimespan(new Time(8, 15), new Time(9, 45));
             Assert.True(course.Start == new Time(8, 15));
             Assert.True(course.End == new Time(9, 45));
@@ -27,7 +27,7 @@ namespace LogicTests
         [Test]
         public void CourseTimeOverlapTests()
         {
-            Course course = new Course(0);
+            Course course = new Course();
             course.SetTimespan(Day.Friday, new Time(9, 30), new Time(10, 50));
             //Not in the sameday
             Assert.False(course.IsOverlappingWithTimePeriod(Day.Monday, new Time(11, 20), new Time(12, 25)));
@@ -47,7 +47,7 @@ namespace LogicTests
         [Test]
         public void CoursesInTheSameTime()
         {
-            Course c1 = new Course(0), c2 = new Course(1);
+            Course c1 = new Course(), c2 = new Course();
             c1.SetTimespan(Day.Monday, new Time(8, 15), new Time(9, 20));
             c2.SetTimespan(Day.Friday, new Time(9, 30), new Time(10, 10));
             Assert.IsFalse(c1.IsInTheSameTimeWith(c2));

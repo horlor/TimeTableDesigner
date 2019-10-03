@@ -37,11 +37,15 @@ namespace TimetableDesigner.Persistence
             return ts;
         }
 
-        abstract public T New();
-
         public void Remove(T t)
         {
             ts.Remove(t);
+        }
+
+        public void Store(T t)
+        {
+            t.SetId(next_id++);
+            ts.Add(t);
         }
     }
 }

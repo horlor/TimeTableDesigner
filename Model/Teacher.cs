@@ -10,7 +10,7 @@ namespace TimetableDesigner.Model
     public class Teacher : EntityBase
     {
         //Providing a constructor, to make new class
-        public Teacher(int id): base(id) { }
+        
 
         private List<Course> courses = new List<Course>();
 
@@ -42,7 +42,7 @@ namespace TimetableDesigner.Model
             foreach (var item in Courses)
             {
                 if (item.IsInTheSameTimeWith(course))
-                    throw new ArgumentException("There are a Course in the same time");
+                    throw new TeacherTimeException("There are a Course in the same time");
             }
             courses.Add(course);
 
@@ -77,13 +77,6 @@ namespace TimetableDesigner.Model
                     return true;
             }
             return false;
-        }
-
-        public bool CourseChanged(Course course)
-        {
-            if (!IsATeachedSubject(course.Subject) && HasCourseAtTheSameTime(course))
-                return false;
-            return true;
         }
 
         public bool HasCourseAtTimePeriod(Day day, Time from, Time to)

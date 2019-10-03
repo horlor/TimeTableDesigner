@@ -9,16 +9,22 @@ namespace TimetableDesigner.Model
     /// </summary>
     public abstract class EntityBase
     {
-        public int Id { get; }
+        private int _id;
+        public int Id { get { return _id; } }
         public string Name { get; set; }
 
         /// <summary>
         /// The constructor for the class
         /// </summary>
         /// <param name="id">The ID of the new class, it can be set only here</param>
-        public EntityBase(int id)
+        public EntityBase()
         {
-            this.Id = id;
+            _id = -1;
+        }
+
+        public void SetId(int id)
+        {
+            _id = id;
         }
 
     }

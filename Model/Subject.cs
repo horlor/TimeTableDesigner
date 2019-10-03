@@ -6,6 +6,6 @@ namespace TimetableDesigner.Model
 {
     public class Subject : EntityBase
     {
-        public Subject(int id): base(id) { }
+        
     }
 }

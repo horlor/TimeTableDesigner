@@ -7,9 +7,6 @@ namespace TimetableDesigner.Model
     public class Group : EntityBase
     {
        
-        public Group(int id) : base(id)
-        {
-        }
         private List<Course> courses =  new List<Course>();
 
         public System.Collections.ObjectModel.ReadOnlyCollection<Course> Courses
@@ -25,7 +22,7 @@ namespace TimetableDesigner.Model
             foreach (var item in courses)
             {
                 if (item.IsInTheSameTimeWith(course))
-                    throw new ArgumentException("There are a Course in the same time");
+                    throw new GroupTimeException("There are a Course in the same time");
             }
             courses.Add(course);
         }

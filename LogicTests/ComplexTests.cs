@@ -11,10 +11,10 @@ namespace LogicTests
         [Test]
         public void TeacherAndSubjectCheckInCourses()
         {
-            Teacher teacher = new Teacher(0);
-            Subject s1 = new Subject(1), s2 = new Subject(2);
+            Teacher teacher = new Teacher();
+            Subject s1 = new Subject(), s2 = new Subject();
             teacher.AddSubject(s1);
-            Course course = new Course(0);
+            Course course = new Course();
             course.Subject = s1;
             Assert.DoesNotThrow(() => { course.Teacher = teacher; });
             Assert.False(teacher.IsATeachedSubject(s2));

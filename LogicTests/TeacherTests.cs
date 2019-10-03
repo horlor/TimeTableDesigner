@@ -16,8 +16,8 @@ namespace LogicTests
         [Test]
         public void AddSubjectTest()
         {
-            Teacher teacher = new Teacher(0);
-            Subject s1 = new Subject(0), s2 = new Subject(1);
+            Teacher teacher = new Teacher();
+            Subject s1 = new Subject(), s2 = new Subject();
             Assert.False(teacher.IsATeachedSubject(s1));
             teacher.AddSubject(s1);
             Assert.True(teacher.IsATeachedSubject(s1));
@@ -29,8 +29,8 @@ namespace LogicTests
         [Test]
         public void RemoveSubjectTest()
         {
-            Teacher teacher = new Teacher(0);
-            Subject s = new Subject(0);
+            Teacher teacher = new Teacher();
+            Subject s = new Subject();
             teacher.AddSubject(s);
             Assert.True(teacher.IsATeachedSubject(s));
             teacher.RemoveSubject(s);

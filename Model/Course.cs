@@ -9,7 +9,6 @@ namespace TimetableDesigner.Model
     //Legyen UWP
     public class Course : EntityBase
     {
-        public Course(int id) : base(id) { }
 
         private Group group;
         public Group Group
@@ -47,7 +46,6 @@ namespace TimetableDesigner.Model
             }
         }
 
-        //What to do if this is changed during run? x
         private Subject subject;
         public Subject Subject
         {
@@ -57,13 +55,7 @@ namespace TimetableDesigner.Model
             }
             set
             {
-                if (teacher==null || teacher.IsATeachedSubject(value))
-                {
-                    subject = value;
-                }
-                else
-                    throw new ArgumentException("Current teacher can't teach this subject");
-
+                subject = value;
             }
         }
 
@@ -92,15 +84,9 @@ namespace TimetableDesigner.Model
             SetTimespan(Day, from, to);
         }
 
-        // This is kinda OOP hack, teacher or group should tell if change is not needed
-        //TODO try to find better solution
-        //idea: remove and readd at change - too resourcedemanding
+
         public void SetTimespan(Day day, Time from, Time to)
         {
-            if (teacher != null && teacher.HasCourseAtTimePeriod(day, from, to))
-                throw new ArgumentException("Teacher has course at the given timeperiod");
-            if (group != null && group.HasCourseAtTimePeriod(day, from, to))
-                throw new ArgumentException("Given group has a Course at the Given timeperiod");
             if (from != null && to != null && from < to)
             {
                 start = from;
