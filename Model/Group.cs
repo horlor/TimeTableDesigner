@@ -49,5 +49,15 @@ namespace TimetableDesigner.Model
         {
             return HasCourseAtTheSameTime(course);
         }
+
+        public bool HasCourseAtTimePeriod(Day day, Time from, Time to)
+        {
+            foreach (Course c in courses)
+            {
+                if (c.IsOverlappingWithTimePeriod(day, from, to))
+                    return true;
+            }
+            return false;
+        }
     }
 }

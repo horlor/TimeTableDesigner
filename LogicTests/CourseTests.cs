@@ -22,8 +22,26 @@ namespace LogicTests
             Assert.True(course.Start == new Time(8, 15));
             Assert.True(course.End == new Time(9, 45));
             Assert.Catch<ArgumentException>(() => course.SetTimespan(new Time(9,10),new Time(8,55)));
-            Assert.Catch<ArgumentException>(() => { course.Start = new Time(10, 10); });
-            Assert.Catch<ArgumentException>(() => { course.End = new Time(7, 10); });
+        }
+
+        [Test]
+        public void CourseTimeOverlapTests()
+        {
+            Course course = new Course(0);
+            course.SetTimespan(Day.Friday, new Time(9, 30), new Time(10, 50));
+            //Not in the sameday
+            Assert.False(course.IsOverlappingWithTimePeriod(Day.Monday, new Time(11, 20), new Time(12, 25)));
+            //Same day, not overlapping time
+            Assert.False(course.IsOverlappingWithTimePeriod(Day.Friday, new Time(11, 20), new Time(12, 25)));
+            //Same day, starting in time the first ended
+            Assert.False(course.IsOverlappingWithTimePeriod(Day.Friday, new Time(10, 50), new Time(12, 25)));
+            //The opposite
+            Assert.False(course.IsOverlappingWithTimePeriod(Day.Friday, new Time(8, 20), new Time(9, 30)));
+            ///Some truly overlapping timeperiods
+            Assert.True(course.IsOverlappingWithTimePeriod(Day.Friday, new Time(9, 20), new Time(10, 40)));
+            Assert.True(course.IsOverlappingWithTimePeriod(Day.Friday, new Time(9, 40), new Time(10, 40)));
+            Assert.True(course.IsOverlappingWithTimePeriod(Day.Friday, new Time(9, 50), new Time(10, 50)));
+
         }
 
         [Test]

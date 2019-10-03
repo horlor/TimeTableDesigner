@@ -54,7 +54,7 @@ namespace TimetableDesigner.Model
             }
             set
             {
-                if (teacher.IsATeachedSubject(value))
+                if (teacher==null || teacher.IsATeachedSubject(value))
                 {
                     subject = value;
                 }
@@ -74,13 +74,6 @@ namespace TimetableDesigner.Model
             {
                 return start;
             }
-            set
-            {
-                if (end != null && value < end)
-                    start = value;
-                else
-                    throw new ArgumentException();
-            }
         }
 
         public Time End
@@ -89,42 +82,47 @@ namespace TimetableDesigner.Model
             {
                 return end;
             }
-            set
-            {
-                if ( value > start)
-                    end = value;
-                else
-                    throw new ArgumentException();
-            }
         }
 
         public void SetTimespan(Time from, Time to)
         {
+            SetTimespan(Day, from, to);
+        }
+
+        // This is kinda OOP hack, teacher or group should tell if change is not needed
+        //TODO try to find better solution
+        //idea: remove and readd at change - too resourcedemanding
+        public void SetTimespan(Day day, Time from, Time to)
+        {
+            if (teacher != null && teacher.HasCourseAtTimePeriod(day, from, to))
+                throw new ArgumentException("Teacher has course at the given timeperiod");
+            if (group != null && group.HasCourseAtTimePeriod(day, from, to))
+                throw new ArgumentException("Given group has a Course at the Given timeperiod");
             if (from != null && to != null && from < to)
             {
                 start = from;
                 end = to;
+                Day = day;
             }
             else
                 throw new ArgumentException("Starttime is later than endtime");
         }
 
-        public void SetTimespan(Day day, Time from, Time to)
-        {
-            Day = day;
-            SetTimespan(from, to);
-        }
-
 
         public bool IsInTheSameTimeWith(Course c)
         {
-            return Day == c.Day && (
-                Start < c.Start && c.Start < End ||
-                //this has started before c has, but this has not endded by the time c has started
-                c.Start < Start && Start < c.End);
-                //and the same in reverse roles
+            return IsOverlappingWithTimePeriod(c.Day, c.start, c.end);
         }
 
+        public bool IsOverlappingWithTimePeriod(Day day, Time from, Time to)
+        {
+            //checking for same day
+            return Day == day && (
+                //Period has started after this, but not after this has ended
+                start < from && from < end ||
+                //Period started before this, but it had not ended before this started
+                from < start && start < to);
+        }
     }
 
     public enum Day
