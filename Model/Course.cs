@@ -4,6 +4,9 @@ using System.Text;
 
 namespace TimetableDesigner.Model
 {
+   // TODO Validáció egy külön osztályba 
+    // A megjelenítésen kezdeni ügyeskedni - egyelőre logika nélkül mondjuk csak egy órarend
+    //Legyen UWP
     public class Course : EntityBase
     {
         public Course(int id) : base(id) { }

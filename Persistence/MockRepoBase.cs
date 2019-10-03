@@ -5,6 +5,9 @@ using TimetableDesigner.Model;
 
 namespace TimetableDesigner.Persistence
 {
+
+    //Az objektumok kezelése a Repositoryban
+    //Ha vissza kell térni a .Net standardra, akkor klasszikus JSON sorosítás 
     public abstract class MockRepoBase<T> : IRepo<T> where T : EntityBase
     {
         protected List<T> ts;
