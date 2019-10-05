@@ -17,7 +17,7 @@ namespace TimetableDesigner.Model
             {
                 return group;
             }
-            set
+            internal set
             {
                 if (group != null)
                 {
@@ -35,7 +35,7 @@ namespace TimetableDesigner.Model
             {
                 return teacher;
             }
-            set
+            internal set
             {
                 if (teacher != null)
                 {
@@ -53,7 +53,7 @@ namespace TimetableDesigner.Model
             {
                 return subject;
             }
-            set
+            internal set
             {
                 subject = value;
             }
