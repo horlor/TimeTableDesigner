@@ -6,9 +6,9 @@ namespace TimetableDesigner.Model
 {
     public interface IDataController
     {
-        public ICourseRepo CourseRepo { get; }
-        public IGroupRepo GroupRepo { get; }
-        public ISubjectRepo SubjectRepo { get; }
-        public ITeacherRepo TeacherRepo { get; }
+        ICourseRepo CourseRepo { get; }
+        IGroupRepo GroupRepo { get; }
+        ISubjectRepo SubjectRepo { get; }
+        ITeacherRepo TeacherRepo { get; }
     }
 }

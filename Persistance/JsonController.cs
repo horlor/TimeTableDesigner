@@ -61,6 +61,7 @@ namespace TimetableDesigner.Persistence
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.Formatting = Formatting.Indented;
+            serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
             using (StreamWriter streamWriter = new StreamWriter(path))
             using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
             {
@@ -73,7 +74,7 @@ namespace TimetableDesigner.Persistence
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-
+            serializer.Formatting = Formatting.Indented;
             using (StreamReader streamReader = new StreamReader(path))
             using (JsonReader jsonReader = new JsonTextReader(streamReader))
             {

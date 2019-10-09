@@ -6,11 +6,11 @@ namespace TimetableDesigner.Model
 {
     public interface IRepo<T>
     {
-        public List<T> GetList();
-        public void Remove(T t);
-        public T FindByName(string name);
-        public T Find(int id);
-        public void Store(T t);
+        List<T> GetList();
+        void Remove(T t);
+        T FindByName(string name);
+        T Find(int id);
+        void Store(T t);
 
 
     }
