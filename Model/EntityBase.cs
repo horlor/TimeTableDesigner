@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,10 +8,16 @@ namespace TimetableDesigner.Model
     /// <summary>
     /// Abstract class for the other classes, to reduce code duplicity
     /// </summary>
+    [JsonObject]
     public abstract class EntityBase
     {
+        [JsonProperty]
         private int _id;
+
+        [JsonIgnore]
         public int Id { get { return _id; } }
+        
+        [JsonProperty]
         public string Name { get; set; }
 
         /// <summary>

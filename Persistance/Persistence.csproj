@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>TimetableDesigner.Persistence</RootNamespace>
+    <AssemblyName>Persistence</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

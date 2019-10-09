@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace TimetableDesigner.Model
 {
     /// <summary>
     /// The Class for representing a teacher.
     /// </summary>
+    [JsonObject(IsReference = true)]
     public class Teacher : EntityBase
     {
         //Providing a constructor, to make new class
@@ -87,6 +89,10 @@ namespace TimetableDesigner.Model
                     return true;
             }
             return false;
+        }
+        public override string ToString()
+        {
+            return "          kjzgfvkjhgv";
         }
 
     }

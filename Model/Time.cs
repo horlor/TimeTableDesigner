@@ -81,4 +81,10 @@ namespace TimetableDesigner.Model
             return hour.GetHashCode() * 14453 + min.GetHashCode();
         }
     }
+
+
+    public enum Day
+    {
+        Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+    }
 }

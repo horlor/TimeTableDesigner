@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TimetableDesigner.Model
 {
+    [JsonObject( IsReference = true)]
     public class Group : EntityBase
     {
-       
+
+        [JsonProperty]
         private List<Course> courses =  new List<Course>();
 
         public System.Collections.ObjectModel.ReadOnlyCollection<Course> Courses

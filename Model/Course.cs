@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,10 +8,13 @@ namespace TimetableDesigner.Model
    // TODO Validáció egy külön osztályba 
     // A megjelenítésen kezdeni ügyeskedni - egyelőre logika nélkül mondjuk csak egy órarend
     //Legyen UWP
+
+    [JsonObject(Id = "Course", IsReference =true)]
     public class Course : EntityBase
     {
 
         private Group group;
+        [JsonProperty]
         public Group Group
         {
             get
@@ -23,12 +27,13 @@ namespace TimetableDesigner.Model
                 {
                     group.RemoveCourse(this);
                 }
-                group.AddCourse(this);
                 group = value;
+                group.AddCourse(this);
             }
         }
 
         private Teacher teacher;
+        [JsonProperty]
         public Teacher Teacher
         {
             get
@@ -47,6 +52,7 @@ namespace TimetableDesigner.Model
         }
 
         private Subject subject;
+        [JsonProperty]
         public Subject Subject
         {
             get
@@ -114,8 +120,4 @@ namespace TimetableDesigner.Model
         }
     }
 
-    public enum Day
-    {
-        Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-    }
 }
