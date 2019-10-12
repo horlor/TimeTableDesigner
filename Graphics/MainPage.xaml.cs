@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TimetableDesigner.Graphics.ViewModel;
+using TimetableDesigner.Model;
+using TimetableDesigner.Persistence;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -28,13 +30,11 @@ namespace Graphics
 
        TimetableViewModel ViewModel = new TimetableViewModel();
 
-        ObservableCollection<string> Strings = new ObservableCollection<string>();
         public MainPage()
         {
             this.InitializeComponent();
-            Strings.Add("Egy");
-            Strings.Add("Kettő");
-            Strings.Add("Három");
+            IDataController controller = new MockController();
+            ViewModel.Courses = controller.CourseRepo.GetList();
         }
     }
 }

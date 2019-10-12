@@ -14,7 +14,7 @@
         <controls:ItemsRepeater ItemsSource="{x:Bind Model.CourseViews}" >
             <controls:ItemsRepeater.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:CourseViewModel">
-                        <!-- It might be faster with inlining CourseView -->
+                    <!-- It might be faster with inlining CourseView -->
                     <local:CourseView Course="{x:Bind Mode=OneWay}"/>
                 </DataTemplate>
             </controls:ItemsRepeater.ItemTemplate>
@@ -35,6 +35,6 @@
             </ListView.ItemTemplate>
 
         </ListView>
-    -->
+        -->
     </StackPanel>
 </UserControl>

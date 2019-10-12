@@ -12,7 +12,7 @@ namespace TimetableDesigner.Model
     [JsonObject(Id = "Course", IsReference =true)]
     public class Course : EntityBase
     {
-
+        
         private Group group;
         [JsonProperty]
         public Group Group
@@ -31,7 +31,7 @@ namespace TimetableDesigner.Model
                 group.AddCourse(this);
             }
         }
-
+        
         private Teacher teacher;
         [JsonProperty]
         public Teacher Teacher
@@ -50,7 +50,7 @@ namespace TimetableDesigner.Model
                 teacher = value;
             }
         }
-
+        
         private Subject subject;
         [JsonProperty]
         public Subject Subject
@@ -67,6 +67,7 @@ namespace TimetableDesigner.Model
 
         public Day Day { get; set; }
 
+        [JsonProperty]
         private Time start, end;
 
         public Time Start

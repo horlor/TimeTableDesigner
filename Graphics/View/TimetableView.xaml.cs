@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TimetableDesigner.Graphics.ViewModel;
+using TimetableDesigner.Model;
+using TimetableDesigner.Persistence;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;

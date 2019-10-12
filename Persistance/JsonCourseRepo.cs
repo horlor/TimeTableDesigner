@@ -9,5 +9,6 @@ namespace TimetableDesigner.Persistence
 {
     public class JsonCourseRepo : JsonRepoBase<Course>, ICourseRepo
     {
+
     }
 }

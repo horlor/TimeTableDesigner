@@ -27,6 +27,7 @@ namespace TimetableDesigner.Model
                 if (item.IsInTheSameTimeWith(course))
                     throw new GroupTimeException("There are a Course in the same time");
             }
+            
             courses.Add(course);
         }
 

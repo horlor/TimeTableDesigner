@@ -4,7 +4,8 @@ using System.Text;
 
 namespace TimetableDesigner.Model
 {
-   public class Time
+ // It might be beneficial to refractor this to struct
+    public class Time
     {
         private int hour, min;
         public int Hour

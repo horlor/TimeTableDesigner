@@ -10,7 +10,7 @@ namespace TimetableDesigner.Persistence
     //Ha vissza kell térni a .Net standardra, akkor klasszikus JSON sorosítás 
     public abstract class MockRepoBase<T> : IRepo<T> where T : EntityBase
     {
-        protected List<T> ts;
+        protected List<T> ts = new List<T>();
         protected int next_id=0;
         public T Find(int id)
         {

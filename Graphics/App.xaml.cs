@@ -30,6 +30,8 @@ namespace Graphics
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            UnhandledException += OnUnhandledException;
+            System.Diagnostics.Debug.WriteLine("wat the fuck");
         }
 
         /// <summary>
@@ -95,6 +97,15 @@ namespace Graphics
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs unhandledExceptionEventArgs)
+        {
+            System.Diagnostics.Debug.WriteLine(sender);
+            System.Diagnostics.Debug.WriteLine(unhandledExceptionEventArgs.Exception);
+            System.Diagnostics.Debug.WriteLine(unhandledExceptionEventArgs.Exception.Message);
+            System.Diagnostics.Debug.WriteLine(unhandledExceptionEventArgs.Exception.StackTrace);
+            unhandledExceptionEventArgs.Handled = true;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace TimetableDesigner.Persistence
 {
     public abstract class JsonRepoBase<T> : IRepo<T> where T : EntityBase
     {
+        [JsonProperty]
         private int next_id = 0;
         [JsonProperty]
         protected List<T> ts = new List<T>();
