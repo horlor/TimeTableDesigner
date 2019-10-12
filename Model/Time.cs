@@ -64,6 +64,11 @@ namespace TimetableDesigner.Model
             return !(lhs == rhs);
         }
 
+        public override string ToString()
+        {
+            return String.Format("{0}:{1}{2}", hour, (min<10)?"0":"",min);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is null)
@@ -79,6 +84,11 @@ namespace TimetableDesigner.Model
         public override int GetHashCode()
         {
             return hour.GetHashCode() * 14453 + min.GetHashCode();
+        }
+
+        public int ToMinutes()
+        {
+            return hour * 60 + min;
         }
     }
 
