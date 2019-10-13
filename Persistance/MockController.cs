@@ -14,6 +14,7 @@ namespace TimetableDesigner.Persistence
         public ISubjectRepo SubjectRepo { get; set; } = new MockSubjectRepo();
 
         public ITeacherRepo TeacherRepo { get; set; } = new MockTeacherRepo();
+        public string Path { get => null; set { } }
 
         public MockController()
         {
@@ -84,6 +85,16 @@ namespace TimetableDesigner.Persistence
             controller.SubjectRepo.Store(asubject);
             controller.TeacherRepo.Store(jteacher);
             controller.TeacherRepo.Store(mteacher);
+        }
+
+        public void Save()
+        {
+            
+        }
+
+        public void Load()
+        {
+            
         }
     }
 }

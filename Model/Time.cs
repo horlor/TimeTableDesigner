@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace TimetableDesigner.Model
 {
  // It might be beneficial to refractor this to struct
+ [JsonObject(IsReference = false)]
     public class Time
     {
         private int hour, min;

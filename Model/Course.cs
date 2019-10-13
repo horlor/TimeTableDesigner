@@ -9,12 +9,12 @@ namespace TimetableDesigner.Model
     // A megjelenítésen kezdeni ügyeskedni - egyelőre logika nélkül mondjuk csak egy órarend
     //Legyen UWP
 
-    [JsonObject(Id = "Course", IsReference =true)]
+    [JsonObject(IsReference =true)]
     public class Course : EntityBase
     {
-        
-        private Group group;
         [JsonProperty]
+        private Group group;
+        
         public Group Group
         {
             get
@@ -31,9 +31,9 @@ namespace TimetableDesigner.Model
                 group.AddCourse(this);
             }
         }
-        
-        private Teacher teacher;
         [JsonProperty]
+        private Teacher teacher;
+        
         public Teacher Teacher
         {
             get
@@ -50,9 +50,10 @@ namespace TimetableDesigner.Model
                 teacher = value;
             }
         }
-        
-        private Subject subject;
+
         [JsonProperty]
+        private Subject subject;
+
         public Subject Subject
         {
             get
@@ -68,7 +69,9 @@ namespace TimetableDesigner.Model
         public Day Day { get; set; }
 
         [JsonProperty]
-        private Time start, end;
+        private Time start;
+        [JsonProperty]
+        private Time end;
 
         public Time Start
         {

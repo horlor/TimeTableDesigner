@@ -10,7 +10,7 @@ namespace TimetableDesigner.Persistence
     {
         [JsonProperty]
         private int next_id = 0;
-        [JsonProperty]
+        [JsonProperty(PropertyName ="Data")]
         protected List<T> ts = new List<T>();
         public T Find(int id)
         {

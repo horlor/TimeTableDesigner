@@ -13,14 +13,16 @@ namespace TimetableDesigner.Model
     {
         //Providing a constructor, to make new class
         
-
+        [JsonProperty(PropertyName ="Courses")]
         private List<Course> courses = new List<Course>();
 
+        [JsonProperty(PropertyName ="TeachedSubjects")]
         private List<Subject> teachedSubjects = new List<Subject>();
 
         /// <summary>
         /// This is a List Accesser for the Courses they teach, it cannot be modified by this reference
         /// </summary>
+        [JsonIgnore]
         public System.Collections.ObjectModel.ReadOnlyCollection<Course> Courses { //Somehow this Special class has more functions than IReadOnlyList
             get 
             {
@@ -31,6 +33,7 @@ namespace TimetableDesigner.Model
         /// <summary>
         /// Only readonly representation of the teached subjects, it can be modified by the class's methods
         /// </summary>
+        [JsonIgnore]
         public IReadOnlyList<Subject> TeachedSubjects
         {
             get
@@ -89,10 +92,6 @@ namespace TimetableDesigner.Model
                     return true;
             }
             return false;
-        }
-        public override string ToString()
-        {
-            return "          kjzgfvkjhgv";
         }
 
     }

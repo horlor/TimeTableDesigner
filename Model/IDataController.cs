@@ -10,5 +10,11 @@ namespace TimetableDesigner.Model
         IGroupRepo GroupRepo { get; }
         ISubjectRepo SubjectRepo { get; }
         ITeacherRepo TeacherRepo { get; }
+
+        void Save();
+
+        void Load();
+
+        String Path { get; set; }
     }
 }

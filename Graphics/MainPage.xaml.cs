@@ -33,7 +33,10 @@ namespace Graphics
         public MainPage()
         {
             this.InitializeComponent();
-            IDataController controller = new MockController();
+            //IDataController controller = new MockController();
+            JsonController controller = new JsonController();
+            controller.Path = "data.json";
+            controller.Load();
             ViewModel.Courses = controller.CourseRepo.GetList();
         }
     }
