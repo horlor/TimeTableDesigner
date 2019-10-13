@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,6 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
         private Time start, end;
-
         public int Height
         {
             get
@@ -100,5 +100,9 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
         }
 
+        public override string ToString()
+        {
+            return this.Subject + " " + this.TimeString;
+        }
     }
 }

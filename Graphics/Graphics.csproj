@@ -126,6 +126,9 @@
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DayCourseViewModel.cs" />
     <Compile Include="ViewModel\TimetableViewModel.cs" />
+    <Compile Include="View\CourseEditView.xaml.cs">
+      <DependentUpon>CourseEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CourseView.xaml.cs">
       <DependentUpon>CourseView.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CourseEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CourseView.xaml">
       <SubType>Designer</SubType>

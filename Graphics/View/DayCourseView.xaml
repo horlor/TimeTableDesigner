@@ -10,31 +10,26 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <StackPanel Orientation="Vertical">
-        <controls:ItemsRepeater ItemsSource="{x:Bind Model.CourseViews}" >
-            <controls:ItemsRepeater.ItemTemplate>
-                <DataTemplate x:DataType="viewmodel:CourseViewModel">
-                    <!-- It might be faster with inlining CourseView -->
-                    <local:CourseView Course="{x:Bind Mode=OneWay}"/>
-                </DataTemplate>
-            </controls:ItemsRepeater.ItemTemplate>
-        </controls:ItemsRepeater>
-        <!--
-        <ListView  ItemsSource="{x:Bind Model.Courses, Mode=OneWay}">
-            <ListView.ItemsPanel>
+    <ListView x:Name="ListPanel"  ItemsSource="{x:Bind Model.CourseViews, Mode=OneWay}"
+                   ScrollViewer.HorizontalScrollMode="Disabled"
+                   ScrollViewer.VerticalScrollMode="Disabled">
+        <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                   
-                    <StackPanel/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodel:CourseViewModel">
-                    
-                    <local:CourseView Course="{x:Bind Mode=OneWay}"></local:CourseView>
+
+                <StackPanel/>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+        </ListView.ItemContainerStyle>
+        <ListView.ItemTemplate >
+            <DataTemplate x:DataType="viewmodel:CourseViewModel">
+                    <local:CourseView Course="{x:Bind Mode=OneWay}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
 
         </ListView>
-        -->
-    </StackPanel>
 </UserControl>

@@ -8,6 +8,15 @@
     xmlns:Model="using:TimetableDesigner.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <view:TimetableView ViewModel="{x:Bind ViewModel}"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <view:TimetableView x:Name="Timetable" ViewModel="{x:Bind ViewModel}"/>
+        <view:CourseEditView x:Name="edit" timetable="{x:Bind Timetable, Mode=OneWay}" Grid.Row="2"/>
+        <TextBlock x:Name="text" Text="Placeholder" FontSize="20" Grid.Row="3"/>
+    </Grid>
 </Page>

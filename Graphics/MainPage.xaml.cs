@@ -38,6 +38,12 @@ namespace Graphics
             controller.Path = "data.json";
             controller.Load();
             ViewModel.Courses = controller.CourseRepo.GetList();
+            Course = new CourseViewModel(controller.CourseRepo.GetList()[0]);
+            /*Timetable.SelectionChanged += (sender, e) =>
+            {
+                text.Text = Timetable.Selected.ToString();
+                edit.ViewModel = Timetable.Selected;
+            };*/
         }
     }
 }

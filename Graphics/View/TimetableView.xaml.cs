@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TimetableDesigner.Graphics.ViewModel;
 using TimetableDesigner.Model;
@@ -20,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace TimetableDesigner.Graphics.View
 {
-    public sealed partial class TimetableView : UserControl
+    public sealed partial class TimetableView : UserControl, INotifyPropertyChanged
     {
         public TimetableViewModel ViewModel { get; set; } = new TimetableViewModel();
 
@@ -29,6 +31,60 @@ namespace TimetableDesigner.Graphics.View
         public TimetableView()
         {
             this.InitializeComponent();
+            MondayView.SelectionChanged += SelectionHandler;
+            TuesdayView.SelectionChanged += SelectionHandler;
+            WednesdayView.SelectionChanged += SelectionHandler;
+            ThursdayView.SelectionChanged += SelectionHandler;
+            FridayView.SelectionChanged += SelectionHandler;
         }
+
+        private void SelectionHandler(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender != MondayView) MondayView.Selected = null;
+            //else MondayView.Focus(FocusState.Programmatic);
+            if (sender != TuesdayView) TuesdayView.Selected = null;
+            //else TuesdayView.Focus(FocusState.Programmatic);
+            if (sender != WednesdayView) WednesdayView.Selected = null;
+            //else WednesdayView.Focus(FocusState.Programmatic);
+            if (sender != ThursdayView) ThursdayView.Selected = null;
+            //else ThursdayView.Focus(FocusState.Programmatic);
+            if (sender != FridayView) FridayView.Selected = null;
+            //else FridayView.Focus(FocusState.Programmatic);
+            if (e.AddedItems.Count != 0)
+            {
+                Selected = e.AddedItems[0] as CourseViewModel;
+            }
+            SelectionChanged?.Invoke(this, e);
+            
+        }
+        private CourseViewModel selected;
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        public event SelectionChangedEventHandler SelectionChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            System.Diagnostics.Debug.WriteLine("Refreshed_" + propertyName);
+        }
+
+        public static readonly DependencyProperty selectedProperty =
+        DependencyProperty.Register("Selected", typeof(CourseViewModel), typeof(TimetableView), null);
+
+        public CourseViewModel Selected
+        {
+            get
+            {
+                System.Diagnostics.Debug.WriteLine("Selected.get: "+selected);
+                return selected;
+            }
+            set
+            {
+                selected = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 }

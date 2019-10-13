@@ -23,10 +23,26 @@ namespace TimetableDesigner.Graphics.View
         public DayCourseViewModel Model { get; set; } = new DayCourseViewModel();
 
         public static readonly DependencyProperty textblockProperty =
-        DependencyProperty.Register("Model", typeof(string), typeof(DayCourseView), null);
+        DependencyProperty.Register("Model", typeof(DayCourseViewModel), typeof(DayCourseView), null);
         public DayCourseView()
         {
             this.InitializeComponent();
+            ListPanel.SelectionChanged += (object sender, SelectionChangedEventArgs args) =>
+            {
+                this.SelectionChanged(this, args);
+            };
         }
+
+        public CourseViewModel Selected
+        {
+            get => ListPanel.SelectedItem as CourseViewModel;
+
+            set => ListPanel.SelectedItem = value;
+
+        }
+
+
+        public event SelectionChangedEventHandler SelectionChanged;
+
     }
 }
