@@ -24,13 +24,36 @@ namespace TimetableDesigner.Graphics.View
         {
             this.InitializeComponent();
         }
-        public TimetableView timetable { set; get; }
-        public CourseViewModel ViewModel { get; set; }
+
+        public static readonly DependencyProperty TimetableProperty =
+       DependencyProperty.Register("Timetable", typeof(TimetableView), typeof(CourseEditView), null);
+        public TimetableView Timetable {
+            set
+            {
+                SetValue(TimetableProperty, value);
+            }
+            get 
+            {
+                return GetValue(TimetableProperty) as TimetableView;
+            } 
+        }
 
         public static readonly DependencyProperty viewModelProperty =
        DependencyProperty.Register("ViewModel", typeof(CourseViewModel), typeof(CourseEditView), null);
+        public CourseViewModel ViewModel {
+            get {
+                return (CourseViewModel)GetValue(viewModelProperty);
+            }
+            set
+            {
+                SetValue(viewModelProperty, value);
+            } 
+        
+        }
 
-        public static readonly DependencyProperty textblockProperty =
-       DependencyProperty.Register("timetable", typeof(TimetableView), typeof(CourseEditView), null);
+        
+
+        
+
     }
 }

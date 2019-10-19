@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,11 +37,16 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:DayCourseView x:Name="MondayView" Grid.Row="1" Model="{x:Bind ViewModel.GetModelOf(Model:Day.Monday)}"/>
-                <local:DayCourseView x:Name="TuesdayView" Grid.Row="1" Grid.Column="1" Model="{x:Bind ViewModel.GetModelOf(Model:Day.Tuesday)}"/>
-                <local:DayCourseView x:Name="WednesdayView" Grid.Row="1" Grid.Column="2" Model="{x:Bind ViewModel.GetModelOf(Model:Day.Wednesday)}"/>
-                <local:DayCourseView x:Name="ThursdayView" Grid.Row="1" Grid.Column="3" Model="{x:Bind ViewModel.GetModelOf(Model:Day.Thursday)}"/>
-                <local:DayCourseView x:Name="FridayView" Grid.Row="1" Grid.Column="4" Model="{x:Bind ViewModel.GetModelOf(Model:Day.Friday)}"/>
+                <local:DayCourseView x:Name="MondayView" Grid.Row="1" Grid.Column="0" 
+                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Monday)}"/>
+                <local:DayCourseView x:Name="TuesdayView" Grid.Row="1" Grid.Column="1" 
+                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Tuesday)}"/>
+                <local:DayCourseView x:Name="WednesdayView" Grid.Row="1" Grid.Column="2" 
+                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Wednesday)}"/>
+                <local:DayCourseView x:Name="ThursdayView" Grid.Row="1" Grid.Column="3" 
+                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Thursday)}"/>
+                <local:DayCourseView x:Name="FridayView" Grid.Row="1" Grid.Column="4" 
+                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Friday)}"/>
             </Grid>
         </ScrollViewer>
     </Grid>

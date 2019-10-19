@@ -9,11 +9,12 @@ namespace TimetableDesigner.Graphics.ViewModel
 {
     public class TimetableViewModel
     {
-        DayCourseViewModel[] days = new DayCourseViewModel[7];
+        private const int NumOfDays = 5;
+        DayCourseViewModel[] days = new DayCourseViewModel[NumOfDays];
 
         public TimetableViewModel()
         {
-            for (int i = 0; i < 7; ++i)
+            for (int i = 0; i < NumOfDays; ++i)
             {
                 days[i] = new DayCourseViewModel();
             }
@@ -29,12 +30,17 @@ namespace TimetableDesigner.Graphics.ViewModel
             get => courses; set
             {
                 courses = value;
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < NumOfDays; i++)
                 {
                     days[i].Day = (Day)i;
                     days[i].Courses = courses;
                 }
             }
+        }
+
+        public CourseViewModel SelectedItem
+        {
+            get; set;
         }
     }
 }

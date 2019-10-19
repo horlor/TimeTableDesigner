@@ -20,16 +20,23 @@ namespace TimetableDesigner.Graphics.View
 {
     public sealed partial class DayCourseView : UserControl
     {
-        public DayCourseViewModel Model { get; set; } = new DayCourseViewModel();
+        public DayCourseViewModel Model {
+            get {
+                return GetValue(ModelProperty) as DayCourseViewModel;
+            }
+            set {
+                SetValue(ModelProperty, value);
+            } 
+        }
 
-        public static readonly DependencyProperty textblockProperty =
+        public static readonly DependencyProperty ModelProperty =
         DependencyProperty.Register("Model", typeof(DayCourseViewModel), typeof(DayCourseView), null);
         public DayCourseView()
         {
             this.InitializeComponent();
             ListPanel.SelectionChanged += (object sender, SelectionChangedEventArgs args) =>
             {
-                this.SelectionChanged(this, args);
+                this.SelectionChanged?.Invoke(this, args);
             };
         }
 

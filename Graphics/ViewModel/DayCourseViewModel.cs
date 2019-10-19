@@ -105,5 +105,13 @@ namespace TimetableDesigner.Graphics.ViewModel
                 return x.Start.ToMinutes() - y.Start.ToMinutes();
             }
         }
+
+
+        //
+        public CourseViewModel Selected
+        {
+            get;
+            set;
+        }
     }
 }

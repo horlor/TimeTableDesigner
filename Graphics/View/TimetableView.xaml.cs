@@ -24,9 +24,18 @@ namespace TimetableDesigner.Graphics.View
 {
     public sealed partial class TimetableView : UserControl, INotifyPropertyChanged
     {
-        public TimetableViewModel ViewModel { get; set; } = new TimetableViewModel();
-
-        public static readonly DependencyProperty viewModelProperty =
+        public TimetableViewModel ViewModel
+        {
+            get
+            {
+                return GetValue(ViewModelProperty) as TimetableViewModel;
+            }
+            set
+            {
+                SetValue(ViewModelProperty, value);
+            }
+        }
+        public static readonly DependencyProperty ViewModelProperty =
         DependencyProperty.Register("ViewModel", typeof(TimetableViewModel), typeof(TimetableView), null);
         public TimetableView()
         {
@@ -41,23 +50,17 @@ namespace TimetableDesigner.Graphics.View
         private void SelectionHandler(object sender, SelectionChangedEventArgs e)
         {
             if (sender != MondayView) MondayView.Selected = null;
-            //else MondayView.Focus(FocusState.Programmatic);
             if (sender != TuesdayView) TuesdayView.Selected = null;
-            //else TuesdayView.Focus(FocusState.Programmatic);
             if (sender != WednesdayView) WednesdayView.Selected = null;
-            //else WednesdayView.Focus(FocusState.Programmatic);
             if (sender != ThursdayView) ThursdayView.Selected = null;
-            //else ThursdayView.Focus(FocusState.Programmatic);
             if (sender != FridayView) FridayView.Selected = null;
-            //else FridayView.Focus(FocusState.Programmatic);
             if (e.AddedItems.Count != 0)
             {
                 Selected = e.AddedItems[0] as CourseViewModel;
+                SelectionChanged?.Invoke(this, e);
             }
-            SelectionChanged?.Invoke(this, e);
             
         }
-        private CourseViewModel selected;
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -69,22 +72,24 @@ namespace TimetableDesigner.Graphics.View
             System.Diagnostics.Debug.WriteLine("Refreshed_" + propertyName);
         }
 
-        public static readonly DependencyProperty selectedProperty =
+        public static readonly DependencyProperty SelectedProperty =
         DependencyProperty.Register("Selected", typeof(CourseViewModel), typeof(TimetableView), null);
 
         public CourseViewModel Selected
         {
             get
             {
-                System.Diagnostics.Debug.WriteLine("Selected.get: "+selected);
-                return selected;
+                return GetValue(SelectedProperty) as CourseViewModel;
             }
             set
             {
-                selected = value;
+                SetValue(SelectedProperty, value);
                 OnPropertyChanged();
             }
         }
-
+        public CourseViewModel GetSelected()
+        {
+            return Selected;
+        }
     }
 }

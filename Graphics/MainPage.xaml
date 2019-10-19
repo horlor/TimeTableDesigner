@@ -9,14 +9,34 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5*"></RowDefinition>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <view:TimetableView x:Name="Timetable" ViewModel="{x:Bind ViewModel}"/>
-        <view:CourseEditView x:Name="edit" timetable="{x:Bind Timetable, Mode=OneWay}" Grid.Row="2"/>
-        <TextBlock x:Name="text" Text="Placeholder" FontSize="20" Grid.Row="3"/>
+        <NavigationView x:Name="NavigationMenu" SelectionChanged="NavigationMenu_SelectionChanged"
+            x:Uid="Menu" PaneDisplayMode="LeftCompact">
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="MenuItemCourse" Tag="course">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE161;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="MenuItemTeacher" Tag="teacher">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE181;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="MenuItemSubject" Tag="subject">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE147;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="MenuItemGroup" Tag="group">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7BE;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame" IsTabStop="True">
+                
+            </Frame>
+        </NavigationView>
     </Grid>
+    
 </Page>

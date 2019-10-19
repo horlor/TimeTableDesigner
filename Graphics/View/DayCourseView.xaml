@@ -15,7 +15,7 @@
                    ScrollViewer.VerticalScrollMode="Disabled">
         <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-
+                <!-- Disable UI virtualization because it won't work well with custom usercontrols -->
                 <StackPanel/>
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
