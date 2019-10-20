@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="TimetableDesigner.Graphics.View.GroupsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TimetableDesigner.Graphics.View"
+    xmlns:model="using:TimetableDesigner.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <ListView ItemsSource="{x:Bind Group.GetList()}" MinWidth="200">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Group">
+                        <TextBlock Text="{x:Bind Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" />
+                    <Button x:Name="btnRemove" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5" />
+                    <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" />
+                    <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Name"/>
+                    <TextBox Text="Name_placeholder"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

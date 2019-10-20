@@ -30,7 +30,7 @@ namespace Graphics
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            //UnhandledException += OnUnhandledException;
+            UnhandledException += OnUnhandledException;
         }
 
         /// <summary>

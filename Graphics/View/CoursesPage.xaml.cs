@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TimetableDesigner.Graphics.Data;
 using TimetableDesigner.Graphics.ViewModel;
 using TimetableDesigner.Persistence;
 using Windows.Foundation;
@@ -26,16 +27,18 @@ namespace TimetableDesigner.Graphics.View
     {
         public CourseViewModel Course = new CourseViewModel();
 
-        TimetableViewModel ViewModel = new TimetableViewModel();
+        public TimetableViewModel ViewModel = new TimetableViewModel();
 
         public CoursesPage()
         {
             this.InitializeComponent();
             //IDataController controller = new MockController();
-            JsonController controller = new JsonController();
-            controller.Path = "data.json";
-            controller.Load();
-            ViewModel.Courses = controller.CourseRepo.GetList();
+            /*JsonController controller = new JsonController
+            {
+                Path = "data.json"
+            };
+            controller.Load();*/
+            ViewModel.Courses = DataManager.Instance.dataController.CourseRepo.GetList();
             Timetable.SelectionChanged += (sender, e) =>
             {
 

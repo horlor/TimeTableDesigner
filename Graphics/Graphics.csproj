@@ -119,12 +119,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\DataManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DayCourseViewModel.cs" />
+    <Compile Include="ViewModel\TeacherViewModel.cs" />
     <Compile Include="ViewModel\TimetableViewModel.cs" />
     <Compile Include="View\CourseEditView.xaml.cs">
       <DependentUpon>CourseEditView.xaml</DependentUpon>
@@ -137,6 +139,15 @@
     </Compile>
     <Compile Include="View\DayCourseView.xaml.cs">
       <DependentUpon>DayCourseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GroupsPage.xaml.cs">
+      <DependentUpon>GroupsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubjectsPage.xaml.cs">
+      <DependentUpon>SubjectsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TeachersPage.xaml.cs">
+      <DependentUpon>TeachersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TimetableView.xaml.cs">
       <DependentUpon>TimetableView.xaml</DependentUpon>
@@ -179,6 +190,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DayCourseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GroupsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SubjectsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TeachersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

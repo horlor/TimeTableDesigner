@@ -94,5 +94,10 @@ namespace TimetableDesigner.Model
             return false;
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
     }
 }

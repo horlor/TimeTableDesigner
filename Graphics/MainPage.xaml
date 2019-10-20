@@ -33,6 +33,11 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
+            <NavigationView.Header>
+                <StackPanel Orientation="Vertical" BorderBrush="Gray" BorderThickness="0,0,0,5">
+                    <TextBlock Text="Header" FontSize="30" />
+                </StackPanel>
+            </NavigationView.Header>
             <Frame x:Name="ContentFrame" IsTabStop="True">
                 
             </Frame>

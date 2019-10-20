@@ -39,6 +39,9 @@ namespace Graphics
         private readonly List<(string Tag, Type Page)> pages = new List<(string Tag, Type Page)>
         {
             ("course", typeof(CoursesPage)),
+            ("teacher",typeof(TeachersPage)),
+            ("group",typeof(GroupsPage)),
+            ("subject",typeof(SubjectsPage))
         };
 
 

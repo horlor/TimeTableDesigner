@@ -9,13 +9,18 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind ViewModel}"/>
-        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Timetable.Selected, Mode=OneWay}" Timetable="{x:Bind Timetable}" Grid.Row="2"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Csoport: "/>
+            <ComboBox />
+        </StackPanel>
+        <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind ViewModel}" Grid.Row="1"/>
+        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Timetable.Selected, Mode=OneWay}" Timetable="{x:Bind Timetable}" Grid.Row="3"/>
         <TextBlock x:Name="text" Text="Placeholder" FontSize="20" Grid.Row="3"/>
     </Grid>
 </Page>
