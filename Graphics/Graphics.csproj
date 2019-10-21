@@ -126,8 +126,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DayCourseViewModel.cs" />
+    <Compile Include="ViewModel\SubjectViewModel.cs" />
     <Compile Include="ViewModel\TeacherViewModel.cs" />
     <Compile Include="ViewModel\TimetableViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\CourseEditView.xaml.cs">
       <DependentUpon>CourseEditView.xaml</DependentUpon>
     </Compile>

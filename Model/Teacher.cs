@@ -34,7 +34,7 @@ namespace TimetableDesigner.Model
         /// Only readonly representation of the teached subjects, it can be modified by the class's methods
         /// </summary>
         [JsonIgnore]
-        public IReadOnlyList<Subject> TeachedSubjects
+        public System.Collections.ObjectModel.ReadOnlyCollection<Subject> TeachedSubjects
         {
             get
             {

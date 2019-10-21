@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,23 +7,20 @@ using TimetableDesigner.Model;
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
-    public class TeacherViewModel : ViewModelBase
+    public class SubjectViewModel : ViewModelBase
     {
-        public Teacher Model { get; }
+        public Subject Model { get; set; }
 
-        public TeacherViewModel(Teacher teacher)
-        {
-            Model = teacher;
-        }
-
-        public String Name
-        {
+        public String Name { 
             get
             {
                 return Model.Name;
             }
+            set
+            {
+                Model.Name = value;
+                OnPropertyChanged();
+            }
         }
-
-
     }
 }
