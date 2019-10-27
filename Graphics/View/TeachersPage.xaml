@@ -11,14 +11,25 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="200"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ListView x:Name="TeacherList" Width="Auto" ItemsSource="{x:Bind data.GetList()}" Grid.Column="0"
                   BorderBrush="Gray" BorderThickness="0,0,2,0">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Teacher">
-                    <TextBlock Text="{x:Bind Name}"/>
+                    <Grid MinWidth="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind Name}" Grid.Column="0"/>
+                        <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
+                                FontFamily="Segoe MDL2 Assets" Margin="5" 
+                                Background="White"/>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -31,7 +42,6 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" Margin="10, 0 ,10,5" Grid.Row="0">
                 <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" />
-                <Button x:Name="btnRemove" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5" />
                 <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" />
                 <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" />
             </StackPanel>
@@ -40,8 +50,13 @@
                 <TextBox Text="{x:Bind ((model:Teacher)TeacherList.SelectedItem).Name, Mode=OneWay}"
                      HorizontalAlignment="Stretch" MinWidth="200" Padding="10"/>
             </StackPanel>
-            <TextBlock Grid.Row="2" Text="Teached subjects" FontSize="20" Padding="5"/>
-            <Grid Grid.Row="3" BorderBrush="Gray" BorderThickness="0,2,0,0">
+            <StackPanel Orientation="Horizontal" Grid.Row="2" BorderBrush="Gray" BorderThickness="0,2,0,0" Margin="0,5,0,0">
+                <TextBlock Text="Teached subjects" FontSize="20" Padding="5"/>
+                <Button x:Name="btnNewSubject" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" />
+            </StackPanel>
+            
+            
+            <Grid Grid.Row="3" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" MinWidth="200"/>
                     <ColumnDefinition/>
@@ -52,24 +67,25 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <ListView Grid.Row="0" ItemsSource="{x:Bind ((model:Teacher)TeacherList.SelectedItem).TeachedSubjects, Mode=OneWay}"
-                          MinWidth="150" BorderBrush="Gray" BorderThickness="0,0,2,0" Padding="3" HorizontalAlignment="Stretch"
+                          MinWidth="150" Padding="3" HorizontalAlignment="Stretch"
                           Grid.RowSpan="3">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="model:Subject">
-                            <TextBlock Text="{x:Bind Name}"/>
-                        </DataTemplate>
+                            <Grid MinWidth="200">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{x:Bind Name}"/>
+                                <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
+                                    FontFamily="Segoe MDL2 Assets" Margin="5" 
+                                    Background="White"/>
+                                </Grid>
+                            </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10, 0 ,10,5">
-                    <Button x:Name="btnAddSubject" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" />
-                    <Button x:Name="btnRemoveSubject" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5" />
-                </StackPanel>
-                <ComboBox Grid.Row="1" Grid.Column="1">
-                    <ComboBoxItem Content="Text1"/>
-                    <ComboBoxItem Content="text2"/>
-                </ComboBox>
             </Grid>
-
         </Grid>
     </Grid>
 </Page>

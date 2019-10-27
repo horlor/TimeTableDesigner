@@ -13,14 +13,23 @@
         <ListView ItemsSource="{x:Bind Subject.GetList()}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Subject">
-                    <TextBlock Text="{x:Bind Name}"/>
+                    <Grid MinWidth="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{x:Bind Name}"/>
+                        <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
+                                    FontFamily="Segoe MDL2 Assets" Margin="5" 
+                                    Background="White"/>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="10, 0 ,10,5">
                 <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" />
-                <Button x:Name="btnRemove" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5" />
                 <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" />
                 <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" />
             </StackPanel>

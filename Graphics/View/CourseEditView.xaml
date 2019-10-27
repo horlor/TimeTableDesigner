@@ -28,6 +28,7 @@
         <ComboBox x:Name="TeacherList" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></ComboBox>
         <TimePicker Grid.Column="3" MinuteIncrement="15" Header="Start"/>
         <TimePicker Grid.Column="3" Grid.Row="1" MinuteIncrement="15" Header="End"/>
+        <TextBlock x:Name="ErrorBlock" Grid.Row="3" Text="Errorinfo"/>
     </Grid>
 
 </UserControl>

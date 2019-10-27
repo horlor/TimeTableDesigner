@@ -9,12 +9,24 @@ namespace TimetableDesigner.Graphics.ViewModel
 {
     public class SubjectViewModel : ViewModelBase
     {
-        public Subject Model { get; set; }
-
-        public String Name { 
+        private Subject model;
+        public Subject Model
+        {
             get
             {
-                return Model.Name;
+                return model;
+            }
+            set
+            {
+                model = value;
+                _name = model.Name;
+            }
+        }
+        private string _name;
+        public string Name { 
+            get
+            {
+                return _name;
             }
             set
             {

@@ -11,17 +11,26 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <ListView ItemsSource="{x:Bind Group.GetList()}" MinWidth="200">
+            <ListView ItemsSource="{x:Bind Group.GetList()}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Group">
-                        <TextBlock Text="{x:Bind Name}"/>
+                        <Grid MinWidth="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{x:Bind Name}" VerticalAlignment="Center"/>
+                            <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
+                                    FontFamily="Segoe MDL2 Assets" Margin="5" 
+                                    Background="White"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" />
-                    <Button x:Name="btnRemove" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5" />
                     <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" />
                     <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" />
                 </StackPanel>
