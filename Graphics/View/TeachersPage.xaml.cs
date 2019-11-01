@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TimetableDesigner.Graphics.Data;
+using TimetableDesigner.Graphics.ViewModel;
 using TimetableDesigner.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,10 +27,20 @@ namespace TimetableDesigner.Graphics.View
     public sealed partial class TeachersPage : Page
     {
 
-        public ITeacherRepo data = DataManager.Instance.dataController.TeacherRepo;
+        ObservableCollection<TeacherViewModel> Teachers = DataManager.Instance.Teachers;
         public TeachersPage()
         {
             this.InitializeComponent();
+        }
+
+        private void btnNewSubject_Click(object sender, RoutedEventArgs e)
+        {
+            (TeacherList.SelectedItem as TeacherViewModel).AddNewSubject();
+        }
+
+        private void btnNew_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

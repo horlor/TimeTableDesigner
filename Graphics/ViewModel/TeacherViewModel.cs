@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TimetableDesigner.Model;
+using Windows.UI.Xaml;
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
@@ -28,6 +29,7 @@ namespace TimetableDesigner.Graphics.ViewModel
             set
             {
                 settedname = value;
+                OnPropertyChanged();
             }
         }
 
@@ -35,6 +37,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             Model.Name = settedname;
         }
+
 
         public void Drop()
         {
@@ -53,9 +56,14 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public void AddNewSubject()
         {
-
+            Model.AddSubject(new Subject() { Name = "new" });
+            OnPropertyChanged("Subjects");
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
 
     }
 }
