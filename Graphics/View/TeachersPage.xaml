@@ -9,7 +9,36 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <Flyout x:Key="SubjectFlyout" x:Name="SubjectFlyout">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Select the subject, you want to add to the teacher!"/>
+                <ComboBox x:Name="CBSubjectChanger" ItemsSource="{x:Bind data.Subjects}"
+                          MinWidth="150" HorizontalAlignment="Stretch" Margin="5">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SubjectViewModel">
+                            <TextBlock Text="{x:Bind Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Add" Grid.Column="0" Margin="20,0,0,0"
+                            Command="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).AddSubjectCmd, Mode=OneWay}"
+                            CommandParameter="{x:Bind CBSubjectChanger.SelectedItem, Mode=OneWay}"
+                            Click="FlyoutButton_Click"/>
+                    <Button Content="Cancel" Grid.Column="2" Margin="0,0,20,0"
+                            Click="FlyoutButton_Click"/>
+                </Grid>
+            </StackPanel>
+        </Flyout>
+    </Page.Resources>
+    
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -56,39 +85,23 @@
             <StackPanel Orientation="Horizontal" Grid.Row="2" BorderBrush="Gray" BorderThickness="0,2,0,0" Margin="0,5,0,0">
                 <TextBlock Text="Teached subjects" FontSize="20" Padding="5"/>
                 <Button x:Name="btnNewSubject" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5"
-                        Click="btnNewSubject_Click"/>
+                        Flyout="{StaticResource ResourceKey=SubjectFlyout}">
+                </Button>
+                <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
+                        FontFamily="Segoe MDL2 Assets" Margin="5" 
+                        Command="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).RemoveSubjectCmd, Mode=OneWay}"
+                        CommandParameter="{x:Bind SubjectsList.SelectedItem, Mode=OneWay}"/>
             </StackPanel>
-
-            <Grid Grid.Row="3" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="200"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ListView Grid.Row="0" ItemsSource="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).Subjects, Mode=OneWay}"
-                          MinWidth="150" Padding="3" HorizontalAlignment="Stretch"
+            <ListView x:Name="SubjectsList"  Grid.Row="3" 
+                          ItemsSource="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).Subjects, Mode=OneWay}"
+                          MinWidth="200" Padding="3" HorizontalAlignment="Stretch"
                           Grid.RowSpan="3">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Subject">
-                            <Grid MinWidth="200">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{x:Bind Name}"/>
-                                <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
-                                    FontFamily="Segoe MDL2 Assets" Margin="5" 
-                                    Background="White"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Subject">
+                        <TextBlock Text="{x:Bind Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Page>

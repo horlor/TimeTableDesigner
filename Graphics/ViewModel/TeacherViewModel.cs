@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimetableDesigner.Graphics.Commands;
 using TimetableDesigner.Model;
 using Windows.UI.Xaml;
 
@@ -17,6 +18,8 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             Model = teacher;
             settedname = Model.Name;
+            AddSubjectCmd = new CommandBase(AddNewSubject, (o) => true);
+            RemoveSubjectCmd = new CommandBase(RemoveSubject, (o) => true);
         }
 
         private string settedname;
@@ -39,6 +42,13 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
 
+
+        public CommandBase AddSubjectCmd { get; }
+        public CommandBase RemoveSubjectCmd { get; }
+        public CommandBase AddNewTeacherCmd { get; }     
+        public CommandBase RemoveTeacherCmd { get; }
+        public CommandBase SaveChangesCmd { get; }
+        public CommandBase DropChangesCmd { get; }
         public void Drop()
         {
             settedname = Model.Name;
@@ -54,10 +64,24 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
         }
 
-        public void AddNewSubject()
+        public void AddNewSubject(object o)
         {
-            Model.AddSubject(new Subject() { Name = "new" });
-            OnPropertyChanged("Subjects");
+            System.Diagnostics.Debug.WriteLine("o: "+o.GetType().FullName+"\n");
+            if (o is SubjectViewModel svm)
+            {
+                Model.AddSubject(svm.Model);
+                OnPropertyChanged("Subjects");
+            }
+
+        }
+
+        public void RemoveSubject(object o)
+        {
+            if (o is Subject s)
+            {
+                Model.RemoveSubject(s);
+                OnPropertyChanged("Subjects");
+            }
         }
 
         public override string ToString()

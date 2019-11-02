@@ -9,6 +9,12 @@ namespace TimetableDesigner.Graphics.ViewModel
 {
     public class SubjectViewModel : ViewModelBase
     {
+        public SubjectViewModel() { }
+        public SubjectViewModel(Subject subject)
+        {
+            Model = subject;
+        }
+
         private Subject model;
         public Subject Model
         {

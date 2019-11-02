@@ -17,6 +17,9 @@ namespace TimetableDesigner.Graphics.Data
         public ObservableCollection<TeacherViewModel> Teachers { get; private set; }
             = new ObservableCollection<TeacherViewModel>();
 
+        public ObservableCollection<SubjectViewModel> Subjects { get; private set; }
+            = new ObservableCollection<SubjectViewModel>();
+
         private DataManager()
         {
             dataController = new JsonController
@@ -29,12 +32,29 @@ namespace TimetableDesigner.Graphics.Data
             {
                 Teachers.Add(new TeacherViewModel(item));
             }
-        }
 
-        private void LoadTeacherViewModels()
+            foreach(Subject item in dataController.SubjectRepo.GetList())
+            {
+                Subjects.Add(new SubjectViewModel(item));
+            }
+        }
+        public SubjectViewModel NewSubject()
         {
-
+            var item = new Subject();
+            var ret = new SubjectViewModel(item);
+            dataController.SubjectRepo.Store(item);
+            Subjects.Add(ret);
+            return ret;
         }
+
+        public void RemoveSubject(SubjectViewModel subject)
+        {
+            Subjects.Remove(subject);
+            dataController.SubjectRepo.Remove(subject.Model);
+        }
+
+
+
 
         private static DataManager instance;
         public static DataManager Instance

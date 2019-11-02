@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace TimetableDesigner.Graphics.Commands
         public CommandBase(Action<object> action, Predicate<object> predicate){
             this.action = action;
             this.predicate = predicate;
+            CanExecuteChanged?.Invoke(this, new EventArgs());
         }
 
         public bool CanExecute(object parameter)

@@ -28,6 +28,8 @@ namespace TimetableDesigner.Graphics.View
     {
 
         ObservableCollection<TeacherViewModel> Teachers = DataManager.Instance.Teachers;
+
+        DataManager data = DataManager.Instance;
         public TeachersPage()
         {
             this.InitializeComponent();
@@ -35,12 +37,17 @@ namespace TimetableDesigner.Graphics.View
 
         private void btnNewSubject_Click(object sender, RoutedEventArgs e)
         {
-            (TeacherList.SelectedItem as TeacherViewModel).AddNewSubject();
+
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void FlyoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            SubjectFlyout.Hide();
         }
     }
 }
