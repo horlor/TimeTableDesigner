@@ -10,7 +10,7 @@ using TimetableDesigner.Persistence;
 
 namespace TimetableDesigner.Graphics.Data
 {
-    public class DataManager
+    public class DataManager : ITeacherManager
     {
         public JsonController dataController;
 
@@ -38,7 +38,7 @@ namespace TimetableDesigner.Graphics.Data
                 Subjects.Add(new SubjectViewModel(item));
             }
         }
-        public SubjectViewModel NewSubject()
+        public SubjectViewModel CreateSubject()
         {
             var item = new Subject();
             var ret = new SubjectViewModel(item);
@@ -53,8 +53,20 @@ namespace TimetableDesigner.Graphics.Data
             dataController.SubjectRepo.Remove(subject.Model);
         }
 
+        public TeacherViewModel CreateTeacher()
+        {
+            var item = new Teacher();
+            var ret = new TeacherViewModel(item);
+            dataController.TeacherRepo.Store(item);
+            Teachers.Add(ret);
+            return ret;
+        }
 
-
+        public void RemoveTeacher(TeacherViewModel teacher)
+        {
+            Teachers.Remove(teacher);
+            dataController.TeacherRepo.Remove(teacher.Model);
+        }
 
         private static DataManager instance;
         public static DataManager Instance

@@ -27,22 +27,13 @@ namespace TimetableDesigner.Graphics.View
     public sealed partial class TeachersPage : Page
     {
 
-        ObservableCollection<TeacherViewModel> Teachers = DataManager.Instance.Teachers;
+        //ObservableCollection<TeacherViewModel> Teachers = DataManager.Instance.Teachers;
+        TeachersPageViewModel Model { get; set; } = new TeachersPageViewModel();
 
         DataManager data = DataManager.Instance;
         public TeachersPage()
         {
             this.InitializeComponent();
-        }
-
-        private void btnNewSubject_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnNew_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void FlyoutButton_Click(object sender, RoutedEventArgs e)

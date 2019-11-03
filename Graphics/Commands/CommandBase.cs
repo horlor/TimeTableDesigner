@@ -17,7 +17,6 @@ namespace TimetableDesigner.Graphics.Commands
         public CommandBase(Action<object> action, Predicate<object> predicate){
             this.action = action;
             this.predicate = predicate;
-            CanExecuteChanged?.Invoke(this, new EventArgs());
         }
 
         public bool CanExecute(object parameter)
@@ -28,6 +27,11 @@ namespace TimetableDesigner.Graphics.Commands
         public void Execute(object parameter)
         {
             action(parameter);
+        }
+
+        public void ExecutionChanged()
+        {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
         }
     }
 }

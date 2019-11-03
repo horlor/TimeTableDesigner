@@ -17,28 +17,30 @@ namespace TimetableDesigner.Graphics.ViewModel
         public TeacherViewModel(Teacher teacher)
         {
             Model = teacher;
-            settedname = Model.Name;
+            name = Model.Name;
             AddSubjectCmd = new CommandBase(AddNewSubject, (o) => true);
             RemoveSubjectCmd = new CommandBase(RemoveSubject, (o) => true);
+            SaveChangesCmd = new CommandBase((o) => Save(), (o) => IsChanged());
         }
 
-        private string settedname;
+        private string name;
         public String Name
         {
             get
             {
-                return settedname;
+                return name;
             }
             set
             {
-                settedname = value;
+                name = value;
+                SaveChangesCmd.ExecutionChanged();
                 OnPropertyChanged();
             }
         }
 
         public void Save()
         {
-            Model.Name = settedname;
+            Model.Name = name;
         }
 
 
@@ -51,7 +53,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         public CommandBase DropChangesCmd { get; }
         public void Drop()
         {
-            settedname = Model.Name;
+            name = Model.Name;
             //Notify the change on all property
             OnPropertyChanged(String.Empty);
         }
@@ -87,6 +89,11 @@ namespace TimetableDesigner.Graphics.ViewModel
         public override string ToString()
         {
             return this.Name;
+        }
+
+        private bool IsChanged()
+        {
+            return name == Model.Name;
         }
 
     }
