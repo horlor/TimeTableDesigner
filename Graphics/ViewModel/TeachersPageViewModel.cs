@@ -25,8 +25,15 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             NewTeacherCmd = new CommandBase((o) => TeacherManager.CreateTeacher(), (o) => true);
             
+            
         }
 
         public CommandBase NewTeacherCmd { get; }
+
+        public CommandBase AddSubjectCmd { get; }
+        public CommandBase RemoveSubjectCmd { get; }
+        public CommandBase RemoveTeacherCmd { get; }
+        public CommandBase SaveChangesCmd { get; }
+        public CommandBase DropChangesCmd { get; }
     }
 }

@@ -10,7 +10,7 @@ using TimetableDesigner.Persistence;
 
 namespace TimetableDesigner.Graphics.Data
 {
-    public class DataManager : ITeacherManager
+    public class DataManager : ITeacherManager, ISubjectManager, ICourseManager, IGroupManager
     {
         public JsonController dataController;
 
@@ -36,6 +36,14 @@ namespace TimetableDesigner.Graphics.Data
             foreach(Subject item in dataController.SubjectRepo.GetList())
             {
                 Subjects.Add(new SubjectViewModel(item));
+            }
+            foreach (Course item in dataController.CourseRepo.GetList())
+            {
+                Courses.Add(new CourseViewModel(item));
+            }
+            foreach (Group item in dataController.GroupRepo.GetList())
+            {
+                Groups.Add(new GroupViewModel(item));
             }
         }
         public SubjectViewModel CreateSubject()
@@ -68,6 +76,36 @@ namespace TimetableDesigner.Graphics.Data
             dataController.TeacherRepo.Remove(teacher.Model);
         }
 
+        public CourseViewModel CreateCourse()
+        {
+            var item = new Course();
+            var ret = new CourseViewModel(item);
+            dataController.CourseRepo.Store(item);
+            Courses.Add(ret);
+            return ret;
+        }
+
+        public void RemoveCourse(CourseViewModel model)
+        {
+            Courses.Remove(model);
+            dataController.CourseRepo.Remove(model.Course);
+        }
+
+        public GroupViewModel CreateGroup()
+        {
+            var item = new Group();
+            var ret = new GroupViewModel(item);
+            dataController.GroupRepo.Store(item);
+            Groups.Add(ret);
+            return ret;
+        }
+
+        public void RemoveGroup(GroupViewModel model)
+        {
+            Groups.Remove(model);
+            dataController.GroupRepo.Remove(model.Model);
+        }
+
         private static DataManager instance;
         public static DataManager Instance
         {
@@ -78,5 +116,9 @@ namespace TimetableDesigner.Graphics.Data
                 return instance;
             }
         }
+
+        public ObservableCollection<CourseViewModel> Courses { get; private set; } = new ObservableCollection<CourseViewModel>();
+
+        public ObservableCollection<GroupViewModel> Groups { get; private set; } = new ObservableCollection<GroupViewModel>();
     }
 }

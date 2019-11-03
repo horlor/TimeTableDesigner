@@ -47,8 +47,6 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public CommandBase AddSubjectCmd { get; }
         public CommandBase RemoveSubjectCmd { get; }
-        public CommandBase AddNewTeacherCmd { get; }     
-        public CommandBase RemoveTeacherCmd { get; }
         public CommandBase SaveChangesCmd { get; }
         public CommandBase DropChangesCmd { get; }
         public void Drop()

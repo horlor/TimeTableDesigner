@@ -120,6 +120,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Data\ICourseManager.cs" />
+    <Compile Include="Data\IGroupManager.cs" />
+    <Compile Include="Data\ISubjectManager.cs" />
     <Compile Include="Data\ITeacherManager.cs" />
     <Compile Include="Data\ObservableCollectionWrapper.cs" />
     <Compile Include="Data\DataManager.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DayCourseViewModel.cs" />
+    <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\SubjectViewModel.cs" />
     <Compile Include="ViewModel\TeachersPageViewModel.cs" />
     <Compile Include="ViewModel\TeacherViewModel.cs" />
