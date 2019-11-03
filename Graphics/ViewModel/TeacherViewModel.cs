@@ -20,7 +20,8 @@ namespace TimetableDesigner.Graphics.ViewModel
             name = Model.Name;
             AddSubjectCmd = new CommandBase(AddNewSubject, (o) => true);
             RemoveSubjectCmd = new CommandBase(RemoveSubject, (o) => true);
-            SaveChangesCmd = new CommandBase((o) => Save(), (o) => IsChanged());
+            SaveChangesCmd = new CommandBase((o) => { Save(); }, (o) => IsChanged());
+            DropChangesCmd = new CommandBase((o) => { Drop(); }, (o) => IsChanged());
         }
 
         private string name;
@@ -51,7 +52,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         public CommandBase DropChangesCmd { get; }
         public void Drop()
         {
-            name = Model.Name;
+            Name = Model.Name;
             //Notify the change on all property
             OnPropertyChanged(String.Empty);
         }
@@ -89,9 +90,9 @@ namespace TimetableDesigner.Graphics.ViewModel
             return this.Name;
         }
 
-        private bool IsChanged()
+        public bool IsChanged()
         {
-            return name == Model.Name;
+            return name != Model.Name;
         }
 
     }

@@ -33,5 +33,8 @@ namespace TimetableDesigner.Graphics.Commands
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
+
+        public static readonly CommandBase Empty = new CommandBase((o) => { }, (o) => false);
+
     }
 }

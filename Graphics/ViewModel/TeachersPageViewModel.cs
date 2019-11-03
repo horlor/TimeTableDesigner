@@ -23,15 +23,39 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public TeachersPageViewModel()
         {
-            NewTeacherCmd = new CommandBase((o) => TeacherManager.CreateTeacher(), (o) => true);
-            
-            
+            NewTeacherCmd = new CommandBase((o) => { var item = TeacherManager.CreateTeacher(); Selected = item; }, (o) => true);
+            RemoveTeacherCmd = new CommandBase((o) => { TeacherManager.RemoveTeacher(selected); }, IsSelectedNotNull);
+            SaveChangesCmd = new CommandBase((o) => Selected.Save(), (o) => IsSelectedNotNull(o) && Selected.IsChanged());
+            DropChangesCmd = new CommandBase((o) => Selected.Drop(), (o) => IsSelectedNotNull(o) && !Selected.IsChanged());
+
+        }
+
+        private TeacherViewModel selected;
+        public TeacherViewModel Selected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                if (selected != value)
+                {
+                    selected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool IsSelectedNotNull(object o)
+        {
+            return !(selected is null);
         }
 
         public CommandBase NewTeacherCmd { get; }
 
-        public CommandBase AddSubjectCmd { get; }
-        public CommandBase RemoveSubjectCmd { get; }
+        public CommandBase AddSubjectCmd { get; private set; }
+        public CommandBase RemoveSubjectCmd { get; private set; }
         public CommandBase RemoveTeacherCmd { get; }
         public CommandBase SaveChangesCmd { get; }
         public CommandBase DropChangesCmd { get; }

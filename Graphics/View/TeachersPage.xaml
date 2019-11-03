@@ -28,7 +28,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Button Content="Add" Grid.Column="0" Margin="20,0,0,0"
-                            Command="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).AddSubjectCmd, Mode=OneWay}"
+                            Command="{x:Bind Model.Selected.AddSubjectCmd, Mode=OneWay}"
                             CommandParameter="{x:Bind CBSubjectChanger.SelectedItem, Mode=OneWay}"
                             Click="FlyoutButton_Click"/>
                     <Button Content="Cancel" Grid.Column="2" Margin="0,0,20,0"
@@ -45,7 +45,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ListView x:Name="TeacherList" Width="Auto" ItemsSource="{x:Bind Model.Teachers}" Grid.Column="0"
-                  BorderBrush="Gray" BorderThickness="0,0,2,0">
+                  BorderBrush="Gray" BorderThickness="0,0,2,0"
+                  SelectedItem="{x:Bind Model.Selected, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:TeacherViewModel">
                     <Grid MinWidth="200">
@@ -55,7 +56,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{x:Bind Name}" Grid.Column="0"/>
+                        <TextBlock Text="{x:Bind Name, Mode=OneWay}" Grid.Column="0"/>
                         <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
                                 FontFamily="Segoe MDL2 Assets" Margin="5" 
                                 Background="White"/>
@@ -74,8 +75,10 @@
             <StackPanel Orientation="Horizontal" Margin="10, 0 ,10,5" Grid.Row="0">
                 <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         Command="{x:Bind Model.NewTeacherCmd}"/>
-                <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" />
-                <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" />
+                <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" 
+                        Command="{x:Bind Model.Selected.DropChangesCmd, Mode=OneWay}"/>
+                <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
+                        Command="{x:Bind Model.Selected.SaveChangesCmd, Mode=OneWay}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBlock Text="Name: " Margin="10"/>
@@ -89,7 +92,7 @@
                 </Button>
                 <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
                         FontFamily="Segoe MDL2 Assets" Margin="5" 
-                        Command="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).RemoveSubjectCmd, Mode=OneWay}"
+                        Command="{x:Bind Model.Selected.RemoveSubjectCmd, Mode=OneWay}"
                         CommandParameter="{x:Bind SubjectsList.SelectedItem, Mode=OneWay}"/>
             </StackPanel>
             <ListView x:Name="SubjectsList"  Grid.Row="3" 

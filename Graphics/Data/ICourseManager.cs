@@ -11,7 +11,7 @@ namespace TimetableDesigner.Graphics.Data
     public interface ICourseManager
     {
         CourseViewModel CreateCourse();
-        void RemoveCourse(CourseViewModel);
+        void RemoveCourse(CourseViewModel course);
         ObservableCollection<CourseViewModel> Courses { get; }
     }
 }

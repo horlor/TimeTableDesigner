@@ -14,12 +14,8 @@ namespace TimetableDesigner.Graphics.Data
     {
         public JsonController dataController;
 
-        public ObservableCollection<TeacherViewModel> Teachers { get; private set; }
-            = new ObservableCollection<TeacherViewModel>();
-
-        public ObservableCollection<SubjectViewModel> Subjects { get; private set; }
-            = new ObservableCollection<SubjectViewModel>();
-
+        
+        //Using singleton pattern to avoid multiple Data access
         private DataManager()
         {
             dataController = new JsonController
@@ -46,6 +42,21 @@ namespace TimetableDesigner.Graphics.Data
                 Groups.Add(new GroupViewModel(item));
             }
         }
+
+        private static DataManager instance;
+        public static DataManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new DataManager();
+                return instance;
+            }
+        }
+
+        public ObservableCollection<SubjectViewModel> Subjects { get; private set; }
+    = new ObservableCollection<SubjectViewModel>();
+
         public SubjectViewModel CreateSubject()
         {
             var item = new Subject();
@@ -60,6 +71,10 @@ namespace TimetableDesigner.Graphics.Data
             Subjects.Remove(subject);
             dataController.SubjectRepo.Remove(subject.Model);
         }
+        public ObservableCollection<TeacherViewModel> Teachers { get; private set; }
+            = new ObservableCollection<TeacherViewModel>();
+
+
 
         public TeacherViewModel CreateTeacher()
         {
@@ -76,6 +91,7 @@ namespace TimetableDesigner.Graphics.Data
             dataController.TeacherRepo.Remove(teacher.Model);
         }
 
+        public ObservableCollection<CourseViewModel> Courses { get; private set; } = new ObservableCollection<CourseViewModel>();
         public CourseViewModel CreateCourse()
         {
             var item = new Course();
@@ -90,6 +106,9 @@ namespace TimetableDesigner.Graphics.Data
             Courses.Remove(model);
             dataController.CourseRepo.Remove(model.Course);
         }
+
+
+        public ObservableCollection<GroupViewModel> Groups { get; private set; } = new ObservableCollection<GroupViewModel>();
 
         public GroupViewModel CreateGroup()
         {
@@ -106,19 +125,8 @@ namespace TimetableDesigner.Graphics.Data
             dataController.GroupRepo.Remove(model.Model);
         }
 
-        private static DataManager instance;
-        public static DataManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new DataManager();
-                return instance;
-            }
-        }
 
-        public ObservableCollection<CourseViewModel> Courses { get; private set; } = new ObservableCollection<CourseViewModel>();
+        
 
-        public ObservableCollection<GroupViewModel> Groups { get; private set; } = new ObservableCollection<GroupViewModel>();
     }
 }
