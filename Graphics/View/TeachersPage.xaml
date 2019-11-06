@@ -46,7 +46,9 @@
         </Grid.ColumnDefinitions>
         <ListView x:Name="TeacherList" Width="Auto" ItemsSource="{x:Bind Model.Teachers}" Grid.Column="0"
                   BorderBrush="Gray" BorderThickness="0,0,2,0"
-                  SelectedItem="{x:Bind Model.Selected, Mode=TwoWay}">
+                  SelectedItem="{x:Bind Model.Selected, Mode=TwoWay}"
+                  SelectionMode="Single"
+                  SelectionChanged="{x:Bind Model.SelectionChanged}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:TeacherViewModel">
                     <Grid MinWidth="200">
@@ -59,7 +61,8 @@
                         <TextBlock Text="{x:Bind Name, Mode=OneWay}" Grid.Column="0"/>
                         <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
                                 FontFamily="Segoe MDL2 Assets" Margin="5" 
-                                Background="White"/>
+                                Background="White"
+                                />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -85,6 +88,7 @@
                 <TextBox Text="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).Name, Mode=TwoWay}"
                      HorizontalAlignment="Stretch" MinWidth="200" Padding="10"/>
             </StackPanel>
+            <!-- The layout of the subject list of the teacher-->
             <StackPanel Orientation="Horizontal" Grid.Row="2" BorderBrush="Gray" BorderThickness="0,2,0,0" Margin="0,5,0,0">
                 <TextBlock Text="Teached subjects" FontSize="20" Padding="5"/>
                 <Button x:Name="btnNewSubject" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5"

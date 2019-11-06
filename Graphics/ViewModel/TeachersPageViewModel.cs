@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TimetableDesigner.Graphics.Commands;
 using TimetableDesigner.Graphics.Data;
+using Windows.UI.Xaml.Controls;
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
@@ -31,6 +32,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
         private TeacherViewModel selected;
+        private TeacherViewModel previous =null;
         public TeacherViewModel Selected
         {
             get
@@ -41,6 +43,7 @@ namespace TimetableDesigner.Graphics.ViewModel
             {
                 if (selected != value)
                 {
+                    previous = selected;
                     selected = value;
                     OnPropertyChanged();
                 }
@@ -50,6 +53,36 @@ namespace TimetableDesigner.Graphics.ViewModel
         private bool IsSelectedNotNull(object o)
         {
             return !(selected is null);
+        }
+
+        public async void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Mi a rosebb "+previous);
+            if (previous != null && previous.IsChanged())
+            {
+                bool res = await SaveOrDropDialog();
+                if (res)
+                    previous.Save();
+                else
+                    previous.Drop();
+            }
+                
+        }
+
+        public async Task<bool> SaveOrDropDialog()
+        {
+            ContentDialog SaveDialog = new ContentDialog
+            {
+                Title = "Not saved modifications",
+                Content = "There are unsaved modifications on the selected item. Do you want to save them?",
+                CloseButtonText = "No",
+                PrimaryButtonText = "Yes"
+            };
+
+            ContentDialogResult result = await SaveDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                return true;
+            return false;    
         }
 
         public CommandBase NewTeacherCmd { get; }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TimetableDesigner.Graphics.Commands;
 using TimetableDesigner.Model;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
@@ -23,6 +24,22 @@ namespace TimetableDesigner.Graphics.ViewModel
             SaveChangesCmd = new CommandBase((o) => { Save(); }, (o) => IsChanged());
             DropChangesCmd = new CommandBase((o) => { Drop(); }, (o) => IsChanged());
         }
+        public async Task SaveOrDropDialog()
+        {
+            ContentDialog SaveDialog = new ContentDialog
+            {
+                Title = "Not saved modifications",
+                Content = "There are unsaved modifications on the selected item. Do you want to save them?",
+                CloseButtonText = "No",
+                PrimaryButtonText = "Yes"
+            };
+
+            ContentDialogResult result = await SaveDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                this.Save();
+            else
+                this.Drop();
+        }
 
         private string name;
         public String Name
@@ -35,6 +52,7 @@ namespace TimetableDesigner.Graphics.ViewModel
             {
                 name = value;
                 SaveChangesCmd.ExecutionChanged();
+                DropChangesCmd.ExecutionChanged();
                 OnPropertyChanged();
             }
         }
@@ -50,11 +68,10 @@ namespace TimetableDesigner.Graphics.ViewModel
         public CommandBase RemoveSubjectCmd { get; }
         public CommandBase SaveChangesCmd { get; }
         public CommandBase DropChangesCmd { get; }
+
         public void Drop()
         {
             Name = Model.Name;
-            //Notify the change on all property
-            OnPropertyChanged(String.Empty);
         }
 
         public IReadOnlyList<Subject> Subjects
