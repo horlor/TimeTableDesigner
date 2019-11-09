@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace TimetableDesigner.Graphics.Data
 {
-    interface IGroupManager
+    public interface IGroupManager
     {
         GroupViewModel CreateGroup();
         void RemoveGroup(GroupViewModel model);

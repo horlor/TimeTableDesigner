@@ -10,30 +10,26 @@ using Windows.UI.Xaml.Controls;
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
-    public class TeachersPageViewModel : ViewModelBase
+    public class SubjectsPageViewModel : ViewModelBase
     {
-        public ITeacherManager TeacherManager { get; set; } = DataManager.Instance;
+        public ISubjectManager SubjectManager { get; set; } = DataManager.Instance;
 
-        public ObservableCollection<TeacherViewModel> Teachers
+        public SubjectsPageViewModel()
+        {
+            NewSubjectCmd = new CommandBase(o => { var subject = SubjectManager.CreateSubject(); Selected = subject; }, o => true);
+            RemoveSubjectCmd = null;
+        }
+
+        public ObservableCollection<SubjectViewModel> Subjects
         {
             get
             {
-                return TeacherManager.Teachers;
+                return SubjectManager.Subjects;
             }
         }
 
-        public TeachersPageViewModel()
-        {
-            NewTeacherCmd = new CommandBase((o) => { var item = TeacherManager.CreateTeacher(); Selected = item; }, (o) => true);
-            RemoveTeacherCmd = new CommandBase((o) => { TeacherManager.RemoveTeacher(selected); }, IsSelectedNotNull);
-            SaveChangesCmd = new CommandBase((o) => Selected.Save(), (o) => IsSelectedNotNull(o) && Selected.IsChanged());
-            DropChangesCmd = new CommandBase((o) => Selected.Drop(), (o) => IsSelectedNotNull(o) && !Selected.IsChanged());
-
-        }
-
-        private TeacherViewModel selected;
-        private TeacherViewModel previous =null;
-        public TeacherViewModel Selected
+        private SubjectViewModel selected, previous = null;
+        public SubjectViewModel Selected
         {
             get
             {
@@ -41,7 +37,7 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
             set
             {
-                if (selected != value)
+                if(value != selected)
                 {
                     previous = selected;
                     selected = value;
@@ -50,14 +46,9 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
         }
 
-        private bool IsSelectedNotNull(object o)
-        {
-            return !(selected is null);
-        }
-
         public async void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (previous != null && previous.IsChanged())
+            if ( previous!= null && previous.IsChanged())
             {
                 bool res = await SaveOrDropDialog();
                 if (res)
@@ -65,7 +56,7 @@ namespace TimetableDesigner.Graphics.ViewModel
                 else
                     previous.Drop();
             }
-                
+
         }
 
         public async Task<bool> SaveOrDropDialog()
@@ -81,12 +72,14 @@ namespace TimetableDesigner.Graphics.ViewModel
             ContentDialogResult result = await SaveDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
                 return true;
-            return false;    
+            return false;
         }
 
-        public CommandBase NewTeacherCmd { get; }
-        public CommandBase RemoveTeacherCmd { get; }
-        public CommandBase SaveChangesCmd { get; }
-        public CommandBase DropChangesCmd { get; }
+
+
+        public CommandBase NewSubjectCmd { get; }
+        public CommandBase RemoveSubjectCmd { get; }
+
+
     }
 }

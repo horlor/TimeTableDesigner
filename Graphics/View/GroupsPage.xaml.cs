@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TimetableDesigner.Graphics.Data;
+using TimetableDesigner.Graphics.ViewModel;
 using TimetableDesigner.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,7 +26,7 @@ namespace TimetableDesigner.Graphics.View
     public sealed partial class GroupsPage : Page
     {
 
-        public IGroupRepo Group { get; } = DataManager.Instance.dataController.GroupRepo;
+        public GroupsPageViewModel Model { get; set; } = new GroupsPageViewModel();
         public GroupsPage()
         {
             this.InitializeComponent();

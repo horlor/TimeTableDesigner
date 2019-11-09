@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TimetableDesigner.Graphics.Data;
+using TimetableDesigner.Graphics.ViewModel;
 using TimetableDesigner.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,7 +26,7 @@ namespace TimetableDesigner.Graphics.View
     public sealed partial class SubjectsPage : Page
     {
 
-        public ISubjectRepo Subject { get; } = DataManager.Instance.dataController.SubjectRepo;
+        SubjectsPageViewModel Model = new SubjectsPageViewModel();
         public SubjectsPage()
         {
             this.InitializeComponent();

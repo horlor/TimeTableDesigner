@@ -85,7 +85,7 @@
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBlock Text="Name: " Margin="10"/>
-                <TextBox Text="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).Name, Mode=TwoWay}"
+                <TextBox Text="{x:Bind Model.Selected.Name, Mode=TwoWay}"
                      HorizontalAlignment="Stretch" MinWidth="200" Padding="10"/>
             </StackPanel>
             <!-- The layout of the subject list of the teacher-->
@@ -100,7 +100,7 @@
                         CommandParameter="{x:Bind SubjectsList.SelectedItem, Mode=OneWay}"/>
             </StackPanel>
             <ListView x:Name="SubjectsList"  Grid.Row="3" 
-                          ItemsSource="{x:Bind ((vm:TeacherViewModel)TeacherList.SelectedItem).Subjects, Mode=OneWay}"
+                          ItemsSource="{x:Bind Model.Selected.Subjects, Mode=OneWay}"
                           MinWidth="200" Padding="3" HorizontalAlignment="Stretch"
                           Grid.RowSpan="3">
                 <ListView.ItemTemplate>

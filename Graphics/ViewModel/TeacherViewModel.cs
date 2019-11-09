@@ -72,6 +72,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         public void Drop()
         {
             Name = Model.Name;
+            OnPropertyChanged(String.Empty);
         }
 
         public IReadOnlyList<Subject> Subjects

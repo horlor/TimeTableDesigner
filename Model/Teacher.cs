@@ -54,7 +54,22 @@ namespace TimetableDesigner.Model
         }
         public void RemoveCourse(Course course)
         {
-            courses.Remove(course);
+            if (course.Teacher == this)
+            {
+                course.Teacher = null;
+                courses.Remove(course);
+            }
+
+        }
+
+        public void RemoveFromAllCourses()
+        {
+            foreach(var course in courses)
+            {
+                if(course.Teacher == this)
+                course.Teacher = null;
+            }
+            courses.Clear();
         }
 
         public void AddSubject(Subject subject)
