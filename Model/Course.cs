@@ -28,7 +28,8 @@ namespace TimetableDesigner.Model
                     group.RemoveCourse(this);
                 }
                 group = value;
-                group.AddCourse(this);
+                if(group !=null)
+                    group.AddCourse(this);
             }
         }
         [JsonProperty]
@@ -46,8 +47,9 @@ namespace TimetableDesigner.Model
                 {
                     teacher.RemoveCourse(this);
                 }
-                value.AddCourse(this);
                 teacher = value;
+                if (teacher != null)
+                    teacher.AddCourse(this);
             }
         }
 

@@ -87,6 +87,7 @@ namespace TimetableDesigner.Graphics.Data
 
         public void RemoveTeacher(TeacherViewModel teacher)
         {
+            teacher.Model.RemoveFromAllCourses();
             Teachers.Remove(teacher);
             dataController.TeacherRepo.Remove(teacher.Model);
         }
@@ -104,6 +105,8 @@ namespace TimetableDesigner.Graphics.Data
         public void RemoveCourse(CourseViewModel model)
         {
             Courses.Remove(model);
+            model.Course.Teacher.RemoveCourse(model.Course);
+            model.Course.Group.RemoveCourse(model.Course);
             dataController.CourseRepo.Remove(model.Course);
         }
 
@@ -122,6 +125,7 @@ namespace TimetableDesigner.Graphics.Data
         public void RemoveGroup(GroupViewModel model)
         {
             Groups.Remove(model);
+            model.Model.RemoveFromAllCourses();
             dataController.GroupRepo.Remove(model.Model);
         }
 

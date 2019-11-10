@@ -20,7 +20,7 @@ namespace TimetableDesigner.Model
         public static void ChangeTime(Course course, Day day, Time from, Time to)
         {
             if (course.Teacher != null && course.Teacher.HasCourseAtTimePeriod(day, from, to))
-                throw new GroupTimeException();
+                throw new TeacherTimeException();
             if (course.Group != null && course.Group.HasCourseAtTimePeriod(day, from, to))
                 throw new GroupTimeException();
             course.SetTimespan(day, from, to);
@@ -36,7 +36,7 @@ namespace TimetableDesigner.Model
         public static void ChangeGroup(Course course, Group group)
         {
             if (group.HasCourseAtTheSameTime(course))
-                throw new GroupTimeException("New Group has a course overlapping the new");
+                throw new GroupTimeException("New Group has a course overlapping the this one");
             course.Group = group;
             
         }

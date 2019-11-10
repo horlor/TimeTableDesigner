@@ -33,7 +33,14 @@ namespace TimetableDesigner.Model
 
         public void RemoveCourse(Course course)
         {
+            course.Group = null;
             courses.Remove(course);
+        }
+
+        public void RemoveFromAllCourses()
+        {
+            foreach (var item in courses)
+                item.Group = null;
         }
         public bool HasCourseAtTheSameTime(Course course)
         {
