@@ -47,7 +47,6 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         private Time start, end;
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public int Height
         {

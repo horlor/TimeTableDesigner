@@ -5,13 +5,10 @@ using Newtonsoft.Json;
 
 namespace TimetableDesigner.Model
 {
-    /// <summary>
-    /// The Class for representing a teacher.
-    /// </summary>
+
     [JsonObject(IsReference = true)]
     public class Teacher : EntityBase
     {
-        //Providing a constructor, to make new class
         
         [JsonProperty(PropertyName ="Courses")]
         private List<Course> courses = new List<Course>();
@@ -19,9 +16,6 @@ namespace TimetableDesigner.Model
         [JsonProperty(PropertyName ="TeachedSubjects")]
         private List<Subject> teachedSubjects = new List<Subject>();
 
-        /// <summary>
-        /// This is a List Accesser for the Courses they teach, it cannot be modified by this reference
-        /// </summary>
         [JsonIgnore]
         public System.Collections.ObjectModel.ReadOnlyCollection<Course> Courses { //Somehow this Special class has more functions than IReadOnlyList
             get 
@@ -30,9 +24,7 @@ namespace TimetableDesigner.Model
             }
         }
 
-        /// <summary>
-        /// Only readonly representation of the teached subjects, it can be modified by the class's methods
-        /// </summary>
+
         [JsonIgnore]
         public System.Collections.ObjectModel.ReadOnlyCollection<Subject> TeachedSubjects
         {
@@ -42,17 +34,17 @@ namespace TimetableDesigner.Model
             }
         }
 
-        public void AddCourse(Course course)
+        protected internal void AddCourse(Course course)
         {
             foreach (var item in Courses)
             {
                 if (item.IsInTheSameTimeWith(course))
-                    throw new TeacherTimeException("There are a Course in the same time");
+                    throw new TeacherTimeException("There is a Course in the same time");
             }
             courses.Add(course);
 
         }
-        public void RemoveCourse(Course course)
+        protected internal void RemoveCourse(Course course)
         {
             if (course.Teacher == this)
             {

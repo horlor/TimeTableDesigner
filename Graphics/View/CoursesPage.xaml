@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TimetableDesigner.Graphics.View"
+    xmlns:vm="using:TimetableDesigner.Graphics.ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -17,10 +18,35 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Csoport: "/>
-            <ComboBox/>
+            <ComboBox MinWidth="200"
+                ItemsSource="{x:Bind Model.GroupManager.Groups, Mode=OneWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:GroupViewModel">
+                        <TextBlock Text="{x:Bind Name, Mode=OneTime}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
+        <ListView ItemsSource="{x:Bind Model.SCourses, Mode=OneWay}">
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Header"></TextBlock>
+                        </DataTemplate> 
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:CourseViewModel">
+                    <local:CourseView Course="{x:Bind Mode=OneWay}"></local:CourseView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+            <!--
         <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind ViewModel}" Grid.Row="1"/>
         <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Timetable.Selected, Mode=OneWay}" Timetable="{x:Bind Timetable}" Grid.Row="3"/>
         <TextBlock x:Name="text" Text="Placeholder" FontSize="20" Grid.Row="4"/>
+        -->
     </Grid>
 </Page>

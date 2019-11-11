@@ -29,22 +29,18 @@ namespace TimetableDesigner.Graphics.View
 
         public TimetableViewModel ViewModel = new TimetableViewModel();
 
+        public CoursesPageViewModel Model { get; set; } = new CoursesPageViewModel();
+
         public CoursesPage()
         {
             this.InitializeComponent();
-            //IDataController controller = new MockController();
-            /*JsonController controller = new JsonController
-            {
-                Path = "data.json"
-            };
-            controller.Load();*/
-            ViewModel.Courses = DataManager.Instance.dataController.CourseRepo.GetList();
+            /*ViewModel.Courses = DataManager.Instance.dataController.CourseRepo.GetList();
             Timetable.SelectionChanged += (sender, e) =>
             {
 
                 text.Text = Timetable.Selected.ToString();
                 edit.ViewModel = Timetable.Selected;
-            };
+            };*/
         }
 
     }

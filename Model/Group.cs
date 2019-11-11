@@ -20,7 +20,7 @@ namespace TimetableDesigner.Model
             }
         }
 
-        public void AddCourse(Course course)
+        protected internal void AddCourse(Course course)
         {
             foreach (var item in courses)
             {
@@ -31,7 +31,7 @@ namespace TimetableDesigner.Model
             courses.Add(course);
         }
 
-        public void RemoveCourse(Course course)
+        protected internal void RemoveCourse(Course course)
         {
             course.Group = null;
             courses.Remove(course);

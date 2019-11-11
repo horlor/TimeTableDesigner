@@ -6,8 +6,6 @@ using System.Text;
 namespace TimetableDesigner.Model
 {
    // TODO Validáció egy külön osztályba 
-    // A megjelenítésen kezdeni ügyeskedni - egyelőre logika nélkül mondjuk csak egy órarend
-    //Legyen UWP
 
     [JsonObject(IsReference =true)]
     public class Course : EntityBase
@@ -21,7 +19,7 @@ namespace TimetableDesigner.Model
             {
                 return group;
             }
-            internal set
+            set
             {
                 if (group != null)
                 {
@@ -41,7 +39,7 @@ namespace TimetableDesigner.Model
             {
                 return teacher;
             }
-            internal set
+            set
             {
                 if (teacher != null)
                 {
