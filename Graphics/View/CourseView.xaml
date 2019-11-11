@@ -19,8 +19,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="{x:Bind Course.TimeString, Mode=OneWay}" FontSize="12" Grid.Row="1"/>
-        <TextBlock Text="{x:Bind Course.Subject, Mode=OneWay}" FontSize="18" Grid.Row="2" TextAlignment="Center"/>
-        <TextBlock Text="{x:Bind Course.Teacher, Mode=OneWay}" FontSize="12" Grid.Row="3"/>
+        <TextBlock Text="{x:Bind Course.SubjectString, Mode=OneWay}" FontSize="18" Grid.Row="2" TextAlignment="Center"/>
+        <TextBlock Text="{x:Bind Course.TeacherString, Mode=OneWay}" FontSize="12" Grid.Row="3"/>
     </Grid>
 
 </UserControl>

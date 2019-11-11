@@ -34,13 +34,12 @@ namespace TimetableDesigner.Graphics.View
         public CoursesPage()
         {
             this.InitializeComponent();
-            /*ViewModel.Courses = DataManager.Instance.dataController.CourseRepo.GetList();
             Timetable.SelectionChanged += (sender, e) =>
             {
 
                 text.Text = Timetable.Selected.ToString();
                 edit.ViewModel = Timetable.Selected;
-            };*/
+            };
         }
 
     }

@@ -19,7 +19,8 @@
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Csoport: "/>
             <ComboBox MinWidth="200"
-                ItemsSource="{x:Bind Model.GroupManager.Groups, Mode=OneWay}">
+                ItemsSource="{x:Bind Model.GroupManager.Groups, Mode=OneWay}"
+                      SelectedItem="{x:Bind Model.SelectedGroup, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="vm:GroupViewModel">
                         <TextBlock Text="{x:Bind Name, Mode=OneTime}"></TextBlock>
@@ -27,26 +28,8 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <ListView ItemsSource="{x:Bind Model.SCourses, Mode=OneWay}">
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="Header"></TextBlock>
-                        </DataTemplate> 
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="vm:CourseViewModel">
-                    <local:CourseView Course="{x:Bind Mode=OneWay}"></local:CourseView>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-            <!--
-        <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind ViewModel}" Grid.Row="1"/>
-        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Timetable.Selected, Mode=OneWay}" Timetable="{x:Bind Timetable}" Grid.Row="3"/>
-        <TextBlock x:Name="text" Text="Placeholder" FontSize="20" Grid.Row="4"/>
-        -->
+        <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind Model.Timetable}" Selected="{x:Bind Model.SelectedCourse, Mode=TwoWay}" Grid.Row="1"/>
+        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Model.SelectedCourse, Mode=OneWay}" Timetable="{x:Bind Timetable}" Grid.Row="3"/>
+        <TextBlock x:Name="text" Text="{x:Bind Model.SelectedCourse.ToString()}" FontSize="20" Grid.Row="4"/>
     </Grid>
 </Page>

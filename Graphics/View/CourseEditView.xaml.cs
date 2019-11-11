@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TimetableDesigner.Graphics.Data;
 using TimetableDesigner.Graphics.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -50,6 +51,8 @@ namespace TimetableDesigner.Graphics.View
             } 
         
         }
+
+        public DataManager DataManager { get; set; } =  DataManager.Instance;
 
         
 

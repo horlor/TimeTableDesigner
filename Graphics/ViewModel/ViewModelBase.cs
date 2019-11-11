@@ -14,7 +14,9 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                System.Diagnostics.Debug.WriteLine(propertyName);
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            
         }
     }
 }

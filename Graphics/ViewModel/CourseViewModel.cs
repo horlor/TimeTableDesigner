@@ -12,7 +12,7 @@ namespace TimetableDesigner.Graphics.ViewModel
     public class CourseViewModel
     {
         private const int MIN_PIXEL=20;
-        public Course Course { get; set; }
+        public Course Model { get; set; }
 
         public CourseViewModel()
         {
@@ -29,18 +29,18 @@ namespace TimetableDesigner.Graphics.ViewModel
             CourseManager.ChangeTeacher(course, teacher);
             CourseManager.ChangeSubject(course, subject);
             CourseManager.ChangeTime(course,Day.Friday,new Time(8, 45), new Time(9, 45));
-            this.Course = course;
+            this.Model = course;
             
         }
 
         public CourseViewModel(Course course)
         {
-            Course = course;
+            Model = course;
         }
 
         public CourseViewModel(Time from, Time to)
         {
-            Course = null;
+            Model = null;
             start = from;
             end = to;
         }
@@ -53,8 +53,8 @@ namespace TimetableDesigner.Graphics.ViewModel
             get
             {
                 int ret;
-                if (Course != null)
-                    ret =  ((Course.End.ToMinutes() - Course.Start.ToMinutes()))/15*MIN_PIXEL;
+                if (Model != null)
+                    ret =  ((Model.End.ToMinutes() - Model.Start.ToMinutes()))/15*MIN_PIXEL;
                 else
                     ret=  (end.ToMinutes() - start.ToMinutes()) / 15 * MIN_PIXEL;
                 //if (ret <= 0 || ret >500)
@@ -67,27 +67,27 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             get
             {
-                if (Course != null)
-                    return string.Format("{0} - {1}", Course.Start.ToString(), Course.End.ToString());
+                if (Model != null)
+                    return string.Format("{0} - {1}", Model.Start.ToString(), Model.End.ToString());
                 return "";
             }
         }
 
-        public string Subject
+        public string SubjectString
         {
             get{ 
-                if(Course !=null) 
-                    return Course.Subject.Name;
+                if(Model !=null) 
+                    return Model.Subject.Name;
                 return "";
             }
         }
 
-        public string Teacher
+        public string TeacherString
         {
             get
             {
-                if(Course!=null)
-                    return Course.Teacher.Name;
+                if(Model!=null)
+                    return Model.Teacher.Name;
                 return "";
             }
         }
@@ -96,15 +96,17 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             get
             {
-                if (Course != null)
-                    return Course.Group.Name;
+                if (Model != null)
+                    return Model.Group.Name;
                 return "";
             }
         }
 
         public override string ToString()
         {
-            return this.Subject + " " + this.TimeString;
+            return this.SubjectString + " " + this.TimeString;
         }
+
+        public Day Day { get { return Model.Day; } }
     }
 }

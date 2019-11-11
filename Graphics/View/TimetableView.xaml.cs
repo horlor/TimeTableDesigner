@@ -84,7 +84,7 @@ namespace TimetableDesigner.Graphics.View
             set
             {
                 SetValue(SelectedProperty, value);
-                OnPropertyChanged();
+                //OnPropertyChanged();
             }
         }
         public CourseViewModel GetSelected()

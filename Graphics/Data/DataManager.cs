@@ -105,9 +105,9 @@ namespace TimetableDesigner.Graphics.Data
         public void RemoveCourse(CourseViewModel model)
         {
             Courses.Remove(model);
-            model.Course.Teacher = null ;
-            model.Course.Group = null;
-            dataController.CourseRepo.Remove(model.Course);
+            model.Model.Teacher = null ;
+            model.Model.Group = null;
+            dataController.CourseRepo.Remove(model.Model);
         }
 
 

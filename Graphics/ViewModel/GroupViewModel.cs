@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,10 @@ namespace TimetableDesigner.Graphics.ViewModel
             name = group.Name;
             SaveChangesCmd = new CommandBase((o) => { Save();}, (o) => IsChanged());
             DropChangesCmd = new CommandBase((o) => { Drop();}, (o) => IsChanged());
-
+            foreach(var item in Model.Courses)
+            {
+                Courses.Add(new CourseViewModel(item));
+            }
         }
 
         public Group Model { get; }
@@ -73,5 +77,8 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             return name != Model.Name;
         }
+
+
+        public ObservableCollection<CourseViewModel> Courses { get; } = new ObservableCollection<CourseViewModel>();
     }
  }

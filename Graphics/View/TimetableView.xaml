@@ -38,15 +38,15 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <local:DayCourseView x:Name="MondayView" Grid.Row="1" Grid.Column="0" 
-                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Monday)}"/>
+                                     Model="{x:Bind ViewModel.Monday}"/>
                 <local:DayCourseView x:Name="TuesdayView" Grid.Row="1" Grid.Column="1" 
-                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Tuesday)}"/>
+                                     Model="{x:Bind ViewModel.Tuesday}"/>
                 <local:DayCourseView x:Name="WednesdayView" Grid.Row="1" Grid.Column="2" 
-                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Wednesday)}"/>
+                                     Model="{x:Bind ViewModel.Wednesday}"/>
                 <local:DayCourseView x:Name="ThursdayView" Grid.Row="1" Grid.Column="3" 
-                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Thursday)}"/>
+                                     Model="{x:Bind ViewModel.Thursday}"/>
                 <local:DayCourseView x:Name="FridayView" Grid.Row="1" Grid.Column="4" 
-                                     Model="{x:Bind ViewModel.GetModelOf(Model:Day.Friday)}"/>
+                                     Model="{x:Bind ViewModel.Friday}"/>
             </Grid>
         </ScrollViewer>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,110 +9,86 @@ using TimetableDesigner.Model;
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
-    public class DayCourseViewModel
+    public class DayCourseViewModel : ViewModelBase
     {
-        private ObservableCollection<CourseViewModel> courseviews = new ObservableCollection<CourseViewModel>();
+        public ObservableCollection<CourseViewModel> CourseViews { get; private set; } = new ObservableCollection<CourseViewModel>();
 
-        public ObservableCollection<CourseViewModel> CourseViews
+        public Day Day { get; set; }
+
+        private Time from = new Time(6, 0), to = new Time(20, 0);
+
+        private ObservableCollection<CourseViewModel> courses;
+        public ObservableCollection<CourseViewModel> Courses
         {
             get
             {
-                return courseviews;
+                return courses;
             }
-        }
-
-        private IList<Course> courses;
-        public IList<Course> Courses
-        {
-            get => courses;
             set
             {
+                if(courses !=null)
+                courses.CollectionChanged -= OnCollectionChanged;
                 courses = value;
-                ConvertCoursesToViews();
+                if(courses !=null)
+                courses.CollectionChanged += OnCollectionChanged;
+                ConvertCourseViews();
             }
         }
+
         public DayCourseViewModel()
         {
-            this.Day = Day.Friday;
-            Course c1 = new Course(), c2 = new Course();
-            Teacher teacher = new Teacher { Name = "Teacher neve" };
-            Subject subject = new Subject { Name = "Tantárgy" };
-            teacher.AddSubject(subject);
-            Group group = new Group() { Name = "Csoport" };
-            CourseManager.ChangeTime(c1, Day.Friday, new Time(8, 0), new Time(9, 0));
-            CourseManager.ChangeTime(c2, Day.Friday, new Time(10, 0), new Time(12, 0));
-            CourseManager.ChangeGroup(c1, group);
-            CourseManager.ChangeGroup(c2, group);
-            CourseManager.ChangeTeacher(c1, teacher);
-            CourseManager.ChangeTeacher(c2, teacher);
-            CourseManager.ChangeSubject(c1, subject);
-            CourseManager.ChangeSubject(c2, subject);
-            List<Course> courses = new List<Course>
-            {
-                c1,
-                c2
-            };
-            this.Courses = courses;
-            ConvertCoursesToViews();
+
         }
 
-        public DayCourseViewModel(IList<Course> courses)
+        private void ConvertCourseViews()
         {
-            this.courses = courses;
-            ConvertCoursesToViews();
-        }
-
-        private void ConvertCoursesToViews()
-        {
-            try
+            List<CourseViewModel> temp = new List<CourseViewModel>();
+            foreach(var item in courses)
             {
-                List<Course> list = new List<Course>();
-                Time time = From;
-                foreach (Course c in courses)
-                {
-                    if (c.Day == this.Day)
-                        list.Add(c);
-                }
-                list.Sort(new CourseComparer());
-                //Erasing the former list
-                courseviews = new ObservableCollection<CourseViewModel>();
-                foreach (Course item in list)
-                {
-                    if (item.Start != time)
-                        courseviews.Add(new CourseViewModel(time, item.Start));
-                    time = item.End;
-                    courseviews.Add(new CourseViewModel(item));
-                }
-                if (time < To)
-                    courseviews.Add(new CourseViewModel(time, To));
+                if (item.Day == this.Day)
+                    temp.Add(item);
             }
-            catch(Exception e)
+            temp.Sort(new CourseViewModelComparer());
+            Time last = from;
+            CourseViews.Clear();
+            foreach(var item in temp)
             {
-                Console.WriteLine(e.StackTrace);
+                if (last < item.Model.Start)
+                    CourseViews.Add(new CourseViewModel(last, item.Model.Start));
+                CourseViews.Add(item);
+                last = item.Model.End;
             }
-        }
-
-        public string DayString { get { return Day.ToString(); } }
-
-        public Day  Day {get; set;}
-
-        public Time From { get; set; } = new Time(6, 0);
-        public Time To { get; set; } = new Time(20, 0);
-
-        private class CourseComparer : IComparer<Course>
-        {
-            public int Compare(Course x, Course y)
+            if(last < to)
             {
-                return x.Start.ToMinutes() - y.Start.ToMinutes();
+                CourseViews.Add(new CourseViewModel(last, to));
             }
         }
 
 
-        //
-        public CourseViewModel Selected
+        
+
+        public void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            get;
-            set;
+            ConvertCourseViews();
+            /*switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+
+            }*/
         }
+
+        private class CourseViewModelComparer : Comparer<CourseViewModel>
+        {
+            public override int Compare(CourseViewModel x, CourseViewModel y)
+            {
+                return x.Model.Start.ToMinutes() - y.Model.Start.ToMinutes();
+            }
+        }
+
     }
 }

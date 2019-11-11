@@ -1,46 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimetableDesigner.Graphics.Data;
 using TimetableDesigner.Model;
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
-    public class TimetableViewModel
+    public class TimetableViewModel : ViewModelBase
     {
         private const int NumOfDays = 5;
         DayCourseViewModel[] days = new DayCourseViewModel[NumOfDays];
 
+        private ObservableCollection<CourseViewModel> courses;
+        public ObservableCollection<CourseViewModel> Courses {
+            get { return courses; }
+            set { courses = value;
+                foreach(var item in days)
+                {
+                    item.Courses = courses;
+                }
+                OnPropertyChanged();
+            }
+        }
+
         public TimetableViewModel()
         {
-            for (int i = 0; i < NumOfDays; ++i)
+            for (int i = 0; i < NumOfDays; i++)
             {
                 days[i] = new DayCourseViewModel();
+                days[i].Day = (Day)i;
             }
+            
         }
-        public DayCourseViewModel GetModelOf(Day day)
+        private GroupViewModel group;
+        public GroupViewModel Group
         {
-            return days[(int)day];
-        }
-
-        private IList<Course> courses = new List<Course>();
-        public IList<Course> Courses
-        {
-            get => courses; set
+            get
             {
-                courses = value;
-                for (int i = 0; i < NumOfDays; i++)
-                {
-                    days[i].Day = (Day)i;
-                    days[i].Courses = courses;
-                }
+                return group;
+            }
+            set
+            {
+                group = value;
+                Courses = group.Courses;
             }
         }
 
-        public CourseViewModel SelectedItem
-        {
-            get; set;
-        }
+        public DayCourseViewModel Monday { get { return days[0]; } }
+        public DayCourseViewModel Tuesday { get { return days[1]; } }
+        public DayCourseViewModel Wednesday { get { return days[2]; } }
+        public DayCourseViewModel Thursday { get { return days[3]; } }
+        public DayCourseViewModel Friday { get { return days[4]; } }
+
+
     }
 }
