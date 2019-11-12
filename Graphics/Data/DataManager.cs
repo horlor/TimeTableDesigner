@@ -10,7 +10,7 @@ using TimetableDesigner.Persistence;
 
 namespace TimetableDesigner.Graphics.Data
 {
-    public class DataManager : ITeacherManager, ISubjectManager, ICourseManager, IGroupManager
+    public class DataManager : ITeacherManager, ISubjectManager, IGroupManager
     {
         public JsonController dataController;
 
@@ -37,11 +37,6 @@ namespace TimetableDesigner.Graphics.Data
             {
                 Groups.Add(new GroupViewModel(item));
             }
-            /*
-            foreach (Course item in dataController.CourseRepo.GetList())
-            {
-                Courses.Add(new CourseViewModel(item));
-            }*/
         }
 
         private static DataManager instance;
@@ -70,6 +65,11 @@ namespace TimetableDesigner.Graphics.Data
         public void RemoveSubject(SubjectViewModel subject)
         {
             Subjects.Remove(subject);
+            foreach(var course in dataController.CourseRepo.GetList())
+            {
+                if (course.Subject == subject.Model)
+                    CourseManager.ChangeSubject(course, null);
+            }
             dataController.SubjectRepo.Remove(subject.Model);
         }
 
@@ -111,33 +111,6 @@ namespace TimetableDesigner.Graphics.Data
             foreach(var item in Teachers)
             {
                 if (item.Model == teacher)
-                    return item;
-            }
-            return null;
-        }
-
-        public ObservableCollection<CourseViewModel> Courses { get; private set; } = new ObservableCollection<CourseViewModel>();
-        public CourseViewModel CreateCourse()
-        {
-            var item = new Course();
-            var ret = new CourseViewModel(item);
-            dataController.CourseRepo.Store(item);
-            Courses.Add(ret);
-            return ret;
-        }
-
-        public void RemoveCourse(CourseViewModel model)
-        {
-            Courses.Remove(model);
-            model.Model.Teacher = null ;
-            model.Model.Group = null;
-            dataController.CourseRepo.Remove(model.Model);
-        }
-        public CourseViewModel FindCourseByModel(Course course)
-        {
-            foreach(var item in Courses)
-            {
-                if (item.Model == course)
                     return item;
             }
             return null;

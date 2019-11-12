@@ -46,22 +46,15 @@ namespace TimetableDesigner.Model
         }
         protected internal void RemoveCourse(Course course)
         {
-            if (course.Teacher == this)
-            {
-                course.Teacher = null;
                 courses.Remove(course);
-            }
-
         }
 
         public void RemoveFromAllCourses()
         {
-            foreach(var course in courses)
+            while(courses.Count > 0)
             {
-                if(course.Teacher == this)
-                course.Teacher = null;
+                courses[0].Teacher = null;
             }
-            courses.Clear();
         }
 
         public void AddSubject(Subject subject)

@@ -9,7 +9,7 @@ namespace TimetableDesigner.Model
         //TODO watching for null params
         public static void ChangeSubject(Course course, Subject subject)
         {
-            if (course.Teacher == null || course.Teacher.IsATeachedSubject(subject))
+            if (course.Teacher == null || course.Teacher.IsATeachedSubject(subject) || subject ==null)
             {
                 course.Subject = subject;
             }

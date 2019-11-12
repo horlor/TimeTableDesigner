@@ -17,7 +17,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         public SubjectsPageViewModel()
         {
             NewSubjectCmd = new CommandBase(o => { var subject = SubjectManager.CreateSubject(); Selected = subject; }, o => true);
-            RemoveSubjectCmd = null;
+            RemoveSubjectCmd = new CommandBase(o=>RemoveSubject(), o => selected!=null);
         }
 
         public ObservableCollection<SubjectViewModel> Subjects
@@ -56,6 +56,7 @@ namespace TimetableDesigner.Graphics.ViewModel
                 else
                     previous.Drop();
             }
+            RemoveSubjectCmd.ExecutionChanged();
 
         }
 
@@ -73,6 +74,22 @@ namespace TimetableDesigner.Graphics.ViewModel
             if (result == ContentDialogResult.Primary)
                 return true;
             return false;
+        }
+
+        public async void RemoveSubject()
+        {
+            ContentDialog SaveDialog = new ContentDialog
+            {
+                Title = "Reference removal",
+                Content = "There can be many references to this Subject in courses, these references will be dropped, and can not be undone. Are you sure to continue?",
+                CloseButtonText = "No",
+                PrimaryButtonText = "Yes"
+            };
+
+            ContentDialogResult result = await SaveDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                SubjectManager.RemoveSubject(selected);
+
         }
 
 

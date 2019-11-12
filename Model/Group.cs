@@ -33,7 +33,6 @@ namespace TimetableDesigner.Model
 
         protected internal void RemoveCourse(Course course)
         {
-            course.Group = null;
             courses.Remove(course);
         }
 

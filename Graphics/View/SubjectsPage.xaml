@@ -14,20 +14,11 @@
         <ListView ItemsSource="{x:Bind Model.Subjects, Mode=OneWay}"
                   SelectionMode="Single"
                   SelectedItem="{x:Bind Model.Selected, Mode=TwoWay}"
-                  SelectionChanged="{x:Bind Model.SelectionChanged}">
+                  SelectionChanged="{x:Bind Model.SelectionChanged}"
+                  MinWidth="200">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:SubjectViewModel">
-                    <Grid MinWidth="200">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{x:Bind Name, Mode=OneWay}"/>
-                        <Button x:Name="btnRemove" Grid.Column="2" Content="&#xE107;"
-                                    FontFamily="Segoe MDL2 Assets" Margin="5" 
-                                    Background="White"/>
-                    </Grid>
+                    <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -39,6 +30,8 @@
                         Command="{x:Bind Model.Selected.DropChangesCmd  , Mode=OneWay}"/>
                 <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         Command="{x:Bind Model.Selected.SaveChangesCmd, Mode=OneWay}"/>
+                <Button x:Name="btnRemove"  Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5"
+                        Command="{x:Bind Model.RemoveSubjectCmd}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Name: " Margin="10,0,10,0" VerticalAlignment="Center"/>

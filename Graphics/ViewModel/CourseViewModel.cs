@@ -78,8 +78,8 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public string SubjectString
         {
-            get{ 
-                if(Model !=null) 
+            get{
+                if (Model != null && Model.Subject !=null)
                     return Model.Subject.Name;
                 return "";
             }
@@ -89,9 +89,11 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             get
             {
-                if(Model!=null)
-                    return Model.Teacher.Name;
-                return "";
+                if (Model is null)
+                    return "";
+                if (Model.Teacher is null)
+                    return "";
+                return Model.Teacher.Name;
             }
         }
 

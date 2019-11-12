@@ -25,9 +25,9 @@ namespace TimetableDesigner.Graphics.ViewModel
         public TeachersPageViewModel()
         {
             NewTeacherCmd = new CommandBase((o) => { var item = TeacherManager.CreateTeacher(); Selected = item; }, (o) => true);
-            RemoveTeacherCmd = new CommandBase((o) => { TeacherManager.RemoveTeacher(selected); }, IsSelectedNotNull);
-            SaveChangesCmd = new CommandBase((o) => Selected.Save(), (o) => IsSelectedNotNull(o) && Selected.IsChanged());
-            DropChangesCmd = new CommandBase((o) => Selected.Drop(), (o) => IsSelectedNotNull(o) && !Selected.IsChanged());
+            RemoveTeacherCmd = new CommandBase((o) => RemoveTeacher(),o => IsSelectedNotNull());
+            SaveChangesCmd = new CommandBase((o) => Selected.Save(), (o) => IsSelectedNotNull() && Selected.IsChanged());
+            DropChangesCmd = new CommandBase((o) => Selected.Drop(), (o) => IsSelectedNotNull() && !Selected.IsChanged());
 
         }
 
@@ -50,7 +50,7 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
         }
 
-        private bool IsSelectedNotNull(object o)
+        private bool IsSelectedNotNull()
         {
             return !(selected is null);
         }
@@ -65,6 +65,7 @@ namespace TimetableDesigner.Graphics.ViewModel
                 else
                     previous.Drop();
             }
+            RemoveTeacherCmd.ExecutionChanged();
                 
         }
 
@@ -82,6 +83,23 @@ namespace TimetableDesigner.Graphics.ViewModel
             if (result == ContentDialogResult.Primary)
                 return true;
             return false;    
+        }
+
+        private async void RemoveTeacher()
+        {
+            ContentDialog RemoveDialog = new ContentDialog
+            {
+                Title = "Reference problems",
+                Content = String.Format("This teacher teaches in {0} courses, these references will be dropped," +
+                " and will not be undoable. Are you sure to continue", Selected.Model.Courses.Count),
+                CloseButtonText = "No",
+                PrimaryButtonText = "Yes"
+            };
+            var result = await RemoveDialog.ShowAsync();
+            if(result == ContentDialogResult.Primary)
+            {
+                TeacherManager.RemoveTeacher(Selected);
+            }
         }
 
         public CommandBase NewTeacherCmd { get; }
