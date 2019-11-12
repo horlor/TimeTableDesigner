@@ -20,16 +20,19 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
         public TimetableViewModel Timetable { get;} = new TimetableViewModel();
+
+        private GroupViewModel group;
         public GroupViewModel SelectedGroup {
             get
             {
-                return Timetable.Group;
+                return group;
             }
             set
             {
-                if(value != Timetable.Group)
+                if(value != group)
                 {
-                    Timetable.Group = value;
+                    group = value;
+                    Timetable.Courses = group.Courses;
                     OnPropertyChanged();
                 }
                 

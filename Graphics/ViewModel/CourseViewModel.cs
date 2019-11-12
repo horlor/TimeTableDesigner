@@ -4,12 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimetableDesigner.Graphics.Data;
 using TimetableDesigner.Model;
 
 
 namespace TimetableDesigner.Graphics.ViewModel
 {
-    public class CourseViewModel
+    public class CourseViewModel : ViewModelBase
     {
         private const int MIN_PIXEL=20;
         public Course Model { get; set; }
@@ -36,6 +37,8 @@ namespace TimetableDesigner.Graphics.ViewModel
         public CourseViewModel(Course course)
         {
             Model = course;
+            Teacher = DataManager.Instance.FindTeacherByModel(Model.Teacher);
+            Subject = DataManager.Instance.FindSubjectByModel(Model.Subject);
         }
 
         public CourseViewModel(Time from, Time to)
@@ -108,5 +111,42 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
         public Day Day { get { return Model.Day; } }
+
+        private SubjectViewModel subject;
+        public SubjectViewModel Subject
+        {
+            get
+            {
+                return subject;
+            }
+            set
+            {
+                if(subject != value)
+                {
+                    subject = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private TeacherViewModel teacher;
+        public TeacherViewModel Teacher
+        {
+            get
+            {
+                return teacher;
+            }
+            set
+            {
+                if(teacher != value)
+                {
+                    teacher = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        
     }
 }

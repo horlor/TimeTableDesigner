@@ -23,7 +23,7 @@ namespace TimetableDesigner.Graphics.Data
                 Path = "data.json"
             };
             dataController.Load();
-
+            
             foreach (Teacher item in dataController.TeacherRepo.GetList())
             {
                 Teachers.Add(new TeacherViewModel(item));
@@ -33,14 +33,15 @@ namespace TimetableDesigner.Graphics.Data
             {
                 Subjects.Add(new SubjectViewModel(item));
             }
-            foreach (Course item in dataController.CourseRepo.GetList())
-            {
-                Courses.Add(new CourseViewModel(item));
-            }
             foreach (Group item in dataController.GroupRepo.GetList())
             {
                 Groups.Add(new GroupViewModel(item));
             }
+            /*
+            foreach (Course item in dataController.CourseRepo.GetList())
+            {
+                Courses.Add(new CourseViewModel(item));
+            }*/
         }
 
         private static DataManager instance;
@@ -71,6 +72,19 @@ namespace TimetableDesigner.Graphics.Data
             Subjects.Remove(subject);
             dataController.SubjectRepo.Remove(subject.Model);
         }
+
+
+        public SubjectViewModel FindSubjectByModel(Subject s)
+        {
+            foreach(var item in Subjects)
+            {
+                if (item.Model == s)
+                    return item;
+            }
+            return null;
+        }
+
+
         public ObservableCollection<TeacherViewModel> Teachers { get; private set; }
             = new ObservableCollection<TeacherViewModel>();
 
@@ -92,6 +106,16 @@ namespace TimetableDesigner.Graphics.Data
             dataController.TeacherRepo.Remove(teacher.Model);
         }
 
+        public TeacherViewModel FindTeacherByModel(Teacher teacher)
+        {
+            foreach(var item in Teachers)
+            {
+                if (item.Model == teacher)
+                    return item;
+            }
+            return null;
+        }
+
         public ObservableCollection<CourseViewModel> Courses { get; private set; } = new ObservableCollection<CourseViewModel>();
         public CourseViewModel CreateCourse()
         {
@@ -108,6 +132,15 @@ namespace TimetableDesigner.Graphics.Data
             model.Model.Teacher = null ;
             model.Model.Group = null;
             dataController.CourseRepo.Remove(model.Model);
+        }
+        public CourseViewModel FindCourseByModel(Course course)
+        {
+            foreach(var item in Courses)
+            {
+                if (item.Model == course)
+                    return item;
+            }
+            return null;
         }
 
 
@@ -129,8 +162,12 @@ namespace TimetableDesigner.Graphics.Data
             dataController.GroupRepo.Remove(model.Model);
         }
 
-
-        
-
+        public GroupViewModel FindGroupByModel(Group group)
+        {
+            foreach (var item in Groups)
+                if (item.Model == group)
+                    return item;
+            return null;
+        }
     }
 }

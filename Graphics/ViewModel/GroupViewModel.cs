@@ -18,10 +18,6 @@ namespace TimetableDesigner.Graphics.ViewModel
             name = group.Name;
             SaveChangesCmd = new CommandBase((o) => { Save();}, (o) => IsChanged());
             DropChangesCmd = new CommandBase((o) => { Drop();}, (o) => IsChanged());
-            foreach(var item in Model.Courses)
-            {
-                Courses.Add(new CourseViewModel(item));
-            }
         }
 
         public Group Model { get; }
@@ -79,6 +75,17 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
 
-        public ObservableCollection<CourseViewModel> Courses { get; } = new ObservableCollection<CourseViewModel>();
+        public ObservableCollection<CourseViewModel> Courses
+        {
+            get
+            {
+                ObservableCollection<CourseViewModel> courseViews = new ObservableCollection<CourseViewModel>();
+                foreach(var item in Model.Courses)
+                {
+                    courseViews.Add(new CourseViewModel(item));
+                }
+                return courseViews;
+            }
+        }
     }
  }

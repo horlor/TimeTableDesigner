@@ -35,19 +35,6 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
             
         }
-        private GroupViewModel group;
-        public GroupViewModel Group
-        {
-            get
-            {
-                return group;
-            }
-            set
-            {
-                group = value;
-                Courses = group.Courses;
-            }
-        }
 
         public DayCourseViewModel Monday { get { return days[0]; } }
         public DayCourseViewModel Tuesday { get { return days[1]; } }

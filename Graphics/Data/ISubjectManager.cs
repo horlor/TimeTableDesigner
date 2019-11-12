@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TimetableDesigner.Graphics.ViewModel;
+using TimetableDesigner.Model;
 
 namespace TimetableDesigner.Graphics.Data
 {
@@ -13,5 +14,6 @@ namespace TimetableDesigner.Graphics.Data
         SubjectViewModel CreateSubject();
         void RemoveSubject(SubjectViewModel model);
         ObservableCollection<SubjectViewModel> Subjects { get; }
+        SubjectViewModel FindSubjectByModel(Subject s);
     }
 }

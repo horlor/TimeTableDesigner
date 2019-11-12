@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TimetableDesigner.Graphics.ViewModel;
 using System.Collections.ObjectModel;
+using TimetableDesigner.Model;
 
 namespace TimetableDesigner.Graphics.Data
 {
@@ -13,5 +14,6 @@ namespace TimetableDesigner.Graphics.Data
         CourseViewModel CreateCourse();
         void RemoveCourse(CourseViewModel course);
         ObservableCollection<CourseViewModel> Courses { get; }
+        CourseViewModel FindCourseByModel(Course course);
     }
 }

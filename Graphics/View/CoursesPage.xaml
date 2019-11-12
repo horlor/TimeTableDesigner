@@ -11,8 +11,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -29,6 +29,15 @@
             </ComboBox>
         </StackPanel>
         <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind Model.Timetable}" Selected="{x:Bind Model.SelectedCourse, Mode=TwoWay}" Grid.Row="1"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="10,5,5,5" />
+            <Button x:Name="btnRemove" Content="&#xE107;"
+                                    FontFamily="Segoe MDL2 Assets" Margin="5" />
+            <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" 
+                        />
+            <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
+                        />
+        </StackPanel>
         <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Model.SelectedCourse, Mode=OneWay}" Timetable="{x:Bind Timetable}" Grid.Row="3"/>
         <TextBlock x:Name="text" Text="{x:Bind Model.SelectedCourse.ToString()}" FontSize="20" Grid.Row="4"/>
     </Grid>

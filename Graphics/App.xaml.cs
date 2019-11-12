@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TimetableDesigner.Graphics.Data;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -31,6 +32,7 @@ namespace Graphics
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             UnhandledException += OnUnhandledException;
+            System.Diagnostics.Debug.WriteLine(DataManager.Instance.Teachers.Count);
         }
 
         /// <summary>

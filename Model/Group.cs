@@ -53,10 +53,6 @@ namespace TimetableDesigner.Model
             return false;
         }
 
-        public bool CourseChanged(Course course)
-        {
-            return HasCourseAtTheSameTime(course);
-        }
 
         public bool HasCourseAtTimePeriod(Day day, Time from, Time to)
         {
