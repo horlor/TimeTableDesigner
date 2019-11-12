@@ -85,7 +85,6 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public void AddNewSubject(object o)
         {
-            System.Diagnostics.Debug.WriteLine("o: "+o.GetType().FullName+"\n");
             if (o is SubjectViewModel svm)
             {
                 Model.AddSubject(svm.Model);

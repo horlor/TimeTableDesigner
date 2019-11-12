@@ -17,7 +17,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         public GroupsPageViewModel()
         {
             NewGroupCmd = new CommandBase(o => { var group = GroupManager.CreateGroup(); Selected = group; }, o => true);
-            RemoveGroupCmd = null;
+            RemoveGroupCmd = new CommandBase(o=> RemoveGroup(), o=> selected!=null);
         }
 
         public ObservableCollection<GroupViewModel> Groups
@@ -42,6 +42,7 @@ namespace TimetableDesigner.Graphics.ViewModel
                     previous = selected;
                     selected = value;
                     OnPropertyChanged();
+                    RemoveGroupCmd.ExecutionChanged();
                 }
             }
         }
@@ -73,6 +74,22 @@ namespace TimetableDesigner.Graphics.ViewModel
             if (result == ContentDialogResult.Primary)
                 return true;
             return false;
+        }
+
+        private async void RemoveGroup()
+        {
+            ContentDialog RemoveDialog = new ContentDialog
+            {
+                Title = "Reference removal",
+                Content = String.Format("This group has {0} courses, these courses will be deleted," +
+                " and after this command, they can not be accessed. Are you sure to continue?", Selected.Model.Courses.Count),
+                CloseButtonText = "No",
+                PrimaryButtonText = "Yes"
+            };
+
+            ContentDialogResult result = await RemoveDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                GroupManager.RemoveGroup(selected);
         }
 
 

@@ -68,12 +68,12 @@
             <StackPanel Orientation="Horizontal" Margin="10, 0 ,10,5" Grid.Row="0">
                 <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         Command="{x:Bind Model.NewTeacherCmd}"/>
+                <Button x:Name="btnRemove" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5"
+                        Command="{x:Bind Model.RemoveTeacherCmd}"/>
                 <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         Command="{x:Bind Model.Selected.DropChangesCmd, Mode=OneWay}"/>
                 <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         Command="{x:Bind Model.Selected.SaveChangesCmd, Mode=OneWay}"/>
-                <Button x:Name="btnRemove" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5"
-                        Command="{x:Bind Model.RemoveTeacherCmd}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBlock Text="Name: " Margin="10"/>

@@ -46,6 +46,7 @@ namespace TimetableDesigner.Graphics.ViewModel
                     previous = selected;
                     selected = value;
                     OnPropertyChanged();
+                    RemoveTeacherCmd.ExecutionChanged();
                 }
             }
         }
@@ -65,8 +66,7 @@ namespace TimetableDesigner.Graphics.ViewModel
                 else
                     previous.Drop();
             }
-            RemoveTeacherCmd.ExecutionChanged();
-                
+
         }
 
         public async Task<bool> SaveOrDropDialog()

@@ -28,7 +28,7 @@ namespace TimetableDesigner.Model
 
         public static void ChangeTeacher(Course course, Teacher teacher)
         {
-            if (teacher.HasCourseAtTheSameTime(course))
+            if (teacher != null && teacher.HasCourseAtTheSameTime(course))
                 throw new TeacherTimeException("New teacher has a course at that time");
             course.Teacher = teacher;
         }

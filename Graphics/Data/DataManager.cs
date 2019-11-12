@@ -131,7 +131,11 @@ namespace TimetableDesigner.Graphics.Data
         public void RemoveGroup(GroupViewModel model)
         {
             Groups.Remove(model);
-            model.Model.RemoveFromAllCourses();
+            foreach(var course in model.Model.Courses)
+            {
+                CourseManager.ChangeTeacher(course, null);
+                dataController.CourseRepo.Remove(course);
+            }
             dataController.GroupRepo.Remove(model.Model);
         }
 
