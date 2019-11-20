@@ -17,7 +17,7 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public CourseViewModel()
         {
-            
+            /*
             Course course = new Course();
             Teacher teacher = new Teacher()
             {
@@ -30,7 +30,7 @@ namespace TimetableDesigner.Graphics.ViewModel
             CourseManager.ChangeTeacher(course, teacher);
             CourseManager.ChangeSubject(course, subject);
             CourseManager.ChangeTime(course,Day.Friday,new Time(8, 45), new Time(9, 45));
-            this.Model = course;
+            this.Model = course;*/
             
         }
 

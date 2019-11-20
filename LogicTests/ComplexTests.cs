@@ -15,10 +15,10 @@ namespace LogicTests
             Subject s1 = new Subject(), s2 = new Subject();
             teacher.AddSubject(s1);
             Course course = new Course();
-            CourseManager.ChangeSubject(course, s1);
-            Assert.DoesNotThrow(() => { CourseManager.ChangeTeacher(course, teacher); });
+            CourseManager.Instance.ChangeSubject(course, s1);
+            Assert.DoesNotThrow(() => { CourseManager.Instance.ChangeTeacher(course, teacher); });
             Assert.False(teacher.IsATeachedSubject(s2));
-            Assert.Catch<TeacherSubjectException>(() => { CourseManager.ChangeSubject(course,s2); });
+            Assert.Catch<TimetableException>(() => { CourseManager.Instance.ChangeSubject(course,s2); });
         }
     }
 }

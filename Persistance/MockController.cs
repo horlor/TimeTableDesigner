@@ -27,57 +27,57 @@ namespace TimetableDesigner.Persistence
             for (int i = 8; i < 16; i += 2)
             {
                 Course course = new Course();
-                CourseManager.ChangeGroup(course, mgroup);
-                CourseManager.ChangeTeacher(course, mteacher);
-                CourseManager.ChangeSubject(course, tsubject);
-                CourseManager.ChangeTime(course, Day.Monday, new Time(i, 0), new Time(i + 1, 0));
+                CourseManager.Instance.ChangeGroup(course, mgroup);
+                CourseManager.Instance.ChangeTeacher(course, mteacher);
+                CourseManager.Instance.ChangeSubject(course, tsubject);
+                CourseManager.Instance.ChangeTime(course, Day.Monday, new Time(i, 0), new Time(i + 1, 0));
                 controller.CourseRepo.Store(course);
             }
             
             for (int i = 8; i < 16; i += 2)
             {
                 Course course = new Course();
-                CourseManager.ChangeGroup(course, mgroup);
-                CourseManager.ChangeTeacher(course, jteacher);
-                CourseManager.ChangeSubject(course, asubject);
-                CourseManager.ChangeTime(course, Day.Tuesday, new Time(i, 0), new Time(i + 1, 0));
+                CourseManager.Instance.ChangeGroup(course, mgroup);
+                CourseManager.Instance.ChangeTeacher(course, jteacher);
+                CourseManager.Instance.ChangeSubject(course, asubject);
+                CourseManager.Instance.ChangeTime(course, Day.Tuesday, new Time(i, 0), new Time(i + 1, 0));
                 controller.CourseRepo.Store(course);
             }
             //Szerda kész
             for (int i = 8; i < 16; i += 2)
             {
                 Course course = new Course();
-                CourseManager.ChangeGroup(course, mgroup);
-                CourseManager.ChangeTeacher(course, jteacher);
-                CourseManager.ChangeSubject(course, asubject);
-                CourseManager.ChangeTime(course, Day.Wednesday, new Time(i, 0), new Time(i + 2, 0));
+                CourseManager.Instance.ChangeGroup(course, mgroup);
+                CourseManager.Instance.ChangeTeacher(course, jteacher);
+                CourseManager.Instance.ChangeSubject(course, asubject);
+                CourseManager.Instance.ChangeTime(course, Day.Wednesday, new Time(i, 0), new Time(i + 2, 0));
                 controller.CourseRepo.Store(course);
             }
             for (int i = 8; i < 16; i += 2)
             {
                 Course course = new Course();
-                CourseManager.ChangeGroup(course, mgroup);
-                CourseManager.ChangeTeacher(course, mteacher);
-                CourseManager.ChangeSubject(course, tsubject);
-                CourseManager.ChangeTime(course, Day.Thursday, new Time(i, 0), new Time(i + 1, 0));
+                CourseManager.Instance.ChangeGroup(course, mgroup);
+                CourseManager.Instance.ChangeTeacher(course, mteacher);
+                CourseManager.Instance.ChangeSubject(course, tsubject);
+                CourseManager.Instance.ChangeTime(course, Day.Thursday, new Time(i, 0), new Time(i + 1, 0));
                 controller.CourseRepo.Store(course);
             }
             for (int i = 8; i < 16; i += 2)
             {
                 Course course = new Course();
-                CourseManager.ChangeGroup(course, mgroup);
-                CourseManager.ChangeTeacher(course, mteacher);
-                CourseManager.ChangeSubject(course, tsubject);
-                CourseManager.ChangeTime(course, Day.Friday, new Time(i, 0), new Time(i + 1, 0));
+                CourseManager.Instance.ChangeGroup(course, mgroup);
+                CourseManager.Instance.ChangeTeacher(course, mteacher);
+                CourseManager.Instance.ChangeSubject(course, tsubject);
+                CourseManager.Instance.ChangeTime(course, Day.Friday, new Time(i, 0), new Time(i + 1, 0));
                 controller.CourseRepo.Store(course);
             }
             for (int i = 8; i < 16; i += 2)
             {
                 Course course = new Course();
-                CourseManager.ChangeGroup(course, mgroup);
-                CourseManager.ChangeTeacher(course, jteacher);
-                CourseManager.ChangeSubject(course, asubject);
-                CourseManager.ChangeTime(course, Day.Friday, new Time(i+1, 0), new Time(i + 2, 0));
+                CourseManager.Instance.ChangeGroup(course, mgroup);
+                CourseManager.Instance.ChangeTeacher(course, jteacher);
+                CourseManager.Instance.ChangeSubject(course, asubject);
+                CourseManager.Instance.ChangeTime(course, Day.Friday, new Time(i+1, 0), new Time(i + 2, 0));
                 controller.CourseRepo.Store(course);
             }
             controller.GroupRepo.Store(mgroup);

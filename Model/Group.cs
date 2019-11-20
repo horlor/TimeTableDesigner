@@ -25,7 +25,7 @@ namespace TimetableDesigner.Model
             foreach (var item in courses)
             {
                 if (item.IsInTheSameTimeWith(course))
-                    throw new GroupTimeException("There are a Course in the same time");
+                    throw new TimetableException("There are a Course in the same time");
             }
             
             courses.Add(course);

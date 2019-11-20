@@ -39,7 +39,7 @@ namespace TimetableDesigner.Model
             foreach (var item in Courses)
             {
                 if (item.IsInTheSameTimeWith(course))
-                    throw new TeacherTimeException("There is a Course in the same time");
+                    throw new TimetableException("There is a Course in the same time");
             }
             courses.Add(course);
 
