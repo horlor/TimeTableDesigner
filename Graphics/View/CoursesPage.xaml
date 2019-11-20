@@ -38,7 +38,7 @@
             <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         />
         </StackPanel>
-        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Model.SelectedCourse, Mode=OneWay}" Timetable="{x:Bind Timetable}" Grid.Row="3"/>
+        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Model.SelectedCourse, Mode=OneWay}" Timetable="{x:Bind Timetable, Mode=OneTime}" Grid.Row="3"/>
         <TextBlock x:Name="text" Text="{x:Bind Model.SelectedCourse.ToString()}" FontSize="20" Grid.Row="4"/>
     </Grid>
 </Page>

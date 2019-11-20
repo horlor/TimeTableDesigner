@@ -25,7 +25,7 @@
         <TextBlock Text="Tantárgy:" Grid.Row="0" Padding="10" VerticalAlignment="Center"/>
         <ComboBox x:Name="SubjectList" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                   ItemsSource="{x:Bind DataManager.Subjects, Mode=OneWay}"
-                  >
+                  SelectedItem="{x:Bind Timetable.Selected.Subject, Mode=TwoWay}">
             <ComboBox.ItemTemplate>
                 <DataTemplate x:DataType="vm:SubjectViewModel">
                     <TextBlock Text="{x:Bind Name}"/>

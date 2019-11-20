@@ -124,7 +124,6 @@
     <Compile Include="Data\IGroupManager.cs" />
     <Compile Include="Data\ISubjectManager.cs" />
     <Compile Include="Data\ITeacherManager.cs" />
-    <Compile Include="Data\ObservableCollectionWrapper.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

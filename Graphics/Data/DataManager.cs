@@ -12,12 +12,16 @@ namespace TimetableDesigner.Graphics.Data
 {
     public class DataManager : ITeacherManager, ISubjectManager, IGroupManager
     {
-        public JsonController dataController;
+        private JsonController dataController;
 
+        public CourseManager CourseManager { get; set; } = CourseManager.Instance;
         
         //Using singleton pattern to avoid multiple Data access
         private DataManager()
         {
+            //Load();
+            //TODO safe loading and writing
+            //Posibbly i should use the new Library for runtime apps
             dataController = new JsonController
             {
                 Path = "data.json"
@@ -48,6 +52,20 @@ namespace TimetableDesigner.Graphics.Data
                     instance = new DataManager();
                 return instance;
             }
+        }
+
+        public async void Save()
+        {
+            dataController.Save("data_temp.json");
+            System.IO.File.Move("data.json", "data_old.json");
+            System.IO.File.Move("data_temp.json", "data.json");
+        }
+
+        private async void Load()
+        {
+            if (System.IO.File.Exists("data_temp.json"))
+                throw new System.IO.FileLoadException();
+
         }
 
         public ObservableCollection<SubjectViewModel> Subjects { get; private set; }

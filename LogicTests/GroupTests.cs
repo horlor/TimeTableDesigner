@@ -19,7 +19,7 @@ namespace LogicTests
         {
             Group g = new Group();
             Course c1 = new Course(), c2 = new Course();
-            g.AddCourse(c1);
+            c1.Group = g;
             Assert.True(g.Courses.IndexOf(c1)!=-1);
             Assert.True(g.Courses.IndexOf(c2)==-1);
         }
@@ -29,9 +29,9 @@ namespace LogicTests
         {
             Group g = new Group();
             Course c = new Course();
-            g.AddCourse(c);
+            c.Group = g;
             Assert.True(g.Courses.IndexOf(c)!=-1);
-            g.RemoveCourse(c);
+            c.Group = null;
             Assert.True(g.Courses.IndexOf(c)==-1);
         }
     }

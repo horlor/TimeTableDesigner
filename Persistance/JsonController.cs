@@ -49,15 +49,14 @@ namespace TimetableDesigner.Persistence
                 return data.teacherRepo;
             }
         }
-        /*
-        public JsonCourseRepo CourseRepo { get; set; } = new JsonCourseRepo();
-        public JsonGroupRepo GroupRepo { get; set; } = new JsonGroupRepo();
-        public JsonSubjectRepo SubjectRepo { get; set; } = new JsonSubjectRepo();
 
-        public JsonTeacherRepo TeacherRepo { get; set; } = new JsonTeacherRepo();
-
-    */
         public void Save()
+        {
+            this.Save(this.Path);
+
+        }
+
+        public void Save(string path)
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.Formatting = Formatting.Indented;
@@ -68,10 +67,9 @@ namespace TimetableDesigner.Persistence
             {
                 serializer.Serialize(jsonWriter, data);
             }
-
         }
 
-        public void Load()
+        public void Load(string path)
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
@@ -82,8 +80,13 @@ namespace TimetableDesigner.Persistence
             {
                 data = serializer.Deserialize<Data>(jsonReader);
             }
-
         }
+
+        public void Load()
+        {
+            this.Load(this.path);
+        }
+
         private class Data
         {
             public JsonSubjectRepo subjectRepo = new JsonSubjectRepo();

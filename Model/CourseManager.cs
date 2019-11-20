@@ -6,37 +6,57 @@ namespace TimetableDesigner.Model
 {
     public class CourseManager
     {
-        //TODO watching for null params
-        public static void ChangeSubject(Course course, Subject subject)
+        private static CourseManager instance = null;
+
+        private CourseManager() {}
+
+        public static CourseManager Instance
+        {
+            get
+            {
+                if (instance is null)
+                {
+                    instance = new CourseManager();
+                }
+                return instance;
+            }
+        }
+
+
+        
+        public void ChangeSubject(Course course, Subject subject)
         {
             if (course.Teacher == null || course.Teacher.IsATeachedSubject(subject) || subject ==null)
             {
                 course.Subject = subject;
             }
             else
-                throw new TeacherSubjectException("This teacher does not teach this subject");
+                throw new TimetableException("This teacher does not teach this subject", TimetableError.TeacherTime);
         }
 
-        public static void ChangeTime(Course course, Day day, Time from, Time to)
+        public void ChangeTime(Course course, Day day, Time from, Time to)
         {
+            List<TimetableError> errors = new List<TimetableError>();
             if (course.Teacher != null && course.Teacher.HasCourseAtTimePeriod(day, from, to))
-                throw new TeacherTimeException();
+                errors.Add(TimetableError.TeacherTime);
             if (course.Group != null && course.Group.HasCourseAtTimePeriod(day, from, to))
-                throw new GroupTimeException();
+                errors.Add(TimetableError.GroupTime);
+            if(errors.Count > 0)
+                throw new TimeoutException()
             course.SetTimespan(day, from, to);
         }
 
-        public static void ChangeTeacher(Course course, Teacher teacher)
+        public void ChangeTeacher(Course course, Teacher teacher)
         {
             if (teacher != null && teacher.HasCourseAtTheSameTime(course))
-                throw new TeacherTimeException("New teacher has a course at that time");
+                throw new TimetableException("New teacher has a course at that time", TimetableError.TeacherTime);
             course.Teacher = teacher;
         }
 
-        public static void ChangeGroup(Course course, Group group)
+        public void ChangeGroup(Course course, Group group)
         {
             if (group.HasCourseAtTheSameTime(course))
-                throw new GroupTimeException("New Group has a course overlapping the this one");
+                throw new TimetableException("New Group has a course overlapping the this one", TimetableError.GroupTime);
             course.Group = group;
             
         }
