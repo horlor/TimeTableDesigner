@@ -118,9 +118,9 @@ namespace TimetableDesigner.Model
             //checking for same day
             return Day == day && (
                 //Period has started after this, but not after this has ended
-                start < from && from < end ||
+                start <= from && from < end ||
                 //Period started before this, but it had not ended before this started
-                from < start && start < to);
+                from <= start && start < to);
         }
     }
 

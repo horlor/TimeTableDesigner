@@ -93,6 +93,16 @@ namespace TimetableDesigner.Model
         {
             return hour * 60 + min;
         }
+
+        public static bool operator<=(Time lhs, Time rhs)
+        {
+            return lhs < rhs || lhs == rhs;
+        }
+
+        public static bool operator>=(Time lhs, Time rhs)
+        {
+            return lhs > rhs || lhs == rhs;
+        }
     }
 
 

@@ -31,7 +31,19 @@ namespace TimetableDesigner.Model
                 course.Subject = subject;
             }
             else
-                throw new TimetableException("This teacher does not teach this subject", TimetableError.TeacherTime);
+                throw new TimetableException("This teacher does not teach this subject", TimetableError.TeacherSubject);
+        }
+
+        public IList<TimetableError> ValidateSubject(Course course, Subject subject)
+        {
+            List<TimetableError> ret = new List<TimetableError>();
+            if (course.Teacher != null && !course.Teacher.IsATeachedSubject(subject) && subject != null)
+            {
+                ret.Add(TimetableError.TeacherSubject);
+               
+            }
+            return ret;
+
         }
 
         public void ChangeTime(Course course, Day day, Time from, Time to)
@@ -42,8 +54,18 @@ namespace TimetableDesigner.Model
             if (course.Group != null && course.Group.HasCourseAtTimePeriod(day, from, to))
                 errors.Add(TimetableError.GroupTime);
             if (errors.Count > 0)
-                throw new TimeoutException();
+                throw new TimetableException(errors);
             course.SetTimespan(day, from, to);
+        }
+
+        public IList<TimetableError> ValidateTime(Course course, Day day, Time from, Time to)
+        {
+            List<TimetableError> errors = new List<TimetableError>();
+            if (course.Teacher != null && course.Teacher.HasCourseAtTimePeriod(day, from, to))
+                errors.Add(TimetableError.TeacherTime);
+            if (course.Group != null && course.Group.HasCourseAtTimePeriod(day, from, to))
+                errors.Add(TimetableError.GroupTime);
+            return errors;
         }
 
         public void ChangeTeacher(Course course, Teacher teacher)
@@ -53,6 +75,16 @@ namespace TimetableDesigner.Model
             course.Teacher = teacher;
         }
 
+        public IList<TimetableError> ValidateTeacher(Course course, Teacher teacher)
+        {
+            List<TimetableError> ret = new List<TimetableError>();
+            if (teacher.HasCourseAtTheSameTime(course))
+                ret.Add(TimetableError.TeacherTime);
+            if (!teacher.IsATeachedSubject(course.Subject))
+                ret.Add(TimetableError.TeacherSubject);
+            return ret;
+        }
+
         public void ChangeGroup(Course course, Group group)
         {
             if (group.HasCourseAtTheSameTime(course))
@@ -60,6 +92,16 @@ namespace TimetableDesigner.Model
             course.Group = group;
             
         }
+
+        public IList<TimetableError> ValidateGroup(Course course, Group group)
+        {
+            List<TimetableError> ret = new List<TimetableError>();
+            if (group.HasCourseAtTheSameTime(course)){
+                ret.Add(TimetableError.GroupTime);
+            }
+            return ret;
+        }
+
 
 
     }
