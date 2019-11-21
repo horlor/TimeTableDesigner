@@ -102,6 +102,17 @@ namespace TimetableDesigner.Model
             return ret;
         }
 
+        public IList<TimetableError> ValidateAll(Course course, Group group, Teacher teacher, Subject subject, Day day, Time from, Time to)
+        {
+            List<TimetableError> ret = new List<TimetableError>();
+            if (!teacher.IsATeachedSubject(subject))
+                ret.Add(TimetableError.TeacherSubject);
+            if (teacher.HasCourseAtTimePeriod(day,from,to))
+                ret.Add(TimetableError.TeacherTime);
+            if (group.HasCourseAtTimePeriod(day,from,to))
+                ret.Add(TimetableError.GroupTime);
+            return ret;
+        }
 
 
     }

@@ -44,7 +44,7 @@
         </ComboBox>
         <TimePicker Grid.Column="3" MinuteIncrement="15" Header="Start"/>
         <TimePicker Grid.Column="3" Grid.Row="1" MinuteIncrement="15" Header="End"/>
-        <TextBlock x:Name="ErrorBlock" Grid.Row="3" Text="Errorinfo"/>
+        <TextBlock x:Name="ErrorBlock" Grid.Row="3" Text="{x:Bind Timetable.Selected.ValidationError, Mode=OneWay}"/>
     </Grid>
 
 </UserControl>

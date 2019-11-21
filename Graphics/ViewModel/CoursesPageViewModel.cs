@@ -56,7 +56,5 @@ namespace TimetableDesigner.Graphics.ViewModel
                 }
             }
         }
-
-        public ObservableCollection<CourseViewModel> SCourses { get; private set; } = new ObservableCollection<CourseViewModel>();
     }
 }

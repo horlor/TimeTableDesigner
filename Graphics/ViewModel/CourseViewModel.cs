@@ -13,32 +13,20 @@ namespace TimetableDesigner.Graphics.ViewModel
     public class CourseViewModel : ViewModelBase
     {
         private const int MIN_PIXEL=20;
-        public Course Model { get; set; }
-
-        public CourseViewModel()
-        {
-            /*
-            Course course = new Course();
-            Teacher teacher = new Teacher()
-            {
-                Name = "Tanár"
-            };
-            Subject subject = new Subject { Name = "Tantárgy" };
-            Group group = new Group();
-            teacher.AddSubject(subject);
-            CourseManager.ChangeGroup(course, group);
-            CourseManager.ChangeTeacher(course, teacher);
-            CourseManager.ChangeSubject(course, subject);
-            CourseManager.ChangeTime(course,Day.Friday,new Time(8, 45), new Time(9, 45));
-            this.Model = course;*/
-            
-        }
+        public Course Model { get; }
 
         public CourseViewModel(Course course)
         {
             Model = course;
             Teacher = DataManager.Instance.FindTeacherByModel(Model.Teacher);
             Subject = DataManager.Instance.FindSubjectByModel(Model.Subject);
+
+            this.PropertyChanged += CourseViewModel_PropertyChanged;
+        }
+
+        private void CourseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            ValidateChanges();
         }
 
         public CourseViewModel(Time from, Time to)
@@ -60,8 +48,6 @@ namespace TimetableDesigner.Graphics.ViewModel
                     ret =  ((Model.End.ToMinutes() - Model.Start.ToMinutes()))/15*MIN_PIXEL;
                 else
                     ret=  (end.ToMinutes() - start.ToMinutes()) / 15 * MIN_PIXEL;
-                //if (ret <= 0 || ret >500)
-                //    return 100;
                 return ret;
             }
         }
@@ -149,6 +135,37 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
 
-        
+        private void ValidateChanges()
+        {
+            var errors = CourseManager.Instance.ValidateAll(Model, Model.Group, Teacher.Model, Subject.Model, Day, start, end);
+            string errortext = "";
+            foreach(var item in errors)
+            {
+                switch (item)
+                {
+                    case TimetableError.TeacherSubject: errortext += "The selected Teacher does not teach the given subject.\n"; break;
+                    case TimetableError.TeacherTime: errortext += "The selected Teacher has another course in the given time.\n"; break;
+                }
+            }
+            ValidationError = errortext;
+        }
+
+        private string validationerror = "";
+        public string ValidationError
+        {
+            get { return validationerror; }
+            private set
+            {
+                if(validationerror != value)
+                {
+                    validationerror = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
+
+
+
     }
 }

@@ -25,7 +25,6 @@ namespace TimetableDesigner.Graphics.View
     /// </summary>
     public sealed partial class CoursesPage : Page
     {
-        public CourseViewModel Course = new CourseViewModel();
 
         public TimetableViewModel ViewModel = new TimetableViewModel();
 
