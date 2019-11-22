@@ -26,20 +26,20 @@ namespace TimetableDesigner.Graphics.View
     public sealed partial class CoursesPage : Page
     {
 
-        public TimetableViewModel ViewModel = new TimetableViewModel();
 
         public CoursesPageViewModel Model { get; set; } = new CoursesPageViewModel();
 
         public CoursesPage()
         {
+            
             this.InitializeComponent();
+            /*
             Timetable.SelectionChanged += (sender, e) =>
             {
 
                 text.Text = Timetable.Selected.ToString();
                 edit.ViewModel = Timetable.Selected;
-            };
+            };*/
         }
-
     }
 }

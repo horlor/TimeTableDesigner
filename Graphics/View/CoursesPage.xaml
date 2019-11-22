@@ -4,10 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TimetableDesigner.Graphics.View"
     xmlns:vm="using:TimetableDesigner.Graphics.ViewModel"
+    xmlns:converter="using:TimetableDesigner.Graphics.Converters"
+    xmlns:model="using:TimetableDesigner.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converter:TimeToTimeSpanConverter x:Key="TimeConverter"/>
+        <converter:DayToStringConverter x:Key="DayConverter"/>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -28,7 +35,9 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind Model.Timetable}" Selected="{x:Bind Model.SelectedCourse, Mode=TwoWay}" Grid.Row="1"/>
+
+        <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind Model.Timetable}" Grid.Row="1"
+                             SelectionChanged="{x:Bind Model.Timetable_SelectionChanged}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="10,5,5,5" />
             <Button x:Name="btnRemove" Content="&#xE107;"
@@ -38,7 +47,61 @@
             <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         />
         </StackPanel>
-        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Model.SelectedCourse, Mode=OneWay}" Timetable="{x:Bind Timetable, Mode=OneTime}" Grid.Row="3"/>
-        <TextBlock x:Name="text" Text="{x:Bind Model.SelectedCourse.ToString()}" FontSize="20" Grid.Row="4"/>
+        <!--
+        <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Model, Mode=OneWay}"
+                              Timetable="{x:Bind Timetable, Mode=OneTime}" Grid.Row="3"/>
+        -->
+        <StackPanel Orientation="Vertical" Grid.Row="3">
+            <StackPanel Orientation="Horizontal" >
+                <ComboBox x:Name="SubjectList" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    Header="Subject" MinWidth="290" Margin="0,0,20,0"
+                    ItemsSource="{x:Bind Model.SubjectManager.Subjects, Mode=OneWay}"
+                    SelectedItem="{x:Bind Model.Subject, Mode=TwoWay}"
+                    IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SubjectViewModel">
+                            <TextBlock Text="{x:Bind Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox x:Name="TeacherList" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                          Header="Teacher"
+                          MinWidth="290"
+                    ItemsSource="{x:Bind Model.TeacherManager.Teachers, Mode=OneWay}"
+                    SelectedItem="{x:Bind Model.Teacher, Mode=TwoWay}"
+                    IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:TeacherViewModel">
+                            <TextBlock Text="{x:Bind Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TimePicker MinuteIncrement="15" Header="Start" Padding="5,0,5,20"
+                            IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
+                            Time="{x:Bind Model.Start, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
+
+                <TimePicker MinuteIncrement="15" Header="End" Padding="5,0,5,20"
+                            IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
+                            Time="{x:Bind Model.End, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
+                <ComboBox x:Name="DayList" Header="Day"
+                          HorizontalAlignment="Center"
+                          MinWidth="150" Padding="5,0,5,0"
+                          IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
+                          ItemsSource="{x:Bind Model.Days, Mode=OneTime}"
+                          SelectedItem="{x:Bind Model.Day, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:Day">
+                            <TextBlock Text="{x:Bind Converter={StaticResource DayConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </StackPanel>
+            <TextBlock x:Name="ErrorBlock" Grid.Row="3" Text="{x:Bind Model.ValidationError, Mode=OneWay}"/>
+        </StackPanel>
+
     </Grid>
 </Page>

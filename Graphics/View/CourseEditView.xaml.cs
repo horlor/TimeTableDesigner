@@ -40,10 +40,10 @@ namespace TimetableDesigner.Graphics.View
         }
 
         public static readonly DependencyProperty viewModelProperty =
-       DependencyProperty.Register("ViewModel", typeof(CourseViewModel), typeof(CourseEditView), null);
-        public CourseViewModel ViewModel {
+       DependencyProperty.Register("ViewModel", typeof(CoursesPageViewModel), typeof(CourseEditView), null);
+        public CoursesPageViewModel ViewModel {
             get {
-                return (CourseViewModel)GetValue(viewModelProperty);
+                return (CoursesPageViewModel)GetValue(viewModelProperty);
             }
             set
             {

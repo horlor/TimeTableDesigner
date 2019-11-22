@@ -18,15 +18,6 @@ namespace TimetableDesigner.Graphics.ViewModel
         public CourseViewModel(Course course)
         {
             Model = course;
-            Teacher = DataManager.Instance.FindTeacherByModel(Model.Teacher);
-            Subject = DataManager.Instance.FindSubjectByModel(Model.Subject);
-
-            this.PropertyChanged += CourseViewModel_PropertyChanged;
-        }
-
-        private void CourseViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            ValidateChanges();
         }
 
         public CourseViewModel(Time from, Time to)
@@ -100,70 +91,7 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public Day Day { get { return Model.Day; } }
 
-        private SubjectViewModel subject;
-        public SubjectViewModel Subject
-        {
-            get
-            {
-                return subject;
-            }
-            set
-            {
-                if(subject != value)
-                {
-                    subject = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private TeacherViewModel teacher;
-        public TeacherViewModel Teacher
-        {
-            get
-            {
-                return teacher;
-            }
-            set
-            {
-                if(teacher != value)
-                {
-                    teacher = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-
-        private void ValidateChanges()
-        {
-            var errors = CourseManager.Instance.ValidateAll(Model, Model.Group, Teacher.Model, Subject.Model, Day, start, end);
-            string errortext = "";
-            foreach(var item in errors)
-            {
-                switch (item)
-                {
-                    case TimetableError.TeacherSubject: errortext += "The selected Teacher does not teach the given subject.\n"; break;
-                    case TimetableError.TeacherTime: errortext += "The selected Teacher has another course in the given time.\n"; break;
-                }
-            }
-            ValidationError = errortext;
-        }
-
-        private string validationerror = "";
-        public string ValidationError
-        {
-            get { return validationerror; }
-            private set
-            {
-                if(validationerror != value)
-                {
-                    validationerror = value;
-                    OnPropertyChanged();
-                }
-
-            }
-        }
+ 
 
 
 

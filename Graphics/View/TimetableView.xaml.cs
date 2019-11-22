@@ -66,11 +66,6 @@ namespace TimetableDesigner.Graphics.View
 
         public event SelectionChangedEventHandler SelectionChanged;
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            System.Diagnostics.Debug.WriteLine("Refreshed_" + propertyName);
-        }
 
         public static readonly DependencyProperty SelectedProperty =
         DependencyProperty.Register("Selected", typeof(CourseViewModel), typeof(TimetableView), null);
@@ -84,7 +79,6 @@ namespace TimetableDesigner.Graphics.View
             set
             {
                 SetValue(SelectedProperty, value);
-                //OnPropertyChanged();
             }
         }
         public CourseViewModel GetSelected()

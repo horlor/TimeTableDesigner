@@ -120,6 +120,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Converters\DayToStringConverter.cs" />
+    <Compile Include="Converters\TimeToTimeSpanConverter.cs" />
     <Compile Include="Data\ICourseManager.cs" />
     <Compile Include="Data\IGroupManager.cs" />
     <Compile Include="Data\ISubjectManager.cs" />
@@ -129,6 +131,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CourseEditViewModel.cs" />
     <Compile Include="ViewModel\CoursesPageViewModel.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DayCourseViewModel.cs" />
