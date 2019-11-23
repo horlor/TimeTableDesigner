@@ -26,7 +26,7 @@ namespace TimetableDesigner.Graphics.Converters
                     case Day.Sunday: return "Sunday";
                 }
             }
-            return "nem mükszik";
+            return "";
 
         }
 

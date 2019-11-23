@@ -173,11 +173,9 @@ namespace TimetableDesigner.Graphics.Data
             CourseManager.ChangeGroup(course, null);
         }
 
-        public Course NewCourse()
+        public void StoreCourse(Course c)
         {
-            Course c = new Course();
             dataController.CourseRepo.Store(c);
-            return c;
         }
     }
 }

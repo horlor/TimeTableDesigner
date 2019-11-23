@@ -105,24 +105,18 @@ namespace TimetableDesigner.Model
         public IList<TimetableError> ValidateAll(Course course, Group group, Teacher teacher, Subject subject, Day day, Time from, Time to)
         {
             List<TimetableError> ret = new List<TimetableError>();
-            if (!teacher.IsATeachedSubject(subject))
+            if (teacher != null && !teacher.IsATeachedSubject(subject))
                 ret.Add(TimetableError.TeacherSubject);
-            if (teacher.HasCourseAtTimePeriod(day,from,to,course))
+            if (teacher != null && teacher.HasCourseAtTimePeriod(day,from,to,course))
                 ret.Add(TimetableError.TeacherTime);
-            if (group.HasCourseAtTimePeriod(day,from,to,course))
+            if (group != null && group.HasCourseAtTimePeriod(day,from,to,course))
                 ret.Add(TimetableError.GroupTime);
             return ret;
         }
 
         public void ChangeAll(Course course, Group group, Teacher teacher, Subject subject, Day day, Time from, Time to)
         {
-            List<TimetableError> ret = new List<TimetableError>();
-            if (!teacher.IsATeachedSubject(subject))
-                ret.Add(TimetableError.TeacherSubject);
-            if (teacher.HasCourseAtTimePeriod(day, from, to, course))
-                ret.Add(TimetableError.TeacherTime);
-            if (group.HasCourseAtTimePeriod(day, from, to, course))
-                ret.Add(TimetableError.GroupTime);
+            var ret = ValidateAll(course, group, teacher, subject, day, from, to);
             if (ret.Count > 0)
                 throw new TimetableException(ret);
             course.Group = group;

@@ -15,7 +15,6 @@ namespace TimetableDesigner.Graphics.Converters
             if (value != null)
             {
                 Time t = (Time)value;
-                System.Diagnostics.Debug.WriteLine(t.Hour + ":" + t.Minute);
                 return new TimeSpan(t.Hour, t.Minute, 0);
             }
             return new TimeSpan();

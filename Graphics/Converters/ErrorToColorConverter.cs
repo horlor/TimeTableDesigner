@@ -16,7 +16,6 @@ namespace TimetableDesigner.Graphics.Converters
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            System.Diagnostics.Debug.WriteLine("brusH: " + (bool)value);
             if ((bool)value)
                 return TrueBrush;
             else

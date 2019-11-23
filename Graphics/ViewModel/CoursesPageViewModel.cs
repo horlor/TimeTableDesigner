@@ -54,7 +54,8 @@ namespace TimetableDesigner.Graphics.ViewModel
                 if (value != group)
                 {
                     group = value;
-                    Timetable.Courses = group.Courses;
+                    if(group!=null)
+                        Timetable.Courses = group.Courses;
                     OnPropertyChanged();
                 }
 
@@ -80,6 +81,7 @@ namespace TimetableDesigner.Graphics.ViewModel
         }
 
         private Course course;
+        private bool isnewcourse = false;
 
         public void Timetable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -148,7 +150,7 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         private void ValidateChanges()
         {
-            if (course is null || Teacher.Value == null || Subject.Value == null || SelectedGroup == null)
+            if (course is null || SelectedGroup == null)
                 return;
             List<string> errortexts = new List<string>();
             setPropertiesValid();
@@ -169,7 +171,9 @@ namespace TimetableDesigner.Graphics.ViewModel
                 Start.Validity = false;
                 End.Validity = false;
             }
-            IList<TimetableError> errors = CourseManager.Instance.ValidateAll(course,SelectedGroup.Model,Teacher.Value.Model,Subject.Value.Model,Day.Value,Start.Value,End.Value) ;
+            Subject subject = Subject.Value is null ? null : Subject.Value.Model;
+            Teacher teacher = Teacher.Value is null ? null : Teacher.Value.Model;
+            IList<TimetableError> errors = CourseManager.Instance.ValidateAll(course,SelectedGroup.Model,teacher,subject,Day.Value,Start.Value,End.Value) ;
             foreach(var item in errors)
             {
                 switch (item)
@@ -212,7 +216,13 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         private void NewCourse()
         {
-            
+            course = new Course();
+            Teacher.Value = null;
+            Subject.Value = null;
+            Start.Value = new Time(11, 0);
+            End.Value = new Time(12, 0);
+            isnewcourse = true;
+            EditEnabled = true;
         }
         public CommandBase DeleteCommand { get; }
 
@@ -226,9 +236,16 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         private void Save()
         {
+
             CourseManager manager = CourseManager.Instance;
+            System.Diagnostics.Debug.WriteLine(Start.Value + "-" + End.Value);
             manager.ChangeAll(course, SelectedGroup.Model, Teacher.Value.Model, Subject.Value.Model, Day.Value, Start.Value, End.Value);
             UpdateTimetable();
+            if (isnewcourse)
+            {
+                DataManager.Instance.StoreCourse(course);
+                isnewcourse = false;
+            }
         }
 
         public CommandBase UndoCommand { get; }
