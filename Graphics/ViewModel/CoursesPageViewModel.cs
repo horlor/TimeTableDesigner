@@ -21,7 +21,7 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public CoursesPageViewModel()
         {
-
+            this.PropertyChanged += CoursesPageViewModel_PropertyChanged;
         }
 
         public TimetableViewModel Timetable { get; } = new TimetableViewModel();
@@ -71,15 +71,17 @@ namespace TimetableDesigner.Graphics.ViewModel
             {
                 EditEnabled = false;
                 ValidationError = "The Clicked item is not a Course, please choose another, or add a new one";
-                return;
             }
-            ValidationError = "";
-            Subject = SubjectManager.FindSubjectByModel(course.Subject);
-            Teacher = TeacherManager.FindTeacherByModel(course.Teacher);
-            Start = course.Start;
-            End = course.End;
-            Day = course.Day;
-            EditEnabled = true;
+            else {
+                Subject = SubjectManager.FindSubjectByModel(course.Subject);
+                Teacher = TeacherManager.FindTeacherByModel(course.Teacher);
+                Start = course.Start;
+                End = course.End;
+                Day = course.Day;
+                EditEnabled = true;
+                ValidateChanges();
+            }
+
         }
 
         private bool editEnabled=false;
@@ -181,19 +183,43 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
         }
 
+        private void CoursesPageViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName=="Teacher"||e.PropertyName=="Subject"||e.PropertyName == "Start" || e.PropertyName =="End" || e.PropertyName =="Day")
+                ValidateChanges();
+        }
+
         private void ValidateChanges()
         {
+            if (course is null || Teacher == null || Subject == null || SelectedGroup == null)
+                return;
+            List<string> errortexts = new List<string>();
+            //Local Validation for Time, and Timetable
+            if (Start >= End)
+                errortexts.Add("The given end time is before the start.");
+            if (Start < new Time(6, 0))
+                errortexts.Add("The given start time is before 6am - Limits of timetable.");
+            if (End > new Time(20, 0))
+                errortexts.Add("The given end time is later than 8pm - Limits of timetable.");
             IList<TimetableError> errors = CourseManager.Instance.ValidateAll(course,SelectedGroup.Model,Teacher.Model,Subject.Model,Day,start,end) ;
-            string errortext="";
-            foreach (var item in errors)
+            foreach(var item in errors)
             {
                 switch (item)
                 {
-                    case TimetableError.TeacherSubject: errortext += "The selected Teacher does not teach the given subject.\n"; break;
-                    case TimetableError.TeacherTime: errortext += "The selected Teacher has another course in the given time.\n"; break;
+                    case TimetableError.TeacherSubject: errortexts.Add("The selected Teacher does not teach the given subject."); break;
+                    case TimetableError.TeacherTime: errortexts.Add("The selected Teacher has another course in the given time."); break;
+                    case TimetableError.GroupTime: errortexts.Add("The selected Group has another course in the given time"); break;
                 }
             }
-            ValidationError = errortext;
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int i=0; i < errortexts.Count; i++)
+            {
+                stringBuilder.Append(errortexts[i]);
+                if (i !=( errortexts.Count - 1))
+                    stringBuilder.Append("\n");
+            }
+            ValidationError = stringBuilder.ToString();
+
         }
 
         private string validationerror = "";

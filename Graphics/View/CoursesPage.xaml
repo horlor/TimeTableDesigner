@@ -39,6 +39,16 @@
         <local:TimetableView x:Name="Timetable" ViewModel="{x:Bind Model.Timetable}" Grid.Row="1"
                              SelectionChanged="{x:Bind Model.Timetable_SelectionChanged}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <CommandBar DefaultLabelPosition="Right">
+                <AppBarButton Icon="Add" Label="Add"/>
+                <AppBarButton Icon="Delete" Label="Remove"/>
+                <AppBarButton Icon="Save" Label="Save"/>
+                <AppBarButton Icon="Undo" Label="Undo"/>
+            </CommandBar>
+        </StackPanel>
+
+        <!--
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="10,5,5,5" />
             <Button x:Name="btnRemove" Content="&#xE107;"
                                     FontFamily="Segoe MDL2 Assets" Margin="5" />
@@ -46,7 +56,7 @@
                         />
             <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
                         />
-        </StackPanel>
+        </StackPanel>-->
         <!--
         <local:CourseEditView x:Name="edit" ViewModel="{x:Bind Model, Mode=OneWay}"
                               Timetable="{x:Bind Timetable, Mode=OneTime}" Grid.Row="3"/>
@@ -81,8 +91,8 @@
             <StackPanel Orientation="Horizontal">
                 <TimePicker MinuteIncrement="15" Header="Start" Padding="5,0,5,20"
                             IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
-                            Time="{x:Bind Model.Start, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
-
+                            Time="{x:Bind Model.Start, Mode=TwoWay, Converter={StaticResource TimeConverter}}"
+                            />
                 <TimePicker MinuteIncrement="15" Header="End" Padding="5,0,5,20"
                             IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
                             Time="{x:Bind Model.End, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>

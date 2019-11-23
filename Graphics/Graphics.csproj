@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Converters\DayToStringConverter.cs" />
+    <Compile Include="Converters\ErrorToColorConverter.cs" />
     <Compile Include="Converters\TimeToTimeSpanConverter.cs" />
     <Compile Include="Data\ICourseManager.cs" />
     <Compile Include="Data\IGroupManager.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ViewModel\TeachersPageViewModel.cs" />
     <Compile Include="ViewModel\TeacherViewModel.cs" />
     <Compile Include="ViewModel\TimetableViewModel.cs" />
+    <Compile Include="ViewModel\ValidPropertyBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\CourseEditView.xaml.cs">
       <DependentUpon>CourseEditView.xaml</DependentUpon>

@@ -94,6 +94,16 @@ namespace TimetableDesigner.Model
             return false;
         }
 
+        public bool HasCourseAtTimePeriod(Day day, Time from, Time to, Course exclude)
+        {
+            foreach (Course c in courses)
+            {
+                if (c.IsOverlappingWithTimePeriod(day, from, to) && !ReferenceEquals(exclude,c))
+                    return true;
+            }
+            return false;
+        }
+
         public override string ToString()
         {
             return this.Name;

@@ -107,9 +107,9 @@ namespace TimetableDesigner.Model
             List<TimetableError> ret = new List<TimetableError>();
             if (!teacher.IsATeachedSubject(subject))
                 ret.Add(TimetableError.TeacherSubject);
-            if (teacher.HasCourseAtTimePeriod(day,from,to))
+            if (teacher.HasCourseAtTimePeriod(day,from,to,course))
                 ret.Add(TimetableError.TeacherTime);
-            if (group.HasCourseAtTimePeriod(day,from,to))
+            if (group.HasCourseAtTimePeriod(day,from,to,course))
                 ret.Add(TimetableError.GroupTime);
             return ret;
         }
