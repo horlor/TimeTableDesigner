@@ -87,7 +87,7 @@ namespace TimetableDesigner.Model
 
         public void ChangeGroup(Course course, Group group)
         {
-            if (group.HasCourseAtTheSameTime(course))
+            if (group!=null && group.HasCourseAtTheSameTime(course))
                 throw new TimetableException("New Group has a course overlapping the this one", TimetableError.GroupTime);
             course.Group = group;
             
@@ -112,6 +112,24 @@ namespace TimetableDesigner.Model
             if (group.HasCourseAtTimePeriod(day,from,to,course))
                 ret.Add(TimetableError.GroupTime);
             return ret;
+        }
+
+        public void ChangeAll(Course course, Group group, Teacher teacher, Subject subject, Day day, Time from, Time to)
+        {
+            List<TimetableError> ret = new List<TimetableError>();
+            if (!teacher.IsATeachedSubject(subject))
+                ret.Add(TimetableError.TeacherSubject);
+            if (teacher.HasCourseAtTimePeriod(day, from, to, course))
+                ret.Add(TimetableError.TeacherTime);
+            if (group.HasCourseAtTimePeriod(day, from, to, course))
+                ret.Add(TimetableError.GroupTime);
+            if (ret.Count > 0)
+                throw new TimetableException(ret);
+            course.Group = group;
+            course.Teacher = teacher;
+            course.SetTimespan(from, to);
+            course.Day = day;
+            course.Subject = subject;
         }
 
 

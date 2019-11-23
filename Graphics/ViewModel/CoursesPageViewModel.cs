@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimetableDesigner.Graphics.Commands;
 using TimetableDesigner.Graphics.Data;
 using TimetableDesigner.Graphics.View;
 using TimetableDesigner.Model;
@@ -13,7 +14,7 @@ namespace TimetableDesigner.Graphics.ViewModel
 {
     public class CoursesPageViewModel : ViewModelBase
     {
-        public readonly Day[] Days = { Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday };
+        public readonly Day[] Days = { Model.Day.Monday, Model.Day.Tuesday, Model.Day.Wednesday, Model.Day.Thursday, Model.Day.Friday };
 
         public IGroupManager GroupManager { get; set; } = DataManager.Instance;
         public ITeacherManager TeacherManager { get; set; } = DataManager.Instance;
@@ -21,8 +22,24 @@ namespace TimetableDesigner.Graphics.ViewModel
 
         public CoursesPageViewModel()
         {
-            this.PropertyChanged += CoursesPageViewModel_PropertyChanged;
+            //Subscribing for changes in order to validate them
+            Teacher.PropertyChanged += CoursesPageViewModel_PropertyChanged;
+            Subject.PropertyChanged += CoursesPageViewModel_PropertyChanged;
+            Day.PropertyChanged += CoursesPageViewModel_PropertyChanged;
+            Start.PropertyChanged += CoursesPageViewModel_PropertyChanged;
+            End.PropertyChanged += CoursesPageViewModel_PropertyChanged;
+
+            //
+            NewCommand = new CommandBase(o => NewCourse(), o => true);
+            SaveCommand = new CommandBase(o => Save(),o=> isValid());
+            UndoCommand = new CommandBase(o => Undo(), o=> { return EditEnabled; });
+            DeleteCommand = new CommandBase(o => DeleteCourse(), o => { return EditEnabled; });
+
+
+
         }
+
+
 
         public TimetableViewModel Timetable { get; } = new TimetableViewModel();
 
@@ -67,21 +84,27 @@ namespace TimetableDesigner.Graphics.ViewModel
         public void Timetable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             course = (sender as TimetableView).Selected.Model;
-            if(course is null)
+            LoadCourse();
+        }
+
+        private void LoadCourse()
+        {
+            setPropertiesValid();
+            if (course is null)
             {
                 EditEnabled = false;
                 ValidationError = "The Clicked item is not a Course, please choose another, or add a new one";
             }
-            else {
-                Subject = SubjectManager.FindSubjectByModel(course.Subject);
-                Teacher = TeacherManager.FindTeacherByModel(course.Teacher);
-                Start = course.Start;
-                End = course.End;
-                Day = course.Day;
+            else
+            {
+                Subject.Value = SubjectManager.FindSubjectByModel(course.Subject);
+                Teacher.Value = TeacherManager.FindTeacherByModel(course.Teacher);
+                Start.Value = course.Start;
+                End.Value = course.End;
+                Day.Value = course.Day;
                 EditEnabled = true;
-                ValidateChanges();
             }
-
+            RefreshCommands();
         }
 
         private bool editEnabled=false;
@@ -98,117 +121,65 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
         }
 
-        private SubjectViewModel subject;
-        public SubjectViewModel Subject
+        public ValidablePropertyBase<SubjectViewModel> Subject { get; } = new ValidablePropertyBase<SubjectViewModel>();
+
+        public ValidablePropertyBase<TeacherViewModel> Teacher { get; } = new ValidablePropertyBase<TeacherViewModel>();
+
+        public ValidablePropertyBase<Day> Day { get; } = new ValidablePropertyBase<Day>();
+
+        public ValidablePropertyBase<Time> Start { get; } = new ValidablePropertyBase<Time>();
+        public ValidablePropertyBase<Time> End { get; } = new ValidablePropertyBase<Time>();
+
+        private void setPropertiesValid()
         {
-            get
-            {
-                return subject;
-            }
-            set
-            {
-                if (subject != value)
-                {
-                    subject = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private TeacherViewModel teacher;
-        public TeacherViewModel Teacher
-        {
-            get
-            {
-                return teacher;
-            }
-            set
-            {
-                if (teacher != value)
-                {
-                    teacher = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private Day day;
-        public Day Day
-        {
-            get
-            {
-                return day;
-            }
-            set
-            {
-                if (day != value)
-                {
-                    day = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private Time start, end;
-
-        public Time Start
-        {
-            get
-            {
-                return start;
-            }
-            set
-            {
-                if (start != value) {
-                    start = value;
-                    OnPropertyChanged();
-                }
-
-            }
-        }
-
-        public Time End
-        {
-            get
-            {
-                return end;
-            }
-            set
-            {
-                if(end != value)
-                {
-                    end = value;
-                    OnPropertyChanged();
-                }
-            }
+            Teacher.Validity = true;
+            Subject.Validity = true;
+            Day.Validity = true;
+            Start.Validity = true;
+            End.Validity = true;
         }
 
         private void CoursesPageViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName=="Teacher"||e.PropertyName=="Subject"||e.PropertyName == "Start" || e.PropertyName =="End" || e.PropertyName =="Day")
+            if(e.PropertyName!="Validity")
                 ValidateChanges();
+            RefreshCommands();
         }
 
         private void ValidateChanges()
         {
-            if (course is null || Teacher == null || Subject == null || SelectedGroup == null)
+            if (course is null || Teacher.Value == null || Subject.Value == null || SelectedGroup == null)
                 return;
             List<string> errortexts = new List<string>();
+            setPropertiesValid();
             //Local Validation for Time, and Timetable
-            if (Start >= End)
+            if (Start.Value >= End.Value)
+            {
                 errortexts.Add("The given end time is before the start.");
-            if (Start < new Time(6, 0))
+                End.Validity = false;
+            }  
+            if (Start.Value < new Time(6, 0))
+            {
                 errortexts.Add("The given start time is before 6am - Limits of timetable.");
-            if (End > new Time(20, 0))
+                Start.Validity = false;
+            }
+            if (End.Value > new Time(20, 0))
+            {
                 errortexts.Add("The given end time is later than 8pm - Limits of timetable.");
-            IList<TimetableError> errors = CourseManager.Instance.ValidateAll(course,SelectedGroup.Model,Teacher.Model,Subject.Model,Day,start,end) ;
+                Start.Validity = false;
+                End.Validity = false;
+            }
+            IList<TimetableError> errors = CourseManager.Instance.ValidateAll(course,SelectedGroup.Model,Teacher.Value.Model,Subject.Value.Model,Day.Value,Start.Value,End.Value) ;
             foreach(var item in errors)
             {
                 switch (item)
                 {
-                    case TimetableError.TeacherSubject: errortexts.Add("The selected Teacher does not teach the given subject."); break;
-                    case TimetableError.TeacherTime: errortexts.Add("The selected Teacher has another course in the given time."); break;
-                    case TimetableError.GroupTime: errortexts.Add("The selected Group has another course in the given time"); break;
+                    case TimetableError.TeacherSubject: errortexts.Add("The selected Teacher does not teach the given subject.");
+                            Teacher.Validity = false; Subject.Validity = false; break;
+                    case TimetableError.TeacherTime: errortexts.Add("The selected Teacher has another course in the given time.");
+                        Teacher.Validity = false; Start.Validity = false; End.Validity = false; Day.Validity = false; break;
+                    case TimetableError.GroupTime: errortexts.Add("The selected Group has another course in the given time");
+                        Start.Validity = false; End.Validity = false; Day.Validity = false; break;
                 }
             }
             StringBuilder stringBuilder = new StringBuilder();
@@ -235,6 +206,53 @@ namespace TimetableDesigner.Graphics.ViewModel
                 }
 
             }
+        }
+
+        public CommandBase NewCommand { get; }
+
+        private void NewCourse()
+        {
+            
+        }
+        public CommandBase DeleteCommand { get; }
+
+        private void DeleteCourse()
+        {
+            DataManager.Instance.RemoveCourse(course);
+            UpdateTimetable();
+        }
+
+        public CommandBase SaveCommand { get; }
+
+        private void Save()
+        {
+            CourseManager manager = CourseManager.Instance;
+            manager.ChangeAll(course, SelectedGroup.Model, Teacher.Value.Model, Subject.Value.Model, Day.Value, Start.Value, End.Value);
+            UpdateTimetable();
+        }
+
+        public CommandBase UndoCommand { get; }
+
+        private void Undo()
+        {
+            LoadCourse();
+        } 
+
+        private bool  isValid()
+        {
+                return EditEnabled && Teacher.Validity && Subject.Validity && Start.Validity && End.Validity && Day.Validity;
+        }
+        private void RefreshCommands()
+        {
+            NewCommand.ExecutionChanged();
+            DeleteCommand.ExecutionChanged();
+            SaveCommand.ExecutionChanged();
+            UndoCommand.ExecutionChanged();
+        }
+
+        private void UpdateTimetable()
+        {
+            Timetable.Courses = SelectedGroup.Courses;
         }
     }
 }

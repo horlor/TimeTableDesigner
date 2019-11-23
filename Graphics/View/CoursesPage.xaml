@@ -13,6 +13,7 @@
     <Page.Resources>
         <converter:TimeToTimeSpanConverter x:Key="TimeConverter"/>
         <converter:DayToStringConverter x:Key="DayConverter"/>
+        <converter:ErrorToBrushConverter x:Key="ErrorConverter"/>
     </Page.Resources>
     
     <Grid>
@@ -40,10 +41,14 @@
                              SelectionChanged="{x:Bind Model.Timetable_SelectionChanged}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <CommandBar DefaultLabelPosition="Right">
-                <AppBarButton Icon="Add" Label="Add"/>
-                <AppBarButton Icon="Delete" Label="Remove"/>
-                <AppBarButton Icon="Save" Label="Save"/>
-                <AppBarButton Icon="Undo" Label="Undo"/>
+                <AppBarButton Icon="Add" Label="Add"
+                              Command="{x:Bind Model.NewCommand, Mode=OneWay}"/>
+                <AppBarButton Icon="Delete" Label="Remove"
+                              Command="{x:Bind Model.DeleteCommand, Mode=OneWay}"/>
+                <AppBarButton Icon="Save" Label="Save"
+                              Command="{x:Bind Model.SaveCommand, Mode=OneWay}"/>
+                <AppBarButton Icon="Undo" Label="Undo"
+                              Command="{x:Bind Model.UndoCommand, Mode=OneWay}"/>
             </CommandBar>
         </StackPanel>
 
@@ -67,8 +72,9 @@
                     HorizontalAlignment="Stretch" VerticalAlignment="Center"
                     Header="Subject" MinWidth="290" Margin="0,0,20,0"
                     ItemsSource="{x:Bind Model.SubjectManager.Subjects, Mode=OneWay}"
-                    SelectedItem="{x:Bind Model.Subject, Mode=TwoWay}"
-                    IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}">
+                    SelectedItem="{x:Bind Model.Subject.Value, Mode=TwoWay}"
+                    IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
+                    Background="{x:Bind Model.Subject.Validity, Mode=OneWay, Converter={StaticResource ErrorConverter}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="vm:SubjectViewModel">
                             <TextBlock Text="{x:Bind Name}"/>
@@ -79,8 +85,9 @@
                           Header="Teacher"
                           MinWidth="290"
                     ItemsSource="{x:Bind Model.TeacherManager.Teachers, Mode=OneWay}"
-                    SelectedItem="{x:Bind Model.Teacher, Mode=TwoWay}"
-                    IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}">
+                    SelectedItem="{x:Bind Model.Teacher.Value, Mode=TwoWay}"
+                    IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
+                    Background="{x:Bind Model.Teacher.Validity, Mode=OneWay, Converter={StaticResource ErrorConverter}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="vm:TeacherViewModel">
                             <TextBlock Text="{x:Bind Name}"/>
@@ -91,17 +98,19 @@
             <StackPanel Orientation="Horizontal">
                 <TimePicker MinuteIncrement="15" Header="Start" Padding="5,0,5,20"
                             IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
-                            Time="{x:Bind Model.Start, Mode=TwoWay, Converter={StaticResource TimeConverter}}"
-                            />
+                            Time="{x:Bind Model.Start.Value, Mode=TwoWay, Converter={StaticResource TimeConverter}}"
+                            Background="{x:Bind Model.Start.Validity, Mode=OneWay, Converter={StaticResource ErrorConverter}}"/>
                 <TimePicker MinuteIncrement="15" Header="End" Padding="5,0,5,20"
                             IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
-                            Time="{x:Bind Model.End, Mode=TwoWay, Converter={StaticResource TimeConverter}}"/>
+                            Time="{x:Bind Model.End.Value, Mode=TwoWay, Converter={StaticResource TimeConverter}}"
+                           Background="{x:Bind Model.End.Validity, Mode=OneWay, Converter={StaticResource ErrorConverter}}" BorderThickness="2"/>
                 <ComboBox x:Name="DayList" Header="Day"
                           HorizontalAlignment="Center"
                           MinWidth="150" Padding="5,0,5,0"
                           IsEnabled="{x:Bind Model.EditEnabled, Mode=OneWay}"
                           ItemsSource="{x:Bind Model.Days, Mode=OneTime}"
-                          SelectedItem="{x:Bind Model.Day, Mode=TwoWay}">
+                          SelectedItem="{x:Bind Model.Day.Value, Mode=TwoWay}"
+                          Background="{x:Bind Model.Day.Validity, Mode=OneWay, Converter={StaticResource ErrorConverter}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:Day">
                             <TextBlock Text="{x:Bind Converter={StaticResource DayConverter}}"/>

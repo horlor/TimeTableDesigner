@@ -164,5 +164,20 @@ namespace TimetableDesigner.Graphics.Data
                     return item;
             return null;
         }
+
+
+        public void RemoveCourse(Course course)
+        {
+            dataController.CourseRepo.Remove(course);
+            CourseManager.ChangeTeacher(course, null);
+            CourseManager.ChangeGroup(course, null);
+        }
+
+        public Course NewCourse()
+        {
+            Course c = new Course();
+            dataController.CourseRepo.Store(c);
+            return c;
+        }
     }
 }
