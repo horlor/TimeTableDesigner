@@ -141,7 +141,7 @@
     <Compile Include="ViewModel\TeachersPageViewModel.cs" />
     <Compile Include="ViewModel\TeacherViewModel.cs" />
     <Compile Include="ViewModel\TimetableViewModel.cs" />
-    <Compile Include="ViewModel\ValidPropertyBase.cs" />
+    <Compile Include="ViewModel\ValidablePropertyBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\CoursesPage.xaml.cs">
       <DependentUpon>CoursesPage.xaml</DependentUpon>

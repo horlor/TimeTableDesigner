@@ -31,17 +31,29 @@ namespace Graphics
 
         public MainPage()
         {
-            this.InitializeComponent();
-            
+            InitializeComponent();
         }
+        public string Title
+        {
+            get
+            {
+                return GetValue(TitleProperty) as string;
+            }
+            set
+            {
+                SetValue(TitleProperty, value);
+            }
+        }
+        public static readonly DependencyProperty TitleProperty =
+        DependencyProperty.Register("Title", typeof(string), typeof(MainPage), null);
 
         // List of ValueTuple holding the Navigation Tag and the relative Navigation Page
-        private readonly List<(string Tag, Type Page)> pages = new List<(string Tag, Type Page)>
+        private readonly List<(string Tag, Type Page, string Title)> pages = new List<(string Tag, Type Page, string Title)>
         {
-            ("course", typeof(CoursesPage)),
-            ("teacher",typeof(TeachersPage)),
-            ("group",typeof(GroupsPage)),
-            ("subject",typeof(SubjectsPage))
+            ("course", typeof(CoursesPage), "Courses"),
+            ("teacher",typeof(TeachersPage), "Teachers"),
+            ("group",typeof(GroupsPage), "Groups"),
+            ("subject",typeof(SubjectsPage),"Subjects")
         };
 
 
@@ -65,6 +77,7 @@ namespace Graphics
             {
                 var item = pages.FirstOrDefault(p => p.Tag.Equals(tag));
                 page = item.Page;
+                Title = item.Title;
             }
 
             var preNavPageType = ContentFrame.CurrentSourcePageType;

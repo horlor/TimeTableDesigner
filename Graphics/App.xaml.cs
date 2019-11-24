@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TimetableDesigner.Graphics.Data;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,7 +34,6 @@ namespace Graphics
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             UnhandledException += OnUnhandledException;
-            System.Diagnostics.Debug.WriteLine(DataManager.Instance.Teachers.Count);
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Graphics
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-
+            DataManager.Initialize();
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
@@ -96,8 +97,9 @@ namespace Graphics
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
-            //DataManager.Instance.Save();
+            //TODO: Save application state and stop any background activity 
+            Task.Run(()=>DataManager.Instance.Save()).Wait();
+            System.Diagnostics.Debug.WriteLine("Save ended");
             deferral.Complete();
         }
 
@@ -109,5 +111,6 @@ namespace Graphics
             System.Diagnostics.Debug.WriteLine(unhandledExceptionEventArgs.Exception.StackTrace);
             unhandledExceptionEventArgs.Handled = true;
         }
+
     }
 }

@@ -15,8 +15,8 @@ namespace TimetableDesigner.Graphics.ViewModel
         {
             Model = subject;
             name = subject.Name;
-            SaveChangesCmd = new CommandBase((o) => { Save(); System.Diagnostics.Debug.WriteLine("mi a fasz " + name); }, (o) => IsChanged());
-            DropChangesCmd = new CommandBase((o) => { Drop(); System.Diagnostics.Debug.WriteLine("why this isn't running?"); }, (o) => IsChanged());
+            SaveChangesCmd = new CommandBase((o) => { Save(); }, (o) => IsChanged());
+            DropChangesCmd = new CommandBase((o) => { Drop(); }, (o) => IsChanged());
 
         }
 

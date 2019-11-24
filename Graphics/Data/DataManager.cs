@@ -4,9 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using TimetableDesigner.Graphics.ViewModel;
 using TimetableDesigner.Model;
 using TimetableDesigner.Persistence;
+using Windows.Storage;
+using Windows.UI.Xaml.Controls;
+using Graphics;
+using System.Threading;
 
 namespace TimetableDesigner.Graphics.Data
 {
@@ -15,25 +20,20 @@ namespace TimetableDesigner.Graphics.Data
         private JsonController dataController;
 
         public CourseManager CourseManager { get; set; } = CourseManager.Instance;
-        
+
         //Using singleton pattern to avoid multiple Data access
         private DataManager()
         {
-            //Load();
-            //TODO safe loading and writing
-            //Posibbly i should use the new Library for runtime apps
-            dataController = new JsonController
-            {
-                Path = "data.json"
-            };
-            dataController.Load();
-            
+
+            Task.Run(() => Load()).Wait();
+            //ars.WaitOne();
+
             foreach (Teacher item in dataController.TeacherRepo.GetList())
             {
                 Teachers.Add(new TeacherViewModel(item));
             }
 
-            foreach(Subject item in dataController.SubjectRepo.GetList())
+            foreach (Subject item in dataController.SubjectRepo.GetList())
             {
                 Subjects.Add(new SubjectViewModel(item));
             }
@@ -41,6 +41,7 @@ namespace TimetableDesigner.Graphics.Data
             {
                 Groups.Add(new GroupViewModel(item));
             }
+
         }
 
         private static DataManager instance;
@@ -54,18 +55,78 @@ namespace TimetableDesigner.Graphics.Data
             }
         }
 
-        public async void Save()
+        public async Task Save()
         {
-            dataController.Save("data_temp.json");
-            System.IO.File.Move("data.json", "data_old.json");
-            System.IO.File.Move("data_temp.json", "data.json");
+            StorageFolder localfolder = ApplicationData.Current.LocalFolder;
+            StorageFile tempfile = await localfolder.CreateFileAsync("data_temp.json",CreationCollisionOption.ReplaceExisting);
+            var stream = await tempfile.OpenStreamForWriteAsync();
+            dataController.Save(stream);
+            var present = await localfolder.GetFileAsync("data.json");
+            var old = await localfolder.TryGetItemAsync("data_old.json");
+            if (old != null)
+            {
+               await old.DeleteAsync();
+            }
+            await present.RenameAsync("data_old.json");
+            await tempfile.RenameAsync("data.json");
+            System.Diagnostics.Debug.WriteLine("Save ended");
         }
 
-        private async void Load()
+        private async Task Load()
         {
-            if (System.IO.File.Exists("data_temp.json"))
-                throw new System.IO.FileLoadException();
+            
+            StorageFolder local = ApplicationData.Current.LocalFolder;
+            if((await local.TryGetItemAsync("data_temp.json"))!=null && (await local.TryGetItemAsync("data_old.json")) != null)
+            {
+                var temp = await local.GetFileAsync("data_temp.json");
+                var data = await local.TryGetItemAsync("data.json");
+                if (data != null)
+                    await data.DeleteAsync();
+                await temp.RenameAsync("data.json");
+            }
+            try
+            {
+                dataController = new JsonController();
+                var json = await local.GetFileAsync("data.json");
+                var stream = await json.OpenStreamForReadAsync();
+                dataController.Load(stream);
+                System.Diagnostics.Debug.WriteLine("load success");
+            }
+            catch(Newtonsoft.Json.JsonException e)
+            {
+                var result = await JsonErrorDialog();
+                if (result == ContentDialogResult.Primary)
+                {
+                    dataController = new JsonController();
+                    return;
+                }
+                else
+                {
+                    App.Current.Exit();
+                }
+            }
+            catch(FileNotFoundException e)
+            {
+                dataController = new JsonController();
+            }
+        }
 
+        private async Task<ContentDialogResult> JsonErrorDialog()
+        {
+            ContentDialog SaveDialog = new ContentDialog
+            {
+                Title = "File error",
+                Content = "The application data is corrupted, do you wish to try loading a previous version or create a new Applicationdata",
+                CloseButtonText = "Cancel",
+                PrimaryButtonText = "Create new"
+            };
+
+            return await SaveDialog.ShowAsync();
+        }
+
+        public static void Initialize()
+        {
+            instance = new DataManager();
         }
 
         public ObservableCollection<SubjectViewModel> Subjects { get; private set; }

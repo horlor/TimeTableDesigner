@@ -4,6 +4,7 @@ using System.Text;
 using TimetableDesigner.Model;
 using Newtonsoft.Json;
 using System.IO;
+using Windows.Storage.Streams;
 
 namespace TimetableDesigner.Persistence
 {
@@ -55,6 +56,19 @@ namespace TimetableDesigner.Persistence
             this.Save(this.Path);
 
         }
+        public void Save(Stream stream)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Formatting = Formatting.Indented;
+            serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+            using (StreamWriter streamWriter = new StreamWriter(stream))
+            using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
+            {
+                serializer.Serialize(jsonWriter, data);
+            }
+        }
+
 
         public void Save(string path)
         {
@@ -66,6 +80,19 @@ namespace TimetableDesigner.Persistence
             using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
             {
                 serializer.Serialize(jsonWriter, data);
+            }
+        }
+
+        public void Load(Stream stream)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            serializer.Formatting = Formatting.Indented;
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+            using (StreamReader streamReader = new StreamReader(stream))
+            using (JsonReader jsonReader = new JsonTextReader(streamReader))
+            {
+                data = serializer.Deserialize<Data>(jsonReader);
             }
         }
 

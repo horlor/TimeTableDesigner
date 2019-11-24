@@ -36,7 +36,7 @@
             </NavigationView.MenuItems>
             <NavigationView.Header>
                 <StackPanel Orientation="Vertical" BorderBrush="Gray" BorderThickness="0,0,0,5">
-                    <TextBlock Text="{x:Bind NavigationMenu.SelectedItem.ToString()}" FontSize="30" />
+                    <TextBlock Text="{x:Bind Title, Mode=OneWay}" FontSize="30" />
                 </StackPanel>
             </NavigationView.Header>
             <Frame x:Name="ContentFrame" IsTabStop="True">
