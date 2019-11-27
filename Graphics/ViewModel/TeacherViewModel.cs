@@ -102,6 +102,7 @@ namespace TimetableDesigner.Graphics.ViewModel
             }
         }
 
+
         public override string ToString()
         {
             return this.Name;

@@ -25,10 +25,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Csoport: "/>
+            <TextBlock Text="Group: " VerticalAlignment="Stretch"/>
             <ComboBox MinWidth="200"
                 ItemsSource="{x:Bind Model.GroupManager.Groups, Mode=OneWay}"
-                      SelectedItem="{x:Bind Model.SelectedGroup, Mode=TwoWay}">
+                      SelectedItem="{x:Bind Model.SelectedGroup, Mode=TwoWay}"
+                      >
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="vm:GroupViewModel">
                         <TextBlock Text="{x:Bind Name, Mode=OneTime}"></TextBlock>
@@ -51,7 +52,7 @@
                               Command="{x:Bind Model.UndoCommand, Mode=OneWay}"/>
             </CommandBar>
         </StackPanel>
-
+        <!--Changed buttons to AppBar-->
         <!--
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="10,5,5,5" />

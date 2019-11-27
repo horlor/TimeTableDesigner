@@ -34,9 +34,6 @@ namespace TimetableDesigner.Graphics.ViewModel
             SaveCommand = new CommandBase(o => Save(),o=> isValid());
             UndoCommand = new CommandBase(o => Undo(), o=> { return EditEnabled; });
             DeleteCommand = new CommandBase(o => DeleteCourse(), o => { return EditEnabled; });
-
-
-
         }
 
 
@@ -83,8 +80,15 @@ namespace TimetableDesigner.Graphics.ViewModel
         private Course course;
         private bool isnewcourse = false;
 
-        public void Timetable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public async Task Timetable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
+            if (course != null && isCourseChanged())
+            {
+                bool res = await showUnsavedChangesDialog();
+                if (res)
+                    Save();
+            } 
             course = (sender as TimetableView).Selected.Model;
             LoadCourse();
         }
@@ -107,6 +111,32 @@ namespace TimetableDesigner.Graphics.ViewModel
                 EditEnabled = true;
             }
             RefreshCommands();
+        }
+
+        private async Task<bool> showUnsavedChangesDialog()
+        {
+            ContentDialog SaveDialog = new ContentDialog
+            {
+                Title = "Not saved modifications",
+                Content = "There are unsaved modifications on the selected item. Do you want to save them?",
+                CloseButtonText = "No",
+                PrimaryButtonText = "Yes"
+            };
+
+            ContentDialogResult result = await SaveDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                return true;
+            return false;
+        }
+
+        private bool isCourseChanged()
+        {
+            return Day.Value != course.Day ||
+                Start.Value != course.Start ||
+                End.Value != course.End ||
+                Subject.Value.Model != course.Subject ||
+                Teacher.Value.Model != course.Teacher;
+
         }
 
         private bool editEnabled=false;

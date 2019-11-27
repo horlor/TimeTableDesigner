@@ -66,14 +66,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" Margin="10, 0 ,10,5" Grid.Row="0">
-                <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5" 
-                        Command="{x:Bind Model.NewTeacherCmd}"/>
-                <Button x:Name="btnRemove" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5"
-                        Command="{x:Bind Model.RemoveTeacherCmd}"/>
-                <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" 
-                        Command="{x:Bind Model.Selected.DropChangesCmd, Mode=OneWay}"/>
-                <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
-                        Command="{x:Bind Model.Selected.SaveChangesCmd, Mode=OneWay}"/>
+                <CommandBar DefaultLabelPosition="Right">
+                    <AppBarButton Icon="Add" Label="Add"
+                             Command="{x:Bind Model.NewTeacherCmd}"/>
+                    <AppBarButton Icon="Delete" Label="Remove"
+                               Command="{x:Bind Model.RemoveTeacherCmd}"/>
+                    <AppBarButton Icon="Save" Label="Save"
+                               Command="{x:Bind Model.Selected.SaveChangesCmd, Mode=OneWay}"/>
+                    <AppBarButton Icon="Undo" Label="Undo"
+                               Command="{x:Bind Model.Selected.DropChangesCmd, Mode=OneWay}"/>
+                </CommandBar>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBlock Text="Name: " Margin="10"/>
@@ -83,13 +85,14 @@
             <!-- The layout of the subject list of the teacher-->
             <StackPanel Orientation="Horizontal" Grid.Row="2" BorderBrush="Gray" BorderThickness="0,2,0,0" Margin="0,5,0,0">
                 <TextBlock Text="Teached subjects" FontSize="20" Padding="5"/>
-                <Button x:Name="btnNewSubject" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5"
-                        Flyout="{StaticResource ResourceKey=SubjectFlyout}">
-                </Button>
-                <Button x:Name="btnRemoveSubject" Grid.Column="2" Content="&#xE107;"
-                        FontFamily="Segoe MDL2 Assets" Margin="5" 
-                        Command="{x:Bind Model.Selected.RemoveSubjectCmd, Mode=OneWay}"
-                        CommandParameter="{x:Bind SubjectsList.SelectedItem, Mode=OneWay}"/>
+                <CommandBar DefaultLabelPosition="Right">
+                    <AppBarButton Icon="Add" Label="Add"
+                                  Flyout="{StaticResource ResourceKey=SubjectFlyout}"
+                                  AllowFocusOnInteraction="True"/>
+                    <AppBarButton Icon="Delete" Label="Remove"
+                               Command="{x:Bind Model.Selected.RemoveSubjectCmd, Mode=OneWay}"
+                                CommandParameter="{x:Bind SubjectsList.SelectedItem, Mode=OneWay}"/>
+                </CommandBar>
             </StackPanel>
             <ListView x:Name="SubjectsList"  Grid.Row="3" 
                           ItemsSource="{x:Bind Model.Selected.Subjects, Mode=OneWay}"

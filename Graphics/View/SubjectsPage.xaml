@@ -15,7 +15,7 @@
                   SelectionMode="Single"
                   SelectedItem="{x:Bind Model.Selected, Mode=TwoWay}"
                   SelectionChanged="{x:Bind Model.SelectionChanged}"
-                  MinWidth="200">
+                  MinWidth="200" BorderBrush="Gray" BorderThickness="0,0,2,0">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:SubjectViewModel">
                     <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
@@ -24,14 +24,16 @@
         </ListView>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="10, 0 ,10,5">
-                <Button x:Name="btnNew" Content="&#xE109;" FontFamily="Segoe MDL2 Assets" Margin="5"
-                        Command="{x:Bind Model.NewSubjectCmd}"/>
-                <Button x:Name="btnRemove"  Content="&#xE107;" FontFamily="Segoe MDL2 Assets" Margin="5"
-                        Command="{x:Bind Model.RemoveSubjectCmd}"/>
-                <Button x:Name="btnDrop" Content="&#xE10A;" FontFamily="Segoe MDL2 Assets" Margin="5" 
-                        Command="{x:Bind Model.Selected.DropChangesCmd  , Mode=OneWay}"/>
-                <Button x:Name="btnSave" Content="&#xE105;" FontFamily="Segoe MDL2 Assets" Margin="5" 
-                        Command="{x:Bind Model.Selected.SaveChangesCmd, Mode=OneWay}"/>
+                <CommandBar DefaultLabelPosition="Right">
+                    <AppBarButton Icon="Add" Label="Add"
+                             Command="{x:Bind Model.NewSubjectCmd}"/>
+                    <AppBarButton Icon="Delete" Label="Remove"
+                               Command="{x:Bind Model.RemoveSubjectCmd}"/>
+                    <AppBarButton Icon="Save" Label="Save"
+                               Command="{x:Bind Model.Selected.SaveChangesCmd, Mode=OneWay}"/>
+                    <AppBarButton Icon="Undo" Label="Undo"
+                               Command="{x:Bind Model.Selected.DropChangesCmd, Mode=OneWay}"/>
+                </CommandBar>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Name: " Margin="10,0,10,0" VerticalAlignment="Center"/>
